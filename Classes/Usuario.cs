@@ -23,4 +23,10 @@ public partial class Usuario
 
     [InverseProperty("Usuario")]
     public virtual ICollection<Estudiante> Estudiantes { get; set; } = new List<Estudiante>();
+
+    [InverseProperty("Usuario")]
+    public virtual ICollection<Almacenista> Almacenistas { get; set; } = new List<Almacenista>();
+
+    [InverseProperty("Usuario")]
+    public virtual ICollection<Coordinador> Coordinadores { get; set; } = new List<Coordinador>();
 }

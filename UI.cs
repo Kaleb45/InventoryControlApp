@@ -1,5 +1,7 @@
 ﻿using InventoryControl;
 using System;
+using System.ComponentModel;
+using System.Diagnostics.Eventing.Reader;
 
 public static class UI
 {
@@ -36,7 +38,6 @@ public static class UI
         using (Almacen db = new())
         {
             var user = db.Usuarios.FirstOrDefault(u => u.Usuario1 == userName && u.Password == password);
-
             if (user != null)
             {
                 Console.Clear();
@@ -50,9 +51,13 @@ public static class UI
                 {
                     StudentUI();
                 }
-                else
+                else if (user.Almacenistas.Any())
                 {
                     InventoryManagerUI();
+                }
+                else if (user.Coordinadores.Any())
+                {
+                    AdministratorUI();  
                 }
             }
             else

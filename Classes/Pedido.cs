@@ -38,6 +38,14 @@ public partial class Pedido
     [InverseProperty("Pedidos")]
     public virtual Estudiante Estudiante { get; set; } = null!;
 
+    [ForeignKey("AlmacenistaId")]
+    [InverseProperty("Pedidos")]
+    public virtual Almacenista Almacenista { get; set; } = null!;
+
+    [ForeignKey("CoordinadorId")]
+    [InverseProperty("Pedidos")]
+    public virtual Coordinador Coordinador { get; set; } = null!;
+
     [ForeignKey("LaboratorioId")]
     [InverseProperty("Pedidos")]
     public virtual Laboratorio Laboratorio { get; set; } = null!;

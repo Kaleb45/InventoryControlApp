@@ -14,6 +14,10 @@ public class Almacen : DbContext
 
     public DbSet<Estudiante> Estudiantes { get; set; }
 
+    public DbSet<Almacenista> Almacenistas { get; set; }
+
+    public DbSet<Coordinador> Coordinadores { get; set; }
+ 
     public DbSet<Grupo> Grupos { get; set; }
 
     public DbSet<Laboratorio> Laboratorios { get; set; }
@@ -80,6 +84,20 @@ public class Almacen : DbContext
             entity.HasOne(d => d.Plantel).WithMany(p => p.Estudiantes).OnDelete(DeleteBehavior.ClientSetNull);
             entity.HasOne(d => d.Semestre).WithMany(p => p.Estudiantes).OnDelete(DeleteBehavior.ClientSetNull);
             entity.HasOne(d => d.Usuario).WithMany(p => p.Estudiantes).OnDelete(DeleteBehavior.ClientSetNull);
+        });
+
+        modelBuilder.Entity<Almacenista>(entity =>
+        {
+            entity.Property(e => e.AlmacenistaId).ValueGeneratedNever();
+            entity.HasOne(d => d.Plantel).WithMany(p => p.Almacenistas).OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(d => d.Usuario).WithMany(p => p.Almacenistas).OnDelete(DeleteBehavior.ClientSetNull);
+        });        
+        
+        modelBuilder.Entity<Coordinador>(entity =>
+        {
+            entity.Property(e => e.CoordinadorId).ValueGeneratedNever();
+            entity.HasOne(d => d.Plantel).WithMany(p => p.Coordinadores).OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(d => d.Usuario).WithMany(p => p.Coordinadores).OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<Grupo>(entity =>

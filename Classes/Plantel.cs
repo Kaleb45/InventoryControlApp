@@ -25,4 +25,10 @@ public partial class Plantel
 
     [InverseProperty("Plantel")]
     public virtual ICollection<Estudiante> Estudiantes { get; set; } = new List<Estudiante>();
+
+    [InverseProperty("Plantel")]
+    public virtual ICollection<Almacenista> Almacenistas { get; set; } = new List<Almacenista>();
+
+    [InverseProperty("Plantel")]
+    public virtual ICollection<Coordinador> Coordinadores { get; set; } = new List<Coordinador>();
 }

@@ -5,12 +5,22 @@ Aplicación de Gestión de inventario para la División de Desarrollo de Softwar
 
 Para poder agregar tus cambios, por favor sigue los siguientes pasos:
 
-1. Crea un fork del repositorio.
-2. Clona tu fork localmente.
-3. Crea una rama para tus cambios: `git checkout -b feature/new-feature`.
-4. Realiza tus cambios y haz commits: `git commit -m 'add new feature'`. (Recuerda que el nombre debe ser con infinitivo (add, no added). Un buen nombre de commit debe responder a "This commit will..." y ahí entra "add changes", "remove code", "modify function")
-5. Sube tus cambios a tu fork: `git push origin feature/new-feature`. 
-6. Envía una solicitud de extracción (Pull Request) con una descripción detallada de tus cambios.
+1. Crea un fork del repositorio. Haz clic en el botón "Fork" en la parte superior derecha de esta página para crear tu propia copia del repositorio en tu cuenta de GitHub. Esto te permitirá trabajar en tus cambios sin afectar el proyecto original.
+2. Clona tu fork del repositorio en tu computadora. Abre tu terminal y ejecuta el siguiente comando, reemplazando `<tu-usuario>` con tu nombre de usuario de GitHub y `<nombre-repositorio>` con el nombre del repositorio:
+   ```bash
+      git clone https://github.com/<tu-usuario>/<nombre-repositorio>.git
+      cd <nombre-repositorio>```
+4. Es importante crear una rama separada para tus cambios. Esto facilita la gestión de múltiples contribuciones. Ejecuta el siguiente comando para crear una nueva rama, reemplazando <nombre-rama> con un nombre descriptivo de tu función o corrección:
+   ```bash
+   git checkout -b feature/new-feature```
+5. Ahora puedes trabajar en tus cambios. Un buen nombre de commit debe responder a "This commit will...". Asegúrate de seguir estas buenas prácticas al hacer commits:
+    - Usa un nombre de commit descriptivo que comience con un verbo en infinitivo, por ejemplo: "Add changes", "Remove code", "Modify a function".
+    - Proporciona una descripción detallada de lo que hace el commit para que otros colaboradores puedan entender tus cambios.
+    ```bash
+      git commit -m 'Add a new funcion: User LogIn'
+    ```
+6. Sube tus cambios a tu fork: `git push origin feature/new-feature`. 
+7. Envía una solicitud de extracción (Pull Request) con una descripción detallada de tus cambios. Dirígete a la página de tu fork en GitHub y selecciona la rama que acabas de crear. Luego, haz clic en el botón "New Pull Request"
 
 Nosotros revisaremos tu Pull Request y lo fusionaremos una vez que sea aprobado.
 

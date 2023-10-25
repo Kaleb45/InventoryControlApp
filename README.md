@@ -9,10 +9,12 @@ Para poder agregar tus cambios, por favor sigue los siguientes pasos:
 2. Clona tu fork del repositorio en tu computadora. Abre tu terminal y ejecuta el siguiente comando, reemplazando `<tu-usuario>` con tu nombre de usuario de GitHub y `<nombre-repositorio>` con el nombre del repositorio:
    ```bash
       git clone https://github.com/<tu-usuario>/<nombre-repositorio>.git
-      cd <nombre-repositorio>```
+      cd <nombre-repositorio>
+   ```
 4. Es importante crear una rama separada para tus cambios. Esto facilita la gestión de múltiples contribuciones. Ejecuta el siguiente comando para crear una nueva rama, reemplazando <nombre-rama> con un nombre descriptivo de tu función o corrección:
    ```bash
-   git checkout -b feature/new-feature```
+   git checkout -b feature/new-feature
+   ```
 5. Ahora puedes trabajar en tus cambios. Un buen nombre de commit debe responder a "This commit will...". Asegúrate de seguir estas buenas prácticas al hacer commits:
     - Usa un nombre de commit descriptivo que comience con un verbo en infinitivo, por ejemplo: "Add changes", "Remove code", "Modify a function".
     - Proporciona una descripción detallada de lo que hace el commit para que otros colaboradores puedan entender tus cambios.

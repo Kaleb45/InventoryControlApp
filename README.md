@@ -19,8 +19,11 @@ Para poder agregar tus cambios, por favor sigue los siguientes pasos:
     ```bash
       git commit -m 'Add a new funcion: User LogIn'
     ```
-6. Sube tus cambios a tu fork: `git push origin feature/new-feature`. 
-7. Envía una solicitud de extracción (Pull Request) con una descripción detallada de tus cambios. Dirígete a la página de tu fork en GitHub y selecciona la rama que acabas de crear. Luego, haz clic en el botón "New Pull Request"
+6. Sube tus cambios a tu fork:
+   ```bash
+   git push origin feature/new-feature
+   ```
+8. Envía una solicitud de extracción (Pull Request) con una descripción detallada de tus cambios. Dirígete a la página de tu fork en GitHub y selecciona la rama que acabas de crear. Luego, haz clic en el botón "New Pull Request"
 
 Nosotros revisaremos tu Pull Request y lo fusionaremos una vez que sea aprobado.
 

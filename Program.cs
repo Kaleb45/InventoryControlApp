@@ -1,10 +1,15 @@
-﻿using System;
+﻿using InventoryControl;
+using Proyecto_Almacen.AutoGen;
+using System;
+using static System.Console;
 
-class Program
+internal partial class Program
 {
     static void Main()
     {
-        Console.WriteLine("Hello Virus!");
+        Console.Clear();
+        Almacen db = new();
+        WriteLine($"Provider: {db.Database.ProviderName}");
         UI.Manage();
     }
 }

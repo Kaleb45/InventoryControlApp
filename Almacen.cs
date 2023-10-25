@@ -1,53 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Proyecto_Almacen.AutoGen;
+using static System.Console;
+namespace InventoryControl;
 
-namespace Proyecto_Almacen.AutoGen;
-
-public partial class Almacen : DbContext
+public class Almacen : DbContext
 {
-    public Almacen()
-    {
-    }
 
-    public Almacen(DbContextOptions<Almacen> options)
-        : base(options)
-    {
-    }
+    public DbSet<Categoria> Categoria { get; set; }
 
-    public virtual DbSet<Categoria> Categoria { get; set; }
+    public DbSet<DescPedido> DescPedidos { get; set; }
 
-    public virtual DbSet<DescPedido> DescPedidos { get; set; }
+    public DbSet<Docente> Docentes { get; set; }
 
-    public virtual DbSet<Docente> Docentes { get; set; }
+    public DbSet<Estudiante> Estudiantes { get; set; }
 
-    public virtual DbSet<Estudiante> Estudiantes { get; set; }
+    public DbSet<Grupo> Grupos { get; set; }
 
-    public virtual DbSet<Grupo> Grupos { get; set; }
+    public DbSet<Laboratorio> Laboratorios { get; set; }
 
-    public virtual DbSet<Laboratorio> Laboratorios { get; set; }
+    public DbSet<Mantenimiento> Mantenimientos { get; set; }
 
-    public virtual DbSet<Mantenimiento> Mantenimientos { get; set; }
+    public DbSet<Marca> Marcas { get; set; }
 
-    public virtual DbSet<Marca> Marcas { get; set; }
+    public DbSet<Material> Materials { get; set; }
 
-    public virtual DbSet<Material> Materials { get; set; }
+    public DbSet<Modelo> Modelos { get; set; }
 
-    public virtual DbSet<Modelo> Modelos { get; set; }
+    public DbSet<Pedido> Pedidos { get; set; }
 
-    public virtual DbSet<Pedido> Pedidos { get; set; }
+    public DbSet<Plantel> Plantels { get; set; }
 
-    public virtual DbSet<Plantel> Plantels { get; set; }
+    public DbSet<Semestre> Semestres { get; set; }
 
-    public virtual DbSet<Semestre> Semestres { get; set; }
+    public DbSet<Tipo> Tipos { get; set; }
 
-    public virtual DbSet<Tipo> Tipos { get; set; }
-
-    public virtual DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<Usuario> Usuarios { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlite("Filename=Almacen.db");
+    {
+        string path = Path.Combine(Environment.CurrentDirectory, "Almacen.db");
+        string connection = $"Filename={path}";
+        ConsoleColor backgroundColor = ForegroundColor;
+        ForegroundColor = ConsoleColor.DarkYellow;
+        WriteLine($"Connection: {connection}");
+        ForegroundColor = backgroundColor;
+        optionsBuilder.UseSqlite(connection);
+        //optionsBuilder.LogTo(WriteLine).EnableSensitiveDataLogging();
+
+        // Using Lazy Loading
+        optionsBuilder.UseLazyLoadingProxies();
+
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -59,31 +62,23 @@ public partial class Almacen : DbContext
         modelBuilder.Entity<DescPedido>(entity =>
         {
             entity.Property(e => e.DescPedidoId).ValueGeneratedNever();
-
             entity.HasOne(d => d.Material).WithMany(p => p.DescPedidos).OnDelete(DeleteBehavior.ClientSetNull);
-
             entity.HasOne(d => d.Pedido).WithMany(p => p.DescPedidos).OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<Docente>(entity =>
         {
             entity.Property(e => e.DocenteId).ValueGeneratedNever();
-
             entity.HasOne(d => d.Plantel).WithMany(p => p.Docentes).OnDelete(DeleteBehavior.ClientSetNull);
-
             entity.HasOne(d => d.Usuario).WithMany(p => p.Docentes).OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<Estudiante>(entity =>
         {
             entity.Property(e => e.EstudianteId).ValueGeneratedNever();
-
             entity.HasOne(d => d.Grupo).WithMany(p => p.Estudiantes).OnDelete(DeleteBehavior.ClientSetNull);
-
             entity.HasOne(d => d.Plantel).WithMany(p => p.Estudiantes).OnDelete(DeleteBehavior.ClientSetNull);
-
             entity.HasOne(d => d.Semestre).WithMany(p => p.Estudiantes).OnDelete(DeleteBehavior.ClientSetNull);
-
             entity.HasOne(d => d.Usuario).WithMany(p => p.Estudiantes).OnDelete(DeleteBehavior.ClientSetNull);
         });
 
@@ -100,9 +95,7 @@ public partial class Almacen : DbContext
         modelBuilder.Entity<Mantenimiento>(entity =>
         {
             entity.Property(e => e.MantenimientoId).ValueGeneratedNever();
-
             entity.HasOne(d => d.Material).WithMany(p => p.Mantenimientos).OnDelete(DeleteBehavior.ClientSetNull);
-
             entity.HasOne(d => d.Tipo).WithMany(p => p.Mantenimientos).OnDelete(DeleteBehavior.ClientSetNull);
         });
 
@@ -114,11 +107,8 @@ public partial class Almacen : DbContext
         modelBuilder.Entity<Material>(entity =>
         {
             entity.Property(e => e.MaterialId).ValueGeneratedNever();
-
             entity.HasOne(d => d.Categoria).WithMany(p => p.Materials).OnDelete(DeleteBehavior.ClientSetNull);
-
             entity.HasOne(d => d.Marca).WithMany(p => p.Materials).OnDelete(DeleteBehavior.ClientSetNull);
-
             entity.HasOne(d => d.Modelo).WithMany(p => p.Materials).OnDelete(DeleteBehavior.ClientSetNull);
         });
 
@@ -130,11 +120,8 @@ public partial class Almacen : DbContext
         modelBuilder.Entity<Pedido>(entity =>
         {
             entity.Property(e => e.PedidoId).ValueGeneratedNever();
-
             entity.HasOne(d => d.Docente).WithMany(p => p.Pedidos).OnDelete(DeleteBehavior.ClientSetNull);
-
             entity.HasOne(d => d.Estudiante).WithMany(p => p.Pedidos).OnDelete(DeleteBehavior.ClientSetNull);
-
             entity.HasOne(d => d.Laboratorio).WithMany(p => p.Pedidos).OnDelete(DeleteBehavior.ClientSetNull);
         });
 
@@ -158,8 +145,5 @@ public partial class Almacen : DbContext
             entity.Property(e => e.UsuarioId).ValueGeneratedNever();
         });
 
-        OnModelCreatingPartial(modelBuilder);
     }
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

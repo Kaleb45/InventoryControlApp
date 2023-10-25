@@ -1,7 +1,12 @@
-﻿class Program
+﻿using InventoryControl;
+using System;
+using static System.Console;
+
+internal partial class Program
 {
     static void Main()
     {
-        Console.WriteLine("Hello Virus!");
+        Almacen db = new();
+        WriteLine($"Provider: {db.Database.ProviderName}");
     }
 }

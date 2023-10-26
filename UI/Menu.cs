@@ -1,79 +1,8 @@
-﻿using InventoryControl;
-using System;
-using System.ComponentModel;
-using System.Diagnostics.Eventing.Reader;
+﻿using System;
+using InventoryControl;
 
-public static class UI
+public static partial class UI
 {
-    public static void Manage()
-    {
-        while (true)
-        {
-            Console.WriteLine("1: Login ");
-            Console.WriteLine("2: Signup");
-            string res = Console.ReadLine();
-            Console.Clear();
-            switch (res)
-            {
-                case "1":
-                    LogIn();
-                    break;
-                case "2":
-                    SignUp();
-                    break;
-                default:
-                    Console.WriteLine("Opçión no valida");
-                    break;
-            }
-        }
-    }
-
-    static void LogIn()
-    {
-        Console.WriteLine("Ingresa tu usuario:");
-        string userName = Console.ReadLine();
-        Console.WriteLine("Ingresa tu contraseña:");
-        string password = Console.ReadLine();
-
-        using (Almacen db = new())
-        {
-            var user = db.Usuarios.FirstOrDefault(u => u.Usuario1 == userName && u.Password == password);
-            if (user != null)
-            {
-                Console.Clear();
-                Console.WriteLine($"¡Bienvenido, {userName}!");
-                Console.WriteLine("");
-                if (user.Docentes.Any())
-                {
-                    TeacherUI();
-                }
-                else if (user.Estudiantes.Any())
-                {
-                    StudentUI();
-                }
-                else if (user.Almacenistas.Any())
-                {
-                    InventoryManagerUI();
-                }
-                else if (user.Coordinadores.Any())
-                {
-                    AdministratorUI();  
-                }
-            }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("Usuario o contraseña incorrectos. Inténtalo nuevamente.");
-            }
-        }
-    }
-
-    public static void SignUp() 
-    {
-        
-    }
-
-
     static void StudentUI()
     {
         do
@@ -139,7 +68,7 @@ public static class UI
                 default:
                     break;
             }
-        } while(true);
+        } while (true);
     }
 
     static void AdministratorUI()
@@ -154,7 +83,7 @@ public static class UI
             Console.WriteLine("9: Logout");
             String option = Console.ReadLine();
             Console.Clear();
-            
+
             switch (option)
             {
                 case "9":
@@ -162,10 +91,6 @@ public static class UI
                 default:
                     break;
             }
-        } while(true);
-    }
-
-    static UI()
-    {
+        } while (true);
     }
 }

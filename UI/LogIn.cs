@@ -2,7 +2,7 @@
 using InventoryControl;
 public static partial class UI
 {
-    static void LogIn()
+    public static void LogIn()
     {
         Console.WriteLine("Ingresa tu usuario:");
         string userName = Console.ReadLine();

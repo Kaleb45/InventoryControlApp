@@ -9,14 +9,17 @@ namespace Proyecto_Almacen.AutoGen;
 public partial class Categoria
 {
     [Key]
-    public long CategoriaId { get; set; }
+    [Column(TypeName = "int")]
+    public int? CategoriaId { get; set; }
 
-    [Column(TypeName = "nvarchar (50)")]
+    [Required]
+    [Column(TypeName = "nvarchar(50)")]
+    [StringLength(50)]
     public string Nombre { get; set; } = null!;
 
-    [Column(TypeName = "nvarchar(50)")]
+    [Column(TypeName = "ntext")]
     public string Descripcion { get; set; } = null!;
 
     [InverseProperty("Categoria")]
-    public virtual ICollection<Material> Materials { get; set; } = new List<Material>();
+    public virtual ICollection<Material>? Materiales { get; set; }
 }

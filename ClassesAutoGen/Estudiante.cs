@@ -10,37 +10,50 @@ namespace Proyecto_Almacen.AutoGen;
 public partial class Estudiante
 {
     [Key]
-    public long EstudianteId { get; set; }
+    [Column(TypeName = "int")]
+    public int? EstudianteId { get; set; }
 
-    [Column(TypeName = "varchar(50)")]
+    [Required]
+    [Column(TypeName = "nvarchar(50)")]
+    [StringLength(50)]
     public string Nombre { get; set; } = null!;
 
-    [Column(TypeName = "varchar(50)")]
+    [Required]
+    [Column(TypeName = "nvarchar(50)")]
+    [StringLength(50)]
     public string ApellidoPaterno { get; set; } = null!;
 
-    [Column(TypeName = "varchar(50)")]
+    [Required]
+    [Column(TypeName = "nvarchar(50)")]
+    [StringLength(50)]
     public string ApellidoMaterno { get; set; } = null!;
 
-    public long SemestreId { get; set; }
+    [Column(TypeName = "int")]
+    public int? SemestreId { get; set; }
 
-    public long GrupoId { get; set; }
+    [Column(TypeName = "int")]
+    public int? GrupoId { get; set; }
 
     [Column(TypeName = "decimal(10,2)")]
-    public byte[] Adeudo { get; set; } = null!;
+    public decimal? Adeudo { get; set; }
 
-    [Column(TypeName = "varchar(100)")]
+    [Required]
+    [Column(TypeName = "nvarchar(100)")]
+    [StringLength(100)]
     public string Correo { get; set; } = null!;
 
-    public long PlantelId { get; set; }
+    [Column(TypeName = "int")]
+    public int? PlantelId { get; set; }
 
-    public long UsuarioId { get; set; }
+    [Column(TypeName = "int")]
+    public int? UsuarioId { get; set; }
 
     [ForeignKey("GrupoId")]
     [InverseProperty("Estudiantes")]
     public virtual Grupo Grupo { get; set; } = null!;
 
     [InverseProperty("Estudiante")]
-    public virtual ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
+    public virtual ICollection<Pedido>? Pedidos { get; set; }
 
     [ForeignKey("PlantelId")]
     [InverseProperty("Estudiantes")]

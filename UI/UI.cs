@@ -1,4 +1,4 @@
-﻿using InventoryControl;
+﻿using Proyecto_Almacen.AutoGen;
 public static partial class UI
 {
     public static void Manage()

@@ -10,10 +10,12 @@ namespace Proyecto_Almacen.AutoGen;
 public partial class Semestre
 {
     [Key]
-    public long SemestreId { get; set; }
+    [Column(TypeName = "int")]
+    public int? SemestreId { get; set; }
 
-    public long Numero { get; set; }
+    [Column(TypeName = "int")]
+    public int? Numero { get; set; }
 
     [InverseProperty("Semestre")]
-    public virtual ICollection<Estudiante> Estudiantes { get; set; } = new List<Estudiante>();
+    public virtual ICollection<Estudiante>? Estudiantes { get; set; }
 }

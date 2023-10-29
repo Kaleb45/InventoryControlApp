@@ -1,7 +1,7 @@
 ﻿using System;
 using InventoryControl;
 
-public static partial class UI
+public static class Validations
 {
     /// <summary>
     /// Username Validation Method for student
@@ -28,13 +28,15 @@ public static partial class UI
 
                 return 10;
             }
-
+            //Not greater than this year
             string year = username.Substring(0, 2);
             if (!int.TryParse(year, out _))
             {
                 return 20;
             }
 
+            //If it's first period, it can't be 100 IF the current year
+            //EX: if we're in fiir
             string periodo = username.Substring(2, 3);
             if (periodo != "100" && periodo != "300")
             {
@@ -86,10 +88,4 @@ public static partial class UI
 
         return 01;
     }
-
-    /// TODO:
-    /// Docent Username Validations
-    /// Almacenist Username Validations
-    /// Administrator Username Validations
-    /// Just length limitations
 }

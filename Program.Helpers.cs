@@ -27,6 +27,4 @@ partial class Program
         WriteLine($"Info > {message}");
         ForegroundColor = backgroundColor;
     }
-
-    
 }

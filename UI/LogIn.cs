@@ -1,8 +1,8 @@
 ﻿using System;
-using InventoryControl;
+using Proyecto_Almacen.AutoGen;
 public static partial class UI
 {
-    public static void LogIn()
+    static void LogIn()
     {
         Console.WriteLine("Ingresa tu usuario:");
         string userName = Console.ReadLine();

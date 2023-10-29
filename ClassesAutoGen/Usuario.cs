@@ -10,23 +10,28 @@ namespace Proyecto_Almacen.AutoGen;
 public partial class Usuario
 {
     [Key]
-    public long UsuarioId { get; set; }
+    [Column(TypeName = "int")]
+    public int UsuarioId { get; set; }
 
-    [Column("Usuario", TypeName = "varchar(50)")]
+    [Required]
+    [Column("Usuario", TypeName = "nvarchar(50)")]
+    [StringLength(50)]
     public string Usuario1 { get; set; } = null!;
 
-    [Column(TypeName = "varchar(50)")]
+    [Required]
+    [Column(TypeName = "nvarchar(8)")]
+    [StringLength(8)]
     public string Password { get; set; } = null!;
 
     [InverseProperty("Usuario")]
-    public virtual ICollection<Docente> Docentes { get; set; } = new List<Docente>();
+    public virtual ICollection<Almacenista>? Almacenistas { get; set; }
 
     [InverseProperty("Usuario")]
-    public virtual ICollection<Estudiante> Estudiantes { get; set; } = new List<Estudiante>();
+    public virtual ICollection<Coordinador>? Coordinadores { get; set; }
 
     [InverseProperty("Usuario")]
-    public virtual ICollection<Almacenista> Almacenistas { get; set; } = new List<Almacenista>();
+    public virtual ICollection<Docente>? Docentes { get; set; }
 
     [InverseProperty("Usuario")]
-    public virtual ICollection<Coordinador> Coordinadores { get; set; } = new List<Coordinador>();
+    public virtual ICollection<Estudiante>? Estudiantes { get; set; }
 }

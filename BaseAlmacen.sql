@@ -17,14 +17,14 @@ DROP TABLE IF EXISTS "Desc_Pedido";
 CREATE TABLE "Categoria" (
 	"CategoriaId" INTEGER PRIMARY KEY,
 	"Nombre" nvarchar (50) NOT NULL ,
-	"Descripcion" nvarchar(50) NOT NULL
+	"Descripcion" "ntext" NOT NULL
 );
 
 -----------------------------------------------------
 
 CREATE TABLE "Grupo" (
   "GrupoId" INTEGER PRIMARY KEY,
-  "Nombre" nvarchar(50) NOT NULL
+  "Nombre" nvarchar(3) NOT NULL
 );
 
 -----------------------------------------------------
@@ -61,31 +61,31 @@ INSERT INTO "Grupo" ("Nombre") VALUES ('Z1');
 CREATE TABLE "Laboratorio" (
   "LaboratorioId" INTEGER PRIMARY KEY,
   "Nombre" nvarchar(50) NOT NULL,
-  "Descripcion" nvarchar(100) NOT NULL
+  "Descripcion" "ntext" NOT NULL
 );
 
 -----------------------------------------------------
 
 CREATE TABLE "Marca" (
   "MarcaId" INTEGER PRIMARY KEY,
-  "Nombre" varchar(50) NOT NULL,
-  "Descripcion" varchar(100) NOT NULL
+  "Nombre" nvarchar(50) NOT NULL,
+  "Descripcion" "ntext" NOT NULL
 );
 
 -----------------------------------------------------
 
 CREATE TABLE "Modelo" (
   "ModeloId" INTEGER PRIMARY KEY,
-  "Nombre" varchar(50) NOT NULL,
-  "Descripcion" varchar(100) NOT NULL
+  "Nombre" nvarchar(50) NOT NULL,
+  "Descripcion" "ntext" NOT NULL
 );
 
 -----------------------------------------------------
 
 CREATE TABLE "Plantel" (
   "PlantelId" INTEGER PRIMARY KEY,
-  "Nombre" varchar(50) NOT NULL,
-  "Direccion" varchar(100) NOT NULL,
+  "Nombre" nvarchar(50) NOT NULL,
+  "Direccion" nvarchar(100) NOT NULL,
   "Telefono" INTEGER NOT NULL
 );
 
@@ -116,18 +116,18 @@ INSERT INTO "Semestre" ("Numero") VALUES (8);
 
 -----------------------------------------------------
 
-CREATE TABLE "Tipo" (
-  "TipoId" INTEGER PRIMARY KEY,
-  "Nombre" varchar(50) NOT NULL,
-  "Descripcion" varchar(100) NOT NULL
+CREATE TABLE "Mantenimiento" (
+  "MantenimientoId" INTEGER PRIMARY KEY,
+  "Nombre" nvarchar(50) NOT NULL,
+  "Descripcion" "ntext"(100) NOT NULL
 );
 
 -----------------------------------------------------
 
 CREATE TABLE "Usuario" (
   "UsuarioId" INTEGER PRIMARY KEY,
-  "Usuario" varchar(50) NOT NULL,
-  "Password" varchar(50) NOT NULL
+  "Usuario" nvarchar(50) NOT NULL,
+  "Password" nvarchar(8) NOT NULL
 );
 
 -----------------------------------------------------
@@ -143,15 +143,16 @@ INSERT INTO "Usuario" ("Usuario", "Password") VALUES ('Carlos', 'Carlos');
 INSERT INTO "Usuario" ("Usuario", "Password") VALUES ('Ernesto', 'Ernesto');
 INSERT INTO "Usuario" ("Usuario", "Password") VALUES ('Susana', 'Susana');
 INSERT INTO "Usuario" ("Usuario", "Password") VALUES ('Aneel', 'Aneel');
+INSERT INTO "Usuario" ("Usuario", "Password") VALUES ('Andres', 'Andres');
 
 -----------------------------------------------------
 
 CREATE TABLE "Docente" (
   "DocenteId" INTEGER PRIMARY KEY,
-  "Nombre" varchar(50) NOT NULL,
-  "ApellidoPaterno" varchar(50) NOT NULL,
-  "ApellidoMaterno" varchar(50) NOT NULL,
-  "Correo" varchar(100) NOT NULL,
+  "Nombre" nvarchar(50) NOT NULL,
+  "ApellidoPaterno" nvarchar(50) NOT NULL,
+  "ApellidoMaterno" nvarchar(50) NOT NULL,
+  "Correo" nvarchar(100) NOT NULL,
   "PlantelId" INTEGER NOT NULL,
   "UsuarioId" INTEGER NOT NULL,
 
@@ -183,10 +184,10 @@ INSERT INTO "Docente" ("DocenteId","Nombre","ApellidoPaterno","ApellidoMaterno",
 
 CREATE TABLE "Almacenista" (
   "AlmacenistaId" INTEGER PRIMARY KEY,
-  "Nombre" varchar(50) NOT NULL,
-  "ApellidoPaterno" varchar(50) NOT NULL,
-  "ApellidoMaterno" varchar(50) NOT NULL,
-  "Correo" varchar(100) NOT NULL,
+  "Nombre" nvarchar(50) NOT NULL,
+  "ApellidoPaterno" nvarchar(50) NOT NULL,
+  "ApellidoMaterno" nvarchar(50) NOT NULL,
+  "Correo" nvarchar(100) NOT NULL,
   "PlantelId" INTEGER NOT NULL,
   "UsuarioId" INTEGER NOT NULL,
 
@@ -201,7 +202,7 @@ CREATE TABLE "Almacenista" (
 	(
 		"UsuarioId"
 	) REFERENCES "Usuario" (
-		"PlantelId"
+		"UsuarioId"
     )
 
 );
@@ -214,10 +215,10 @@ INSERT INTO "Almacenista" ("AlmacenistaId","Nombre","ApellidoPaterno","ApellidoM
 
 CREATE TABLE "Coordinador" (
   "CoordinadorId" INTEGER PRIMARY KEY,
-  "Nombre" varchar(50) NOT NULL,
-  "ApellidoPaterno" varchar(50) NOT NULL,
-  "ApellidoMaterno" varchar(50) NOT NULL,
-  "Correo" varchar(100) NOT NULL,
+  "Nombre" nvarchar(50) NOT NULL,
+  "ApellidoPaterno" nvarchar(50) NOT NULL,
+  "ApellidoMaterno" nvarchar(50) NOT NULL,
+  "Correo" nvarchar(100) NOT NULL,
   "PlantelId" INTEGER NOT NULL,
   "UsuarioId" INTEGER NOT NULL,
 
@@ -239,19 +240,19 @@ CREATE TABLE "Coordinador" (
 
 -----------------------------------------------------
 
-INSERT INTO "Coordinador" ("CoordinadorId","Nombre","ApellidoPaterno","ApellidoMaterno","Correo","PlantelId","UsuarioId") VALUES (1,'Andres','Figueroa','Flores','figueroa@ceti.mx',1,11);
+INSERT INTO "Coordinador" ("CoordinadorId","Nombre","ApellidoPaterno","ApellidoMaterno","Correo","PlantelId","UsuarioId") VALUES (1,'Andres','Figueroa','Flores','figueroa@ceti.mx',1,12);
 
 -----------------------------------------------------
 
 CREATE TABLE "Estudiante" (
   "EstudianteId" INTEGER PRIMARY KEY,
-  "Nombre" varchar(50) NOT NULL,
-  "ApellidoPaterno" varchar(50) NOT NULL,
-  "ApellidoMaterno" varchar(50) NOT NULL,
+  "Nombre" nvarchar(50) NOT NULL,
+  "ApellidoPaterno" nvarchar(50) NOT NULL,
+  "ApellidoMaterno" nvarchar(50) NOT NULL,
   "SemestreId" INTEGER NOT NULL,
   "GrupoId" INTEGER NOT NULL,
-  "Adeudo" decimal(10,2) NOT NULL,
-  "Correo" varchar(100) NOT NULL,
+  "Adeudo" decimal(10,2) NULL,
+  "Correo" nvarchar(100) NOT NULL,
   "PlantelId" INTEGER NOT NULL,
   "UsuarioId" INTEGER NOT NULL,
 
@@ -294,20 +295,20 @@ INSERT INTO "Estudiante" ("EstudianteId","Nombre","ApellidoPaterno","ApellidoMat
 
 -----------------------------------------------------
 
-CREATE TABLE "Mantenimiento" (
-  "MantenimientoId" INTEGER PRIMARY KEY,
-  "Fecha" date NOT NULL,
-  "TipoId" INTEGER NOT NULL,
+CREATE TABLE "ReporteMantenimiento" (
+  "ReporteMantenimientoId" INTEGER PRIMARY KEY,
+  "Fecha" "datetime" NOT NULL,
+  "MantenimientoId" INTEGER NOT NULL,
   "MaterialId" INTEGER NOT NULL,
 
-  CONSTRAINT "FK_Mantenimiento_Tipo" FOREIGN KEY 
+  CONSTRAINT "FK_ReporteMantenimiento_Mantenimiento" FOREIGN KEY 
 	(
-		"TipoId"
-	) REFERENCES "Tipo" (
-		"TipoId"
+		"MantenimientoId"
+	) REFERENCES "Mantenimiento" (
+		"MantenimientoId"
     ),
 
-  CONSTRAINT "FK_Mantenimiento_Material" FOREIGN KEY 
+  CONSTRAINT "FK_ReporteMantenimiento_Material" FOREIGN KEY 
 	(
 		"MaterialId"
 	) REFERENCES "Material" (
@@ -321,11 +322,12 @@ CREATE TABLE "Mantenimiento" (
 CREATE TABLE "Material" (
   "MaterialId" INTEGER PRIMARY KEY,
   "ModeloId" INTEGER NOT NULL,
-  "Descripcion" varchar(255) NOT NULL,
+  "Descripcion" "ntext" NOT NULL,
   "YearEntrada" INTEGER NOT NULL,
   "MarcaId" INTEGER NOT NULL,
   "CategoriaId" INTEGER NOT NULL,
-  "Serie" varchar(255) NOT NULL,
+  "PlantelId" INTEGER NOT NULL,
+  "Serie" nvarchar(255) NOT NULL,
   "ValorHistorico" decimal(18,2) NOT NULL,
 
   CONSTRAINT "FK_Material_Modelo" FOREIGN KEY 
@@ -342,6 +344,13 @@ CREATE TABLE "Material" (
 		"MarcaId"
     ),
 
+    CONSTRAINT "FK_Material_Plantel" FOREIGN KEY 
+	(
+		"PlantelId"
+	) REFERENCES "Plantel" (
+		"PlantelId"
+    ),
+
   CONSTRAINT "FK_Material_Categoria" FOREIGN KEY 
 	(
 		"CategoriaId"
@@ -354,10 +363,10 @@ CREATE TABLE "Material" (
 
 CREATE TABLE "Pedido" (
   "PedidoId" INTEGER PRIMARY KEY,
-  "Fecha" date NOT NULL,
+  "Fecha" "datetime" NOT NULL,
   "LaboratorioId" INTEGER NOT NULL,
-  "HoraEntrega" time NOT NULL,
-  "HoraDevolucion" time NOT NULL,
+  "HoraEntrega" "datetime" NOT NULL,
+  "HoraDevolucion" "datetime" NOT NULL,
   "EstudianteId" INTEGER NOT NULL,
   "DocenteId" INTEGER NOT NULL,
 
@@ -375,7 +384,7 @@ CREATE TABLE "Pedido" (
 		"EstudianteId"
     ),
 
-  CONSTRAINT "FK_Material_Docente" FOREIGN KEY 
+  CONSTRAINT "FK_Pedido_Docente" FOREIGN KEY 
 	(
 		"DocenteId"
 	) REFERENCES "Docente" (
@@ -406,4 +415,3 @@ CREATE TABLE "Desc_Pedido" (
 		"MaterialId"
     )
 );
-

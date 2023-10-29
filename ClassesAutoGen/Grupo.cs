@@ -10,11 +10,14 @@ namespace Proyecto_Almacen.AutoGen;
 public partial class Grupo
 {
     [Key]
-    public long GrupoId { get; set; }
+    [Column(TypeName = "int")]
+    public int? GrupoId { get; set; }
 
-    [Column(TypeName = "nvarchar(50)")]
+    [Required]
+    [Column(TypeName = "nvarchar(3)")]
+    [StringLength(3)]
     public string Nombre { get; set; } = null!;
 
     [InverseProperty("Grupo")]
-    public virtual ICollection<Estudiante> Estudiantes { get; set; } = new List<Estudiante>();
+    public virtual ICollection<Estudiante>? Estudiantes { get; set; }
 }

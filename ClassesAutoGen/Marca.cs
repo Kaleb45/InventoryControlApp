@@ -6,18 +6,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Proyecto_Almacen.AutoGen;
 
-[Table("Tipo")]
-public partial class Tipo
+[Table("Marca")]
+public partial class Marca
 {
     [Key]
-    public long TipoId { get; set; }
+    [Column(TypeName = "int")]
+    public int? MarcaId { get; set; }
 
-    [Column(TypeName = "varchar(50)")]
+    [Required]
+    [Column(TypeName = "nvarchar(50)")]
+    [StringLength(50)]
     public string Nombre { get; set; } = null!;
 
-    [Column(TypeName = "varchar(100)")]
+    [Column(TypeName = "ntext")]
     public string Descripcion { get; set; } = null!;
 
-    [InverseProperty("Tipo")]
-    public virtual ICollection<Mantenimiento> Mantenimientos { get; set; } = new List<Mantenimiento>();
+    [InverseProperty("Marca")]
+    public virtual ICollection<Material>? Materiales { get; set; }
 }

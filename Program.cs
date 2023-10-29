@@ -1,5 +1,4 @@
-﻿using InventoryControl;
-using Proyecto_Almacen.AutoGen;
+﻿using Proyecto_Almacen.AutoGen;
 using System;
 using static System.Console;
 

@@ -10,26 +10,37 @@ namespace Proyecto_Almacen.AutoGen;
 public partial class Docente
 {
     [Key]
-    public long DocenteId { get; set; }
+    [Column(TypeName = "int")]
+    public int? DocenteId { get; set; }
 
-    [Column(TypeName = "varchar(50)")]
+    [Required]
+    [Column(TypeName = "nvarchar(50)")]
+    [StringLength(50)]
     public string Nombre { get; set; } = null!;
 
-    [Column(TypeName = "varchar(50)")]
+    [Required]
+    [Column(TypeName = "nvarchar(50)")]
+    [StringLength(50)]
     public string ApellidoPaterno { get; set; } = null!;
 
-    [Column(TypeName = "varchar(50)")]
+    [Required]
+    [Column(TypeName = "nvarchar(50)")]
+    [StringLength(50)]
     public string ApellidoMaterno { get; set; } = null!;
 
-    [Column(TypeName = "varchar(100)")]
+    [Required]
+    [Column(TypeName = "nvarchar(100)")]
+    [StringLength(100)]
     public string Correo { get; set; } = null!;
 
-    public long PlantelId { get; set; }
+    [Column(TypeName = "int")]
+    public int? PlantelId { get; set; }
 
-    public long UsuarioId { get; set; }
+    [Column(TypeName = "int")]
+    public int? UsuarioId { get; set; }
 
     [InverseProperty("Docente")]
-    public virtual ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
+    public virtual ICollection<Pedido>? Pedidos { get; set; }
 
     [ForeignKey("PlantelId")]
     [InverseProperty("Docentes")]

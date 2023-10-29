@@ -10,14 +10,17 @@ namespace Proyecto_Almacen.AutoGen;
 public partial class DescPedido
 {
     [Key]
-    [Column("Desc_PedidoId")]
-    public long DescPedidoId { get; set; }
+    [Column("Desc_PedidoId", TypeName = "int")]
+    public int? DescPedidoId { get; set; }
 
-    public long Cantidad { get; set; }
+    [Column(TypeName = "int")]
+    public int? Cantidad { get; set; }
 
-    public long PedidoId { get; set; }
+    [Column(TypeName = "int")]
+    public int? PedidoId { get; set; }
 
-    public long MaterialId { get; set; }
+    [Column(TypeName = "int")]
+    public int? MaterialId { get; set; }
 
     [ForeignKey("MaterialId")]
     [InverseProperty("DescPedidos")]

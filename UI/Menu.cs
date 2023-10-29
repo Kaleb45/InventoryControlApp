@@ -1,5 +1,5 @@
 ﻿using System;
-using InventoryControl;
+using Proyecto_Almacen.AutoGen;
 
 public static partial class UI
 {
@@ -24,6 +24,7 @@ public static partial class UI
             }
         } while (true);
     }
+    
 
     static void TeacherUI()
     {
@@ -73,24 +74,26 @@ public static partial class UI
 
     static void AdministratorUI()
     {
+        string option;
         do
         {
             Console.WriteLine("Administrador Menu:");
-            Console.WriteLine("1: Opción 1");
-            Console.WriteLine("2: Opción 2");
-            Console.WriteLine("3: Opción 3");
-            Console.WriteLine("4: Cambiar contraseña");
-            Console.WriteLine("9: Logout");
-            String option = Console.ReadLine();
+            Console.WriteLine("1: Agregar un nuevo Docente");
+            Console.WriteLine("2: Agregar un nuevo Almacenista");
+            Console.WriteLine("3: Cambiar contraseña");
+            Console.WriteLine("4: Logout");
+            option = Console.ReadLine();
             Console.Clear();
 
             switch (option)
             {
-                case "9":
-                    return;
+                case "1":
+                    SignUpDocente();
+                    break;
                 default:
+                    Console.WriteLine("Opción invalida");
                     break;
             }
-        } while (true);
+        } while (option != "4");
     }
 }

@@ -24,6 +24,7 @@ public static partial class UI
             }
         } while (true);
     }
+    
 
     static void TeacherUI()
     {

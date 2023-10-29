@@ -26,5 +26,7 @@ public static partial class UI
 
     static UI()
     {
+        
     }
+
 }

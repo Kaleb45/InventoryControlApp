@@ -13,17 +13,17 @@ Para poder agregar tus cambios, por favor sigue los siguientes pasos:
    ```
 4. Es importante crear una rama separada para tus cambios. Esto facilita la gestión de múltiples contribuciones. Ejecuta el siguiente comando para crear una nueva rama, reemplazando <nombre-rama> con un nombre descriptivo de tu función o corrección:
    ```bash
-   git checkout -b feature/new-feature
+   git checkout -b new-feature
    ```
 5. Ahora puedes trabajar en tus cambios. Un buen nombre de commit debe responder a "This commit will...". Asegúrate de seguir estas buenas prácticas al hacer commits:
     - Usa un nombre de commit descriptivo que comience con un verbo en infinitivo, por ejemplo: "Add changes", "Remove code", "Modify a function".
     - Proporciona una descripción detallada de lo que hace el commit para que otros colaboradores puedan entender tus cambios.
     ```bash
-      git commit -m 'Add a new funcion: User LogIn'
+      git commit -m 'Add a new method: User LogIn'
     ```
 6. Sube tus cambios a tu fork:
    ```bash
-   git push origin feature/new-feature
+   git push origin new-feature
    ```
 8. Envía una solicitud de extracción (Pull Request) con una descripción detallada de tus cambios. Dirígete a la página de tu fork en GitHub y selecciona la rama que acabas de crear. Luego, haz clic en el botón "New Pull Request"
 

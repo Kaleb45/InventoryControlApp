@@ -124,6 +124,70 @@ public static partial class UI
         return username;
     }
 
+    /// <summary>
+    /// Register validation method
+    /// </summary>
+    /// <param name="registro"></param>
+    /// <returns>
+    ///     10 - wrong register length ||
+    ///     20 - register cannot exist due to year ||
+    ///     30 - register period is not valid  ||
+    ///     01 -  register is valid ||
+    /// </returns>
+    public static int RegisterValidation(int registro)
+    {
+        string register = registro.ToString();
+        if (register.Length != 8)//19300107
+        {
+            return 10;
+        }
+        int year = Convert.ToInt32(DateTime.Parse(DateTime.Now.ToString()).Year.ToString().Substring(2, 2));
+        if ((registro / 1000000) > year)
+        {
+            return 20;
+        }
+        if (!register.Substring(2, 3).Contains("300") && !register.Substring(2, 3).Contains("100"))
+        {
+            return 30;
+        }
+
+        return 01;
+    }
+
+    /// <summary>
+    /// Email Validation method
+    /// </summary>
+    /// <param name="Email"></param>
+    /// <returns>
+    ///         10 - wrong Email Length
+    ///         20 - Not student email
+    ///         30 - Wrong Email register
+    ///         40 - Emails does not have "@ceti.mx"
+    ///         01 - Valid Email ||
+    /// </returns>
+    public static int StudentEmailValidation(string? Email, long registro)
+    {
+        string register = registro.ToString();
+        if (Email.Length != 17)//a19300107@ceti.mx
+        {
+            return 10;
+        }
+        if (!Email.Substring(0, 1).Contains('a'))
+        {
+            return 20;
+        }
+        if (!Email.Substring(1, 8).Contains(register))
+        {
+            return 30;
+        }
+        if (!Email.Substring(9,8).Contains("@ceti.mx"))
+        {
+            return 40;
+        }
+        return 01;
+    }
+
+
     public static bool NameValidation(string name){
         bool validName;
         if(name.Any(n => "!1234567890".Contains(n)) || name.Any(n => "!@#$%^&*()-_+=<>?".Contains(n))){

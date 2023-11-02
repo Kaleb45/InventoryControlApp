@@ -23,6 +23,9 @@ namespace AlmacenSQLiteEntities
         [StringLength(8)]
         public string Password { get; set; } = null!;
 
+        [Column(TypeName = "bit")]
+        public bool Temporal { get; set; }
+
         [InverseProperty("Usuario")]
         public virtual ICollection<Almacenista>? Almacenistas { get; set; }
 

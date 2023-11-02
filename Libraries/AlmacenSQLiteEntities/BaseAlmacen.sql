@@ -127,7 +127,8 @@ CREATE TABLE "Mantenimiento" (
 CREATE TABLE "Usuario" (
   "UsuarioId" INTEGER PRIMARY KEY,
   "Usuario" nvarchar(50) NOT NULL,
-  "Password" nvarchar(8) NOT NULL
+  "Password" nvarchar(8) NOT NULL,
+  "Temporal" "bit" NOT NULL DEFAULT (0)
 );
 
 -----------------------------------------------------
@@ -369,6 +370,7 @@ CREATE TABLE "Pedido" (
   "HoraDevolucion" "datetime" NOT NULL,
   "EstudianteId" INTEGER NOT NULL,
   "DocenteId" INTEGER NOT NULL,
+  "Estado" "bit" NOT NULL DEFAULT (0),
 
   CONSTRAINT "FK_Pedido_Laboratorio" FOREIGN KEY 
 	(

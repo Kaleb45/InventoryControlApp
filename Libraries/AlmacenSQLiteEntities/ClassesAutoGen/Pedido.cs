@@ -30,12 +30,12 @@ namespace AlmacenSQLiteEntities
         [Column(TypeName = "int")]
         public int? EstudianteId { get; set; }
 
-        [Column(TypeName = "bit")]
-        public bool Estado { get; set; }
         
         [Column(TypeName = "int")]
         public int? DocenteId { get; set; }
 
+        [Column(TypeName = "bit")]
+        public bool Estado { get; set; }
 
         [InverseProperty("Pedido")]
         public virtual ICollection<DescPedido>? DescPedidos { get; set; }

@@ -18,14 +18,14 @@ namespace AlmacenSQLiteEntities
         [StringLength(50)]
         public string Usuario1 { get; set; } = null!;
 
-        [Column(TypeName = "bit")]
-        public bool Temporal { get; set; }
         
         [Required]
         [Column(TypeName = "nvarchar(8)")]
         [StringLength(8)]
         public string Password { get; set; } = null!;
 
+        [Column(TypeName = "bit")]
+        public bool Temporal { get; set; }
 
         [InverseProperty("Usuario")]
         public virtual ICollection<Almacenista>? Almacenistas { get; set; }

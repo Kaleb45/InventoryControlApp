@@ -188,6 +188,53 @@ public static partial class UI
         return 01;
     }
 
+    /// <summary>
+    /// Group Validation Method
+    /// </summary>
+    /// <param name="Grupo"></param>
+    /// <returns></returns>
+    public static int? GetGroupID(string? Grupo)
+    {
+        using(Almacen db = new())
+        {
+            Grupo Grupos = db.Grupos.First(g => g.Nombre == Grupo);
+            if(Grupos is null)
+            {
+                WriteLine("The value you were searching does not exists");
+                return 0;
+            }
+            else
+            {
+                return Grupos.GrupoId;
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Verifies if group ID exists
+    /// </summary>
+    /// <param name="grupo"></param>
+    /// <returns>
+    ///      10 - grupo no encontrado
+    ///      01 - grupo encontrado    
+    /// </returns>
+    public static int GroupVerification(int grupo)
+    {
+        using(Almacen db = new())
+        {
+            IQueryable<Grupo> Grupos = db.Grupos.Where(g => g.GrupoId == grupo);
+            if(Grupos is null)
+            {
+                WriteLine("The value you were searching does not exists");
+                return 10;
+            }
+            else
+            {
+                return 01;
+            }
+        }
+    }
+
 
     public static bool NameValidation(string name){
         bool validName;

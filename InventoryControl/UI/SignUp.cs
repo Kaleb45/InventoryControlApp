@@ -12,7 +12,8 @@ public static partial class UI
         string? ApellidoMaterno;
         int plantel;
         int Semestre;
-        int Grupo;
+        string? grupo;
+        int GrupoID;
         string? Correo;
         string? Contrasena;
         do
@@ -63,7 +64,9 @@ public static partial class UI
         do
         {
             WriteLine("Ingresa tu Grupo");
-        } while (int.TryParse(ReadLine(), out Grupo) == false || Grupo < 1 || Grupo > 26);
+            grupo = ReadLine();
+            GrupoID = (int)GetGroupID(grupo);
+        } while (GroupVerification(GrupoID) != 01);
 
         do
         {
@@ -77,10 +80,10 @@ public static partial class UI
             Contrasena = ReadLine();
         } while (PasswordValidation(Contrasena) != 01);
 
-        AddStudent(Registro, newUsername, Nombre, ApellidoPaterno, ApellidoMaterno, plantel, Semestre, Grupo, Correo, Contrasena);
+        AddStudent(Registro, newUsername, Nombre, ApellidoPaterno, ApellidoMaterno, plantel, Semestre, GrupoID, Correo, Contrasena);
     }
 
-    public static void AddStudent(int Registro, string newUsername, string? Nombre, string? ApellidoPaterno, string? ApellidoMaterno, int plantel, int Semestre, int Grupo, string? Correo, string? Contrasena)
+    public static void AddStudent(int Registro, string newUsername, string? Nombre, string? ApellidoPaterno, string? ApellidoMaterno, int plantel, int Semestre, int GrupoID, string? Correo, string? Contrasena)
     {
         using (Almacen db = new Almacen())
         {
@@ -108,7 +111,7 @@ public static partial class UI
                 ApellidoMaterno = ApellidoMaterno,
                 PlantelId = plantel,
                 SemestreId = Semestre,
-                GrupoId = Grupo,
+                GrupoId = GrupoID,
                 Correo = Correo,
                 UsuarioId = UserID,
             };

@@ -64,6 +64,9 @@ public static partial class UI
 
             switch (option)
             {
+                case "1":
+                    ManageInventory();
+                    break;
                 case "9":
                     return;
                 default:
@@ -80,13 +83,42 @@ public static partial class UI
             Console.WriteLine("1: Opción 1");
             Console.WriteLine("2: Opción 2");
             Console.WriteLine("3: Opción 3");
-            Console.WriteLine("4: Cambiar contraseña");
+            Console.WriteLine("4: Opción 3");
+            Console.WriteLine("5: Cambiar contraseña");
             Console.WriteLine("9: Logout");
             String option = Console.ReadLine()??"";
             Console.Clear();
 
             switch (option)
             {
+                case "1":
+                    CrudFuntions.ListOrders();
+                    int deletedOrders = CrudFuntions.DeleteOrders();
+                    Console.WriteLine($"{deletedOrders} pedidos eliminados.");
+                    Console.WriteLine();
+                    CrudFuntions.ListOrders();
+                    break;
+                case "2":
+                    CrudFuntions.ListTeachers();
+                    int deletedTeachers = CrudFuntions.DeleteTeachers();
+                    Console.WriteLine($"{deletedTeachers} maestros eliminados.");
+                    Console.WriteLine();
+                    CrudFuntions.ListTeachers();
+                    break;
+                case "3":
+                    CrudFuntions.ListInventoryManager();
+                    int deletedInventoryManager = CrudFuntions.DeleteInventoryManager();
+                    Console.WriteLine($"{deletedInventoryManager} almacenistas eliminados.");
+                    Console.WriteLine();
+                    CrudFuntions.ListInventoryManager();
+                    break;
+                case "4":
+                    CrudFuntions.ListStudents();
+                    int deletedStudents = CrudFuntions.DeleteStudents();
+                    Console.WriteLine($"{deletedStudents} estudiantes eliminados.");
+                    Console.WriteLine();
+                    CrudFuntions.ListStudents();
+                    break;
                 case "9":
                     return;
                 default:

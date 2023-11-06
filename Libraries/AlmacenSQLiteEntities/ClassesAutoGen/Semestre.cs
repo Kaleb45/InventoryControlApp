@@ -11,7 +11,7 @@ namespace AlmacenSQLiteEntities
     {
         [Key]
         [Column(TypeName = "int")]
-        public int? SemestreId { get; set; }
+        public int SemestreId { get; set; }
 
         [Column(TypeName = "int")]
         public int? Numero { get; set; }

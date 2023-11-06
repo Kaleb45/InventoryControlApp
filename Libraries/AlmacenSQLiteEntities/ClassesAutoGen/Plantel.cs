@@ -12,7 +12,7 @@ namespace AlmacenSQLiteEntities
     {
         [Key]
         [Column(TypeName = "int")]
-        public int? PlantelId { get; set; }
+        public int PlantelId { get; set; }
 
         [Required]
         [Column(TypeName = "nvarchar(50)")]

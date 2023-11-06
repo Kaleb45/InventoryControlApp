@@ -91,9 +91,9 @@ CREATE TABLE "Plantel" (
 
 -----------------------------------------------------
 
-INSERT INTO "Plantel" ("Nombre", "Direccion", "Telefono") VALUES ('Colomos', 'C. Nueva Escocia 1885, 44630 Guadalajara, Jal.', 3336413250);
-INSERT INTO "Plantel" ("Nombre", "Direccion", "Telefono") VALUES ('Tonalá', 'Loma Dorada Norte, Loma Dorada 8962, Ejidal, 45418 Tonalá, Jal.', 333687417);
-INSERT INTO "Plantel" ("Nombre", "Direccion", "Telefono") VALUES ('Rio Santiago', 'Camino a Matatlán # 2400, Fraccionamiento Urbi Paseos de Santiago II, Tonalá, Jal.', 3330020800);
+INSERT INTO "Plantel" ("PlantelId","Nombre", "Direccion", "Telefono") VALUES (1,'Colomos', 'C. Nueva Escocia 1885, 44630 Guadalajara, Jal.', 3336413250);
+INSERT INTO "Plantel" ("PlantelId","Nombre", "Direccion", "Telefono") VALUES (2,'Tonalá', 'Loma Dorada Norte, Loma Dorada 8962, Ejidal, 45418 Tonalá, Jal.', 333687417);
+INSERT INTO "Plantel" ("PlantelId","Nombre", "Direccion", "Telefono") VALUES (3,'Rio Santiago', 'Camino a Matatlán # 2400, Fraccionamiento Urbi Paseos de Santiago II, Tonalá, Jal.', 3330020800);
 
 -----------------------------------------------------
 
@@ -154,6 +154,7 @@ CREATE TABLE "Docente" (
   "ApellidoPaterno" nvarchar(50) NOT NULL,
   "ApellidoMaterno" nvarchar(50) NOT NULL,
   "Correo" nvarchar(100) NOT NULL,
+  "Pin" INTEGER NULL,
   "PlantelId" INTEGER NOT NULL,
   "UsuarioId" INTEGER NOT NULL,
 

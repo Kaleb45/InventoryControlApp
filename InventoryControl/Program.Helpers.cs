@@ -2,7 +2,7 @@
 using static System.Console;
 partial class Program
 {
-    static void SectionTitle(string title)
+    public static void SectionTitle(string title)
     {
         ConsoleColor backgroundColor = ForegroundColor;
         ForegroundColor = ConsoleColor.Green;
@@ -11,7 +11,7 @@ partial class Program
         ForegroundColor = backgroundColor;
     }
 
-    static void Fail(string message)
+    public static void Fail(string message)
     {
         ConsoleColor backgroundColor = ForegroundColor;
         ForegroundColor = ConsoleColor.Red;
@@ -20,7 +20,7 @@ partial class Program
         ForegroundColor = backgroundColor;
     }
 
-    static void Info(string message)
+    public static void Info(string message)
     {
         ConsoleColor backgroundColor = ForegroundColor;
         ForegroundColor = ConsoleColor.Cyan;

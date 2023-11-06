@@ -1,14 +1,13 @@
 using System;
 using AlmacenDataContext;
 using AlmacenSQLiteEntities;
-public static partial class CrudFuntions
-{
+public static partial class CrudFuntions{
     public static int DeleteMaterials()
     {
         using(Almacen db = new())
         {
             int materialId = SearchId();
-
+    
             Material? materiales = db.Materiales!.FirstOrDefault(m => m.MaterialId == materialId);
 
             if((materiales is null))

@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryControl", "InventoryControl\InventoryControl.csproj", "{9E501F3C-643E-4843-9DF9-ADCA708E80C9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{4B6D8FE6-1840-447C-A5E3-1D3E41B88C03}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlmacenDataContext", "Libraries\AlmacenDataContext\AlmacenDataContext.csproj", "{D07D1367-85A2-422D-A96A-E29919BB3E07}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlmacenSQLiteEntities", "Libraries\AlmacenSQLiteEntities\AlmacenSQLiteEntities.csproj", "{9AF2F6AB-AE96-4EC0-A8E4-96217BB6469B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E501F3C-643E-4843-9DF9-ADCA708E80C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E501F3C-643E-4843-9DF9-ADCA708E80C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E501F3C-643E-4843-9DF9-ADCA708E80C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E501F3C-643E-4843-9DF9-ADCA708E80C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D07D1367-85A2-422D-A96A-E29919BB3E07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D07D1367-85A2-422D-A96A-E29919BB3E07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D07D1367-85A2-422D-A96A-E29919BB3E07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D07D1367-85A2-422D-A96A-E29919BB3E07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AF2F6AB-AE96-4EC0-A8E4-96217BB6469B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AF2F6AB-AE96-4EC0-A8E4-96217BB6469B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AF2F6AB-AE96-4EC0-A8E4-96217BB6469B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AF2F6AB-AE96-4EC0-A8E4-96217BB6469B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D07D1367-85A2-422D-A96A-E29919BB3E07} = {4B6D8FE6-1840-447C-A5E3-1D3E41B88C03}
+		{9AF2F6AB-AE96-4EC0-A8E4-96217BB6469B} = {4B6D8FE6-1840-447C-A5E3-1D3E41B88C03}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5FD2FAEB-9F46-4F65-A1F1-5CC133CAFA55}
+	EndGlobalSection
+EndGlobal

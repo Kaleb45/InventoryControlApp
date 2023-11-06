@@ -13,7 +13,7 @@ namespace AlmacenSQLiteEntities
     {
         [Key]
         [Column(TypeName = "int")]
-        public int? EstudianteId { get; set; }
+        public int EstudianteId { get; set; }
 
         [Required]
         [Column(TypeName = "nvarchar(50)")]
@@ -31,7 +31,7 @@ namespace AlmacenSQLiteEntities
         public string ApellidoMaterno { get; set; } = null!;
 
         [Column(TypeName = "int")]
-        public int? SemestreId { get; set; }
+        public int SemestreId { get; set; }
 
         [Column(TypeName = "int")]
         public int? GrupoId { get; set; }

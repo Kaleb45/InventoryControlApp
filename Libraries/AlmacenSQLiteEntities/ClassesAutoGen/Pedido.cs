@@ -13,7 +13,7 @@ namespace AlmacenSQLiteEntities
     {
         [Key]
         [Column(TypeName = "int")]
-        public int? PedidoId { get; set; }
+        public int PedidoId { get; set; }
 
         [Column(TypeName = "datetime")]
         public DateTime? Fecha { get; set; }

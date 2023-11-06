@@ -12,7 +12,7 @@ namespace AlmacenSQLiteEntities
     {
         [Key]
         [Column(TypeName = "int")]
-        public int? ReporteMantenimientoId { get; set; }
+        public int ReporteMantenimientoId { get; set; }
 
         [Column(TypeName = "datetime")]
         public DateTime? Fecha { get; set; }

@@ -11,7 +11,7 @@ namespace AlmacenSQLiteEntities
     {
         [Key]
         [Column(TypeName = "int")]
-        public int? AlmacenistaId { get; set; }
+        public int AlmacenistaId { get; set; }
 
         [Required]
         [Column(TypeName = "nvarchar(50)")]
@@ -41,10 +41,10 @@ namespace AlmacenSQLiteEntities
 
         [ForeignKey("PlantelId")]
         [InverseProperty("Almacenistas")]
-        public virtual Plantel? Plantel { get; set; } = null!;
+        public virtual Plantel Plantel { get; set; } = null!;
 
         [ForeignKey("UsuarioId")]
         [InverseProperty("Almacenistas")]
-        public virtual Usuario? Usuario { get; set; } = null!;
+        public virtual Usuario Usuario { get; set; } = null!;
     }
 }

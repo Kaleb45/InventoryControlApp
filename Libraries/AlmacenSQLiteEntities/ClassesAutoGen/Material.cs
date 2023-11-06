@@ -13,7 +13,7 @@ namespace AlmacenSQLiteEntities
     {
         [Key]
         [Column(TypeName = "int")]
-        public int? MaterialId { get; set; }
+        public int MaterialId { get; set; }
 
         [Column(TypeName = "int")]
         public int? ModeloId { get; set; }

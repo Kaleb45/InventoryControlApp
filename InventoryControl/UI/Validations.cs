@@ -95,33 +95,26 @@ public static partial class UI
     public static string GenerateUsername(string nombre, string ApellidoPaterno, string ApellidoMaterno)
     {
         string primerNombre = nombre.Split(' ')[0]; // Obtén el primer nombre
-
         string segundoNombre = string.Empty;
         if (nombre.Split(' ').Length > 1)
         {
             segundoNombre = nombre.Split(' ')[1][0].ToString(); // Obtiene la primera letra del segundo nombre si existe
         }
-
         string primerApellido = ApellidoPaterno;
         string segundoApellido = ApellidoMaterno[0].ToString(); // Obtén la primera letra del segundo apellido
-
         string username = $"{primerNombre}{segundoNombre}{primerApellido}{segundoApellido}";
-
         return username;
     }
 
     public static string SecondOptionUsername(string nombre, string ApellidoPaterno, string ApellidoMaterno)
     {
         string primerNombre = nombre.Split(' ')[0]; // Obtén el primer nombre
-
         string segundoNombre = string.Empty;
         if (nombre.Split(' ').Length > 1)
         {
             segundoNombre = nombre.Split(' ')[1][0].ToString(); // Obtiene la primera letra del segundo nombre si existe
         }
-
         string username = $"{primerNombre}{segundoNombre}{ApellidoPaterno}{ApellidoMaterno}";
-
         return username;
     }
 

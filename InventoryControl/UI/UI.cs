@@ -17,11 +17,11 @@ public static partial class UI
                 string userName = Console.ReadLine()??"";
                 Console.WriteLine("Ingresa tu contraseña:");
                 string password = Console.ReadLine()??"";
-                var user1=LogIn(userName,password) ;
-                MenuSelected(user1.MenuCorrespondiente);
+                var user=LogIn(userName,password) ;
+                MenuSelected(user.MenuCorrespondiente);
                 break;
                 case "2":
-                    SignUp();
+                    SignUpEstudent();
                     break;
                 case "3":
                 return;

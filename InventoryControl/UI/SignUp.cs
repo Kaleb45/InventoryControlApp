@@ -2,334 +2,123 @@
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using AlmacenDataContext;
 using AlmacenSQLiteEntities;
-public static partial class UI
-{
-    public static void SignUp()
-    {
-        int Registro;
-        string? Nombre;
-        string? ApellidoPaterno;
-        string? ApellidoMaterno;
-        int plantel;
-        int Semestre;
-        string? grupo;
-        int GrupoID;
-        string? Correo;
-        string? Contrasena;
-        do
-        {
-            WriteLine("Ingresa tu registro");
-        } while (int.TryParse(ReadLine(), out Registro) == false || RegisterValidation(Registro) != 01);
+using InventoryControl.UI;
+using System.Security.Cryptography.X509Certificates;
+public static partial class UI{
+    public static Person GetDataOfSignUp(bool isStudent){
+        Person persona = new Person();
+        if(isStudent){
+            do{
+                WriteLine("Ingresa tu registro");
+            } while (int.TryParse(ReadLine(), out persona.Registro) == false || RegisterValidation(persona.Registro) != 01);
+            do{
+                WriteLine("Ingresa tu Semestre");
+            } while (int.TryParse(ReadLine(), out persona.Semestre) == false || persona.Semestre < 1 || persona.Semestre > 8);
+            do{
+                WriteLine("Ingresa tu Grupo");
+                persona.grupo = ReadLine();
+                persona.GrupoID = (int)GetGroupID(persona.grupo);
+            } while (GroupVerification(persona.GrupoID) != 01);
+        }
 
-        do
-        {
+        do{
             WriteLine("Ingresa tu/s Nombre/s");
-            Nombre = ReadLine();
-        } while (NameValidation(Nombre) == false);
+            persona.Nombre = ReadLine();
+        } while (NameValidation(persona.Nombre) == false);
 
         WriteLine("Ingresa tu Apellido Paterno");
 
-        do
-        {
-            ApellidoPaterno = ReadLine();
-        } while (NameValidation(ApellidoPaterno) == false);
+        do{
+            persona.ApellidoPaterno = ReadLine();
+        } while (NameValidation(persona.ApellidoPaterno) == false);
 
         WriteLine("Ingresa tu Apellido Materno");
-        do
-        {
-            ApellidoMaterno = ReadLine();
-        } while (NameValidation(ApellidoMaterno) == false);
-
-        string newUsername = GenerateUsername(Nombre, ApellidoPaterno, ApellidoMaterno);
-
-
-        do
-        {
+        do{
+            persona.ApellidoMaterno = ReadLine();
+        } while (NameValidation(persona.ApellidoMaterno) == false);
+        persona.newUsername = GenerateUsername(persona.Nombre, persona.ApellidoPaterno, persona.ApellidoMaterno);
+        do{
             WriteLine("Plantel: ");
             WriteLine("1. Colomos");
             WriteLine("2. Tonalá");
             WriteLine("3. Río Santiago");
-            if (!int.TryParse(ReadLine(), out plantel))
+            if (!int.TryParse(ReadLine(), out persona.plantel))
             {
                 WriteLine("Opción invalida");
             }
-        } while (plantel < 1 || plantel > 3);
+        } while (persona.plantel < 1 || persona.plantel > 3);
 
 
-        do
-        {
-            WriteLine("Ingresa tu Semestre");
-        } while (int.TryParse(ReadLine(), out Semestre) == false || Semestre < 1 || Semestre > 8);
-
-        do
-        {
-            WriteLine("Ingresa tu Grupo");
-            grupo = ReadLine();
-            GrupoID = (int)GetGroupID(grupo);
-        } while (GroupVerification(GrupoID) != 01);
-
-        do
-        {
-            WriteLine("Ingesa tu correo");
-            Correo = ReadLine();
-        } while (StudentEmailValidation(Correo, Registro) != 01);
-
-        do
-        {
-            WriteLine("Ingresa tu contraseña");
-            Contrasena = ReadLine();
-        } while (PasswordValidation(Contrasena) != 01);
-
-        AddStudent(Registro, newUsername, Nombre, ApellidoPaterno, ApellidoMaterno, plantel, Semestre, GrupoID, Correo, Contrasena);
-    }
-
-    public static void AddStudent(int Registro, string newUsername, string? Nombre, string? ApellidoPaterno, string? ApellidoMaterno, int plantel, int Semestre, int GrupoID, string? Correo, string? Contrasena)
-    {
-        using (Almacen db = new Almacen())
-        {
-            var CheckStudent = db.Estudiantes.FirstOrDefault(r => r.EstudianteId == Registro || r.Correo == Correo);
-            if (CheckStudent != null)
-            {
-                WriteLine("Datos de usuario ya existentes");
-                return;
-            }
-            int? lastUserId = db.Usuarios.OrderByDescending(u => u.UsuarioId).Select(u => u.UsuarioId).FirstOrDefault();
-            int UserID = lastUserId.HasValue ? lastUserId.Value + 1 : 1;
-
-            var usuario = new Usuario()
-            {
-                UsuarioId = UserID,
-                Usuario1 = newUsername,
-                Password = Contrasena,
-            };
-
-            var estudiante = new Estudiante()
-            {
-                EstudianteId = Registro,
-                Nombre = Nombre,
-                ApellidoPaterno = ApellidoPaterno,
-                ApellidoMaterno = ApellidoMaterno,
-                PlantelId = plantel,
-                SemestreId = Semestre,
-                GrupoId = GrupoID,
-                Correo = Correo,
-                UsuarioId = UserID,
-            };
-
-            Clear();
-            db.Usuarios.Add(usuario);
-            db.Estudiantes.Add(estudiante);
-            db.SaveChanges();
-
+        if(isStudent){
+            do{
+                WriteLine("Ingesa tu correo");
+                persona.Correo = ReadLine();
+            } while (StudentEmailValidation(persona.Correo, persona.Registro) != 01);
         }
-    }
-
-    public static void SignUpDocente()
-    {
-        string nombre;
-        string ApellidoPaterno;
-        string ApellidoMaterno;
-        string correo;
-        int plantel;
-        string password;
-        int validacionPassword;
-        string newUsername;
-
-        do
-        {
-            Console.Write("Nombre: ");
-            nombre = Console.ReadLine();
-        } while (!NameValidation(nombre));
-
-        do
-        {
-            Console.Write("Apellido Paterno: ");
-            ApellidoPaterno = Console.ReadLine();
-        } while (!NameValidation(ApellidoPaterno));
-
-        do
-        {
-            Console.Write("Apellido Materno: ");
-            ApellidoMaterno = Console.ReadLine();
-        } while (!NameValidation(ApellidoMaterno));
-
-        newUsername = GenerateUsername(nombre, ApellidoPaterno, ApellidoMaterno);
-
-        do
-        {
-            Console.Write("Correo: ");
-            correo = Console.ReadLine();
-        } while (!EmailValidation(correo));
-
-        do
-        {
-            Console.WriteLine("Plantel: ");
-            Console.WriteLine("1. Colomos");
-            Console.WriteLine("2. Tonalá");
-            Console.WriteLine("3. Río Santiago");
-            if (!int.TryParse(Console.ReadLine(), out plantel))
-            {
-                Console.WriteLine("Opción invalida");
-            }
-            else
-            {
-                plantel = int.Parse(Console.ReadLine());
-            }
-
-        } while (plantel < 1 || plantel > 3);
-
-        do
-        {
-            Console.Write("Contraseña: ");
-            password = Console.ReadLine();
-            validacionPassword = PasswordValidation(password);
-        } while (validacionPassword != 01);
-
-        AddTeacher(newUsername, nombre, ApellidoPaterno, ApellidoMaterno, plantel, correo, password);
-    }
-
-    public static void AddTeacher(string newUsername, string? nombre, string? ApellidoPaterno, string? ApellidoMaterno, int plantel, string? correo, string? password)
-    {
-        using (Almacen db = new Almacen())
-        {
-            var CheckTeacher = db.Docentes.FirstOrDefault(r => r.Correo == correo);
-            if (CheckTeacher != null)
-            {
-                WriteLine("Datos de usuario ya existentes");
-                return;
-            }
-            int? lastUserId = db.Usuarios.OrderByDescending(u => u.UsuarioId).Select(u => u.UsuarioId).FirstOrDefault();
-            int newId = lastUserId.HasValue ? lastUserId.Value + 1 : 1;
-
-            Usuario newUser = new Usuario
-            {
-                UsuarioId = newId,
-                Usuario1 = newUsername,
-                Password = password
-            };
-
-            int? lastDocenteId = db.Docentes.OrderByDescending(d => d.DocenteId).Select(d => d.DocenteId).FirstOrDefault();
-            int newDocenteId = lastDocenteId.HasValue ? lastDocenteId.Value + 1 : 1;
-
-            Docente newDocente = new Docente
-            {
-                DocenteId = newDocenteId,
-                Nombre = nombre,
-                ApellidoPaterno = ApellidoPaterno,
-                ApellidoMaterno = ApellidoMaterno,
-                Correo = correo,
-                PlantelId = plantel,
-                UsuarioId = newId
-            };
-
-            db.Usuarios.Add(newUser);
-            db.Docentes.Add(newDocente);
-            db.SaveChanges();
-        }
-    }
-
-    public static void SignUpAlmacenista()
-    {
-            string nombre;
-            string ApellidoPaterno;
-            string ApellidoMaterno;
-            string correo;
-            int plantel;
-            string password;
-            int validacionPassword;
-            string newUsername;
-
-            do
-            {
-                Console.Write("Nombre: ");
-                nombre = Console.ReadLine();
-            } while (!NameValidation(nombre));
-
-            do
-            {
-                Console.Write("Apellido Paterno: ");
-                ApellidoPaterno = Console.ReadLine();
-            } while (!NameValidation(ApellidoPaterno));
-
-            do
-            {
-                Console.Write("Apellido Materno: ");
-                ApellidoMaterno = Console.ReadLine();
-            } while (!NameValidation(ApellidoMaterno));
-
-            newUsername = GenerateUsername(nombre, ApellidoPaterno, ApellidoMaterno);
-
+        else{
             do
             {
                 Console.Write("Correo: ");
-                correo = Console.ReadLine();
-            } while (!EmailValidation(correo));
-
-            do
-            {
-                Console.WriteLine("Plantel: ");
-                Console.WriteLine("1. Colomos");
-                Console.WriteLine("2. Tonalá");
-                Console.WriteLine("3. Río Santiago");
-                if (!int.TryParse(Console.ReadLine(), out plantel))
-                {
-                    Console.WriteLine("Opción invalida");
-                }
-                else
-                {
-                    plantel = int.Parse(Console.ReadLine());
-                }
-
-            } while (plantel < 1 || plantel > 3);
-
-            do
-            {
-                Console.Write("Contraseña: ");
-                password = Console.ReadLine();
-                validacionPassword = PasswordValidation(password);
-            } while (validacionPassword != 01);
-
-            AddTeacher(newUsername, nombre, ApellidoPaterno, ApellidoMaterno, plantel, correo, password);
-    }
-
-    public static void AddWarehouseManager(string newUsername, string? nombre, string? ApellidoPaterno, string? ApellidoMaterno, int plantel, string? correo, string? password)
-    {
-        using (Almacen db = new Almacen())
-        {
-            var CheckWarehouseManager = db.Almacenistas.FirstOrDefault(r => r.Correo == correo);
-            if (CheckWarehouseManager != null)
-            {
-                WriteLine("Datos de usuario ya existentes");
-                return;
-            }
-            int? lastUserId = db.Usuarios.OrderByDescending(u => u.UsuarioId).Select(u => u.UsuarioId).FirstOrDefault();
-            int newId = lastUserId.HasValue ? lastUserId.Value + 1 : 1;
-
-            Usuario newUser = new Usuario
-            {
-                UsuarioId = newId,
-                Usuario1 = newUsername,
-                Password = password
-            };
-
-            int? lastAlmacenistaId = db.Almacenistas.OrderByDescending(a => a.AlmacenistaId).Select(a => a.AlmacenistaId).FirstOrDefault();
-            int newAlmacenistaId = lastAlmacenistaId.HasValue ? lastAlmacenistaId.Value + 1 : 1;
-
-            Almacenista newAlmacenista = new Almacenista
-            {
-                AlmacenistaId = newAlmacenistaId,
-                Nombre = nombre,
-                ApellidoPaterno = ApellidoPaterno,
-                ApellidoMaterno = ApellidoMaterno,
-                Correo = correo,
-                PlantelId = plantel,
-                UsuarioId = newId
-            };
-
-            db.Usuarios.Add(newUser);
-            db.Almacenistas.Add(newAlmacenista);
-            db.SaveChanges();
-
+                persona.Correo = Console.ReadLine();
+            } while (!EmailValidation(persona.Correo));
         }
+
+        do{
+            WriteLine("Ingresa tu contraseña");
+            persona.Contrasena = ReadLine();
+        } while (PasswordValidation(persona.Contrasena) != 01);
+        return persona;
+    }
+    public static void SignUpEstudent(){
+        Person person = new Person();
+        Estudiante estudiante = new Estudiante();
+        Usuario usuario = new Usuario();
+        
+        person = GetDataOfSignUp(true);
+        estudiante.EstudianteId = person.Registro;
+        estudiante.Nombre = person.Nombre;
+        estudiante.ApellidoPaterno = person.ApellidoPaterno;
+        estudiante.ApellidoMaterno = person.ApellidoMaterno;
+        estudiante.SemestreId = person.Semestre;
+        estudiante.GrupoId = person.GrupoID;
+        estudiante.PlantelId = person.plantel;
+        estudiante.Correo = person.Correo;
+        estudiante.Adeudo = 0;
+        usuario.Usuario1 = person.newUsername;
+        usuario.Password = person.Contrasena;
+        usuario.Temporal = false;
+        CrudFuntions.AddStudent(estudiante,usuario);
+    }
+    public static void SignUpDocente(){
+        Person person = new Person();
+        Docente docente = new Docente();
+        Usuario usuario = new Usuario();
+        
+        person = GetDataOfSignUp(true);
+        docente.Nombre = person.Nombre;
+        docente.ApellidoPaterno = person.ApellidoPaterno;
+        docente.ApellidoMaterno = person.ApellidoMaterno;
+        docente.PlantelId = person.plantel;
+        docente.Correo = person.Correo;
+        usuario.Usuario1 = person.newUsername;
+        usuario.Password = person.Contrasena;
+        usuario.Temporal = false;
+        CrudFuntions.AddTeacher(docente,usuario);
+    }
+    public static void SignUpAlmacenista(){  
+        Person person = new Person();
+        Almacenista almacenista = new Almacenista();
+        Usuario usuario = new Usuario();
+        
+        person = GetDataOfSignUp(true);
+        almacenista.Nombre = person.Nombre;
+        almacenista.ApellidoPaterno = person.ApellidoPaterno;
+        almacenista.ApellidoMaterno = person.ApellidoMaterno;
+        almacenista.PlantelId = person.plantel;
+        almacenista.Correo = person.Correo;
+        usuario.Usuario1 = person.newUsername;
+        usuario.Password = person.Contrasena;
+        usuario.Temporal = false;
+        CrudFuntions.AddWarehouseManager(almacenista,usuario);
     }
 }

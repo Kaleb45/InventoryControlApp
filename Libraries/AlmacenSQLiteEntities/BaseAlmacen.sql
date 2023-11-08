@@ -17,7 +17,8 @@ DROP TABLE IF EXISTS "Desc_Pedido";
 CREATE TABLE "Categoria" (
 	"CategoriaId" INTEGER PRIMARY KEY,
 	"Nombre" nvarchar (50) NOT NULL ,
-	"Descripcion" "ntext" NOT NULL
+	"Descripcion" "ntext" NOT NULL,
+  "Acceso" "bit" NULL DEFAULT (0)
 );
 
 -----------------------------------------------------
@@ -332,7 +333,6 @@ CREATE TABLE "Material" (
   "Serie" nvarchar(255) NOT NULL,
   "ValorHistorico" decimal(18,2) NOT NULL,
   "Condición" "bit" NOT NULL DEFAULT (0),
-  "Acceso" "bit" NOT NULL DEFAULT (0),
   
   CONSTRAINT "FK_Material_Modelo" FOREIGN KEY 
 	(
@@ -374,7 +374,7 @@ CREATE TABLE "Pedido" (
   "EstudianteId" INTEGER NULL,
   "DocenteId" INTEGER NULL,
   "CoordinadorId" INTEGER NULL,
-  "Estado" "bit" NOT NULL DEFAULT (0),
+  "Estado" "bit" NULL DEFAULT (0),
 
   CONSTRAINT "FK_Pedido_Laboratorio" FOREIGN KEY 
 	(

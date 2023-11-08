@@ -519,7 +519,7 @@ CREATE TABLE "Estudiante" (
 		"UsuarioId"
     )
 
-);
+); 
 -----------------------------------------------------
 
 INSERT INTO 'Estudiante' ('EstudianteId', 'Nombre', 'ApellidoPaterno', 'ApellidoMaterno', 'SemestreId', 'GrupoId', 'Adeudo', 'Correo', 'PlantelId', 'UsuarioId') VALUES ('20300697', 'DIEGO', 'ROMERO', 'CORVERA', '7', '2', '0', 'a20300697@ceti.mx', '1', '46');

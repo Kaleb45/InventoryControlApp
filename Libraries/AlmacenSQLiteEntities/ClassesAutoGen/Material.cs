@@ -40,6 +40,9 @@ namespace AlmacenSQLiteEntities
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal? ValorHistorico { get; set; } = null!;
+        
+        [Column(TypeName = "bit")]
+        public bool Condicion { get; set; }
 
         [ForeignKey("CategoriaId")]
         [InverseProperty("Materiales")]

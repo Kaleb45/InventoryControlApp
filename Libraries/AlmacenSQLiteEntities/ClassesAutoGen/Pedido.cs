@@ -34,6 +34,9 @@ namespace AlmacenSQLiteEntities
         [Column(TypeName = "int")]
         public int? DocenteId { get; set; }
 
+        [Column(TypeName = "int")]
+        public int? CoordinadorId { get; set; }
+
         [Column(TypeName = "bit")]
         public bool Estado { get; set; }
 
@@ -48,6 +51,10 @@ namespace AlmacenSQLiteEntities
         [InverseProperty("Pedidos")]
         public virtual Estudiante Estudiante { get; set; } = null!;
 
+        [ForeignKey("CoordinadorId")]
+        [InverseProperty("Pedidos")]
+        public virtual Coordinador Coordinador { get; set; } = null!;
+        
         [ForeignKey("LaboratorioId")]
         [InverseProperty("Pedidos")]
         public virtual Laboratorio Laboratorio { get; set; } = null!;

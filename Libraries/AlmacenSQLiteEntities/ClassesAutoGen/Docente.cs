@@ -36,9 +36,6 @@ namespace AlmacenSQLiteEntities
         public string Correo { get; set; } = null!;
 
         [Column(TypeName = "int")]
-        public int? Pin {get; set;}
-
-        [Column(TypeName = "int")]
         public int? PlantelId { get; set; }
 
         [Column(TypeName = "int")]

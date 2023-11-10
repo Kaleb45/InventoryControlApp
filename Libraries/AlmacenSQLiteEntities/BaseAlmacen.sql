@@ -331,9 +331,7 @@ CREATE TABLE "Material" (
   "PlantelId" INTEGER NOT NULL,
   "Serie" nvarchar(255) NOT NULL,
   "ValorHistorico" decimal(18,2) NOT NULL,
-  "Condición" "bit" NOT NULL DEFAULT (0),
-  "Acceso" "bit" NOT NULL DEFAULT (0),
-  
+
   CONSTRAINT "FK_Material_Modelo" FOREIGN KEY 
 	(
 		"ModeloId"
@@ -371,9 +369,8 @@ CREATE TABLE "Pedido" (
   "LaboratorioId" INTEGER NOT NULL,
   "HoraEntrega" "datetime" NOT NULL,
   "HoraDevolucion" "datetime" NOT NULL,
-  "EstudianteId" INTEGER NULL,
-  "DocenteId" INTEGER NULL,
-  "CoordinadorId" INTEGER NULL,
+  "EstudianteId" INTEGER NOT NULL,
+  "DocenteId" INTEGER NOT NULL,
   "Estado" "bit" NOT NULL DEFAULT (0),
 
   CONSTRAINT "FK_Pedido_Laboratorio" FOREIGN KEY 
@@ -395,13 +392,8 @@ CREATE TABLE "Pedido" (
 		"DocenteId"
 	) REFERENCES "Docente" (
 		"DocenteId"
-    ),
-  CONSTRAINT "FK_Pedido_Coordinador" FOREIGN KEY 
-	(
-		"CoordinadorId"
-	) REFERENCES "Coordinador" (
-		"CoordinadorId"
     )
+
 );
 
 -----------------------------------------------------

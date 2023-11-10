@@ -162,7 +162,7 @@ public partial class Almacen : DbContext
             entity.HasOne(d => d.Docente).WithMany(p => p.Pedidos).OnDelete(DeleteBehavior.ClientSetNull);
 
             entity.HasOne(d => d.Estudiante).WithMany(p => p.Pedidos).OnDelete(DeleteBehavior.ClientSetNull);
-
+            entity.HasOne(d => d.Coordinador).WithMany(p => p.Pedidos).OnDelete(DeleteBehavior.ClientSetNull);
             entity.HasOne(d => d.Laboratorio).WithMany(p => p.Pedidos).OnDelete(DeleteBehavior.ClientSetNull);
         });
 

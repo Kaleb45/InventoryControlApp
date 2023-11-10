@@ -4,20 +4,17 @@ using AlmacenSQLiteEntities;
 
 public static partial class UI
 {
-    static void StudentUI()
-    {
-        do
-        {
-            Console.WriteLine("Alumno Menu:");
-            Console.WriteLine("1: Solicitar un material");
-            Console.WriteLine("2: Ver solicitudes");
-            Console.WriteLine("3: Cambiar contraseña");
-            Console.WriteLine("9: Logout");
-            String option = Console.ReadLine()??"";
-            Console.Clear();
+    static void StudentUI(){
+        do{
+            WriteLine("Alumno Menu:");
+            WriteLine("1: Solicitar un material");
+            WriteLine("2: Ver solicitudes");
+            WriteLine("3: Cambiar contraseña");
+            WriteLine("9: Logout");
+            String option = ReadLine()??"";
+            Clear();
 
-            switch (option)
-            {
+            switch (option){
                 case "9":
                     return;
                 default:
@@ -26,18 +23,16 @@ public static partial class UI
         } while (true);
     }
 
-    static void TeacherUI()
-    {
-        do
-        {
-            Console.WriteLine("Profesor Menu:");
-            Console.WriteLine("1: Historial de solicitudes");
-            Console.WriteLine("2: Ver solicitudes");
-            Console.WriteLine("3: Hacer una solicitud");
-            Console.WriteLine("4: Cambiar contraseña");
-            Console.WriteLine("9: Logout");
-            String option = Console.ReadLine()??"";
-            Console.Clear();
+    static void TeacherUI(){
+        do{
+            WriteLine("Profesor Menu:");
+            WriteLine("1: Historial de solicitudes");
+            WriteLine("2: Ver solicitudes");
+            WriteLine("3: Hacer una solicitud");
+            WriteLine("4: Cambiar contraseña");
+            WriteLine("9: Logout");
+            String option = ReadLine()??"";
+            Clear();
 
             switch (option)
             {
@@ -53,14 +48,14 @@ public static partial class UI
     {
         do
         {
-            Console.WriteLine("Almacenista Menu:");
-            Console.WriteLine("1: Administrar inventario");
-            Console.WriteLine("2: Ver solicitudes");
-            Console.WriteLine("3: Generar informes");
-            Console.WriteLine("4: Cambiar contraseña");
-            Console.WriteLine("9: Logout");
-            String option = Console.ReadLine()??"";
-            Console.Clear();
+            WriteLine("Almacenista Menu:");
+            WriteLine("1: Administrar inventario");
+            WriteLine("2: Ver solicitudes");
+            WriteLine("3: Generar informes");
+            WriteLine("4: Cambiar contraseña");
+            WriteLine("9: Logout");
+            String option = ReadLine()??"";
+            Clear();
 
             switch (option)
             {
@@ -79,44 +74,44 @@ public static partial class UI
     {
         do
         {
-            Console.WriteLine("Administrador Menu:");
-            Console.WriteLine("1: Opción 1");
-            Console.WriteLine("2: Opción 2");
-            Console.WriteLine("3: Opción 3");
-            Console.WriteLine("4: Opción 3");
-            Console.WriteLine("5: Cambiar contraseña");
-            Console.WriteLine("9: Logout");
-            String option = Console.ReadLine()??"";
-            Console.Clear();
+            WriteLine("Administrador Menu:");
+            WriteLine("1: Opción 1");
+            WriteLine("2: Opción 2");
+            WriteLine("3: Opción 3");
+            WriteLine("4: Opción 3");
+            WriteLine("5: Cambiar contraseña");
+            WriteLine("9: Logout");
+            String option = ReadLine()??"";
+            Clear();
 
             switch (option)
             {
                 case "1":
                     CrudFuntions.ListOrders();
                     int deletedOrders = CrudFuntions.DeleteOrders();
-                    Console.WriteLine($"{deletedOrders} pedidos eliminados.");
-                    Console.WriteLine();
+                    WriteLine($"{deletedOrders} pedidos eliminados.");
+                    WriteLine();
                     CrudFuntions.ListOrders();
                     break;
                 case "2":
                     CrudFuntions.ListTeachers();
                     int deletedTeachers = CrudFuntions.DeleteTeachers();
-                    Console.WriteLine($"{deletedTeachers} maestros eliminados.");
-                    Console.WriteLine();
+                    WriteLine($"{deletedTeachers} maestros eliminados.");
+                    WriteLine();
                     CrudFuntions.ListTeachers();
                     break;
                 case "3":
                     CrudFuntions.ListInventoryManager();
                     int deletedInventoryManager = CrudFuntions.DeleteInventoryManager();
-                    Console.WriteLine($"{deletedInventoryManager} almacenistas eliminados.");
-                    Console.WriteLine();
+                    WriteLine($"{deletedInventoryManager} almacenistas eliminados.");
+                    WriteLine();
                     CrudFuntions.ListInventoryManager();
                     break;
                 case "4":
                     CrudFuntions.ListStudents();
                     int deletedStudents = CrudFuntions.DeleteStudents();
-                    Console.WriteLine($"{deletedStudents} estudiantes eliminados.");
-                    Console.WriteLine();
+                    WriteLine($"{deletedStudents} estudiantes eliminados.");
+                    WriteLine();
                     CrudFuntions.ListStudents();
                     break;
                 case "9":

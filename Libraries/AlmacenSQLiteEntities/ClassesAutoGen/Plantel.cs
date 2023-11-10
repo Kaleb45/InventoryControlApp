@@ -24,8 +24,8 @@ namespace AlmacenSQLiteEntities
         [StringLength(100)]
         public string Direccion { get; set; } = null!;
 
-        [Column(TypeName = "int")]
-        public int? Telefono { get; set; }
+        [Column(TypeName = "BIGINT")]
+        public long? Telefono { get; set; }
 
         [InverseProperty("Plantel")]
         public virtual ICollection<Almacenista>? Almacenistas { get; set; }

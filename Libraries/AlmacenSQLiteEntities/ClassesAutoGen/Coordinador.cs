@@ -48,5 +48,9 @@ namespace AlmacenSQLiteEntities
         [ForeignKey("UsuarioId")]
         [InverseProperty("Coordinadores")]
         public virtual Usuario? Usuario { get; set; } = null!;
+        
+        [InverseProperty("Coordinador")]
+        public virtual ICollection<Pedido>? Pedidos { get; set; }
+
     }
 }

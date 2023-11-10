@@ -21,6 +21,9 @@ namespace AlmacenSQLiteEntities
         [Column(TypeName = "ntext")]
         public string Descripcion { get; set; } = null!;
 
+        [Column(TypeName = "bit")]
+        public bool Acceso { get; set; }
+
         [InverseProperty("Categoria")]
         public virtual ICollection<Material>? Materiales { get; set; }
     }

@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 namespace InventoryControl.UI
 {
-    public struct Person
-    {
+    public struct Person{
         
         public int Registro;
         public string? Nombre;
@@ -19,6 +18,6 @@ namespace InventoryControl.UI
         public string? Correo;
         public string? Contrasena;
         public string? newUsername;
-        public int validacionPassword;
+        public int? validacionPassword;
     }
 }

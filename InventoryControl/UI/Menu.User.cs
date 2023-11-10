@@ -9,9 +9,10 @@ public static partial class UI
         do
         {
             Console.WriteLine("Alumno Menu:");
-            Console.WriteLine("1: Solicitar un material");
-            Console.WriteLine("2: Ver solicitudes");
-            Console.WriteLine("3: Cambiar contraseña");
+            Console.WriteLine("1: Ver material");
+            Console.WriteLine("2: Solicitar un material");
+            Console.WriteLine("3: Ver solicitudes");
+            Console.WriteLine("4: Cambiar contraseña");
             Console.WriteLine("9: Logout");
             String option = Console.ReadLine()??"";
             Console.Clear();
@@ -34,7 +35,8 @@ public static partial class UI
             Console.WriteLine("1: Historial de solicitudes");
             Console.WriteLine("2: Ver solicitudes");
             Console.WriteLine("3: Hacer una solicitud");
-            Console.WriteLine("4: Cambiar contraseña");
+            Console.WriteLine("4: Ver materiales");
+            Console.WriteLine("5: Cambiar contraseña");
             Console.WriteLine("9: Logout");
             String option = Console.ReadLine()??"";
             Console.Clear();
@@ -57,7 +59,11 @@ public static partial class UI
             Console.WriteLine("1: Administrar inventario");
             Console.WriteLine("2: Ver solicitudes");
             Console.WriteLine("3: Generar informes");
-            Console.WriteLine("4: Cambiar contraseña");
+            Console.WriteLine("4: Agregar pedido");
+            Console.WriteLine("5: Modificar pedido");
+            Console.WriteLine("6: Eliminar pedido");
+            Console.WriteLine("7: Cambiar contraseña");
+            Console.WriteLine("8: Agendar mantenimiento");
             Console.WriteLine("9: Logout");
             String option = Console.ReadLine()??"";
             Console.Clear();
@@ -80,12 +86,23 @@ public static partial class UI
         do
         {
             Console.WriteLine("Administrador Menu:");
-            Console.WriteLine("1: Opción 1");
-            Console.WriteLine("2: Opción 2");
-            Console.WriteLine("3: Opción 3");
-            Console.WriteLine("4: Opción 3");
-            Console.WriteLine("5: Cambiar contraseña");
-            Console.WriteLine("9: Logout");
+            Console.WriteLine("1: Eliminar pedido");
+            Console.WriteLine("2: Eliminar maestro");
+            Console.WriteLine("3: Eliminar almacenista");
+            Console.WriteLine("4: Eliminar estudiante");
+            Console.WriteLine("5: Eliminar mantenimiento");
+            Console.WriteLine("6: Modificar pedido");
+            Console.WriteLine("7: Modificar maestro");
+            Console.WriteLine("8: Modificar almacenista");
+            Console.WriteLine("9: Modificar estudiante"); 
+            Console.WriteLine("10: Modificar mantenimiento");
+            Console.WriteLine("11: Agregar pedido");
+            Console.WriteLine("12: Agregar maestro");
+            Console.WriteLine("13: Agregar almacenista");
+            Console.WriteLine("14: Agregar estudiante");
+            Console.WriteLine("15: Agregar mantenimiento");
+            Console.WriteLine("16: Cambiar contraseña");
+            Console.WriteLine("17: Logout");
             String option = Console.ReadLine()??"";
             Console.Clear();
 

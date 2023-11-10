@@ -4,7 +4,7 @@ using AlmacenSQLiteEntities;
 
 public static partial class UI
 {
-    static void StudentUI(Estudiante? estudiante)
+    static void StudentUI()
     {
         do
         {
@@ -26,7 +26,7 @@ public static partial class UI
         } while (true);
     }
 
-    static void TeacherUI(Docente? docente)
+    static void TeacherUI()
     {
         do
         {
@@ -49,7 +49,7 @@ public static partial class UI
         } while (true);
     }
 
-    static void InventoryManagerUI(Almacenista? almacenista)
+    static void InventoryManagerUI()
     {
         do
         {
@@ -75,7 +75,7 @@ public static partial class UI
         } while (true);
     }
 
-    static void AdministratorUI(Coordinador? coordinador)
+    static void AdministratorUI()
     {
         do
         {

@@ -11,16 +11,16 @@ public static partial class UI
     /// <param name="userName">usuario</param>
     /// <param name="password">contraseña</param>
     /// <returns></returns>
-    static (Usuario? usuarioEncontrado,int MenuCorrespondiente) LogIn(string userName,string password)
+    static (Usuario? usuarioEncontrado,int typeOfUser) LogIn(string userName,string password)
     {
         using (Almacen db = new())
         {
             var user = db.Usuarios.FirstOrDefault(u => u.Usuario1 == userName && u.Password == password);//busca al usuario en la BD 
             if (user != null)//si no es nulo , osea que si encontro un usuario regresara al usuario encontrado junto con su tipo
             {
-                Console.Clear();
-                Console.WriteLine($"¡Bienvenido, {userName}!");
-                Console.WriteLine("");
+                Clear();
+                WriteLine($"¡Bienvenido, {userName}!");
+                WriteLine("");
                 int TipoUsuario=0;
                 if (user.Docentes.Any())
                 {
@@ -42,8 +42,8 @@ public static partial class UI
             }
             else
             {
-                Console.Clear();
-                Console.WriteLine("Usuario o contraseña incorrectos. Inténtalo nuevamente.");
+                Clear();
+                WriteLine("Usuario o contraseña incorrectos. Inténtalo nuevamente.");
                 return (user,0);
             }
         }
@@ -56,21 +56,26 @@ public static partial class UI
     /// 
     /// </summary>
     /// <param name="i"></param>
-    static public void MenuSelected( int i){
-
-        switch(i){
-            case 1:
-            TeacherUI();
-            break;
-            case 2:
-            StudentUI();
-            break;
-            case 3:
-            InventoryManagerUI();
-            break;
-            case 4:
-            AdministratorUI();
-            break;
+    static public void MenuSelected(Usuario currentUser, int typeOfUser){
+        using(Almacen db = new()){
+            switch(typeOfUser){
+                case 1:
+                Docente? docente = db.Docentes!.FirstOrDefault(r => r.UsuarioId == currentUser.UsuarioId);
+                TeacherUI(docente);
+                break;
+                case 2:
+                Estudiante? estudiante = db.Estudiantes!.FirstOrDefault(r => r.UsuarioId == currentUser.UsuarioId);
+                StudentUI(estudiante);
+                break;
+                case 3:
+                Almacenista? almacenista = db.Almacenistas!.FirstOrDefault(r => r.UsuarioId == currentUser.UsuarioId);
+                InventoryManagerUI(almacenista);
+                break;
+                case 4:
+                Coordinador? coordinador = db.Coordinadores!.FirstOrDefault(r => r.UsuarioId == currentUser.UsuarioId);
+                AdministratorUI(coordinador);
+                break;
+            }
         }
     }
 }

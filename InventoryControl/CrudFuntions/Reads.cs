@@ -7,17 +7,41 @@ using System.Linq;
 public static partial class CrudFuntions{
 
     public static int SearchId(){
-        Program.SectionTitle("Material");
+        Program.SectionTitle("Selecciona alguno se los anteriores");
         string? input;
         int Id;
         do{
-            WriteLine("Ingresa el ID del material: ");
+            WriteLine("Ingresa el ID: ");
             input = ReadLine();
         } while (!int.TryParse(input, out Id));
         return Id;
     }
 
-    public static void ListMaterials(int[]? materialIdHighlight = null){
+    public static void GeneralSearchCategory(int typeOfUser){
+        using(Almacen db = new()){
+            IQueryable<Categoria> result;
+            string? input = "";
+            WriteLine($"Por favor ingrese el elemento a buscar: ");
+            input = ReadLine();
+            input = input.ToUpper();
+            result = db.Categorias.Where(r => r.Nombre.Contains(input));
+            ReadQueryCategorias(result);
+        }
+    }
+
+    public static void GeneralSearchTeacher(){
+        using(Almacen db = new()){
+            IQueryable<Docente> result;
+            string? input = "";
+            WriteLine($"Por favor ingrese el elemento a buscar: ");
+            input = ReadLine();
+            input = input.ToUpper();
+            result = db.Docentes.Where(r => r.Nombre.Contains(input));
+            ReadQueryDocentes(result);
+        }
+    }
+
+    public static void ListMaterialsWithHighlight(int[]? materialIdHighlight = null){
         using(Almacen db = new()){
             if(db.Materiales is null || (!db.Materiales.Any())){
                 Program.Fail("No hay materiales registrados");
@@ -36,7 +60,7 @@ public static partial class CrudFuntions{
         }
     }
     
-    public static void ListOrders(int[]? ordersIdHighlight = null){
+    public static void ListOrdersWithHighlight(int[]? ordersIdHighlight = null){
         using(Almacen db = new()){
             if(db.Pedidos is null || (!db.Pedidos.Any())){
                 Program.Fail("No hay pedidos registrados");
@@ -113,7 +137,7 @@ public static partial class CrudFuntions{
     }
 
     // Función para el READ de la tabla almacenista
-    static void ReadAlmacenistas(){
+    public static void ReadAlmacenistas(){
         using (Almacen bd = new()){
             if (bd.Almacenistas is null || (!bd.Almacenistas.Any())){
                 WriteLine("No se encontraron almacenistas");
@@ -129,7 +153,7 @@ public static partial class CrudFuntions{
     }
 
     // Función para el READ de la tabla categorías
-    static void ReadCategorias(){
+    public static void ReadCategorias(){
         using (Almacen bd = new()){
             if (bd.Categorias is null || (!bd.Categorias.Any())){
                 WriteLine("No se encontraron categorías");
@@ -144,7 +168,7 @@ public static partial class CrudFuntions{
     }
 
     // Función para el READ de la tabla coordinadores
-    static void ReadCoordinadores(){
+    public static void ReadCoordinadores(){
         using (Almacen bd = new()){
             if (bd.Coordinadores is null || (!bd.Coordinadores.Any())){
                 WriteLine("No se encontraron coordinadores");
@@ -159,7 +183,7 @@ public static partial class CrudFuntions{
     }
 
     // Función para el READ de la tabla descripciones de pedidos
-    static void ReadDescPedidos(){
+    public static void ReadDescPedidos(){
         using (Almacen bd = new()){
             if (bd.DescPedidos is null || (!bd.DescPedidos.Any())){
                 WriteLine("No se encontraron descripciones de pedidos");
@@ -174,7 +198,7 @@ public static partial class CrudFuntions{
     }
 
     // Función para el READ de la tabla estudiantes
-    static void ReadEstudiantes(){
+    public static void ReadEstudiantes(){
         using (Almacen bd = new()){
             if (bd.Estudiantes is null || (!bd.Estudiantes.Any())){
                 WriteLine("No se encontraron estudiantes");
@@ -190,7 +214,7 @@ public static partial class CrudFuntions{
     }
 
     // Función para el READ de la tabla docentes
-    static void ReadDocentes(){
+    public static void ReadDocentes(){
         using (Almacen bd = new()){
             if (bd.Docentes is null || (!bd.Docentes.Any())){
                 WriteLine("No se encontraron docentes");
@@ -205,7 +229,7 @@ public static partial class CrudFuntions{
     }
 
     // Función para el READ de la tabla grupos
-    static void ReadGrupos(){
+    public static void ReadGrupos(){
         using (Almacen bd = new()){
             if (bd.Grupos is null || (!bd.Grupos.Any())){
                 WriteLine("No se encontraron grupos");
@@ -220,7 +244,7 @@ public static partial class CrudFuntions{
     }
 
     // Función para el READ de la tabla laboratorios
-    static void ReadLaboratorios(){
+    public static void ReadLaboratorios(){
         using (Almacen bd = new()){
             if (bd.Laboratorios is null || (!bd.Laboratorios.Any())){
                 WriteLine("No se encontraron laboratorios");
@@ -235,7 +259,7 @@ public static partial class CrudFuntions{
     }
 
     // Función para el READ de la tabla mantenimientos
-    static void ReadMantenimientos(){
+    public static void ReadMantenimientos(){
         using (Almacen bd = new()){
             if (bd.Mantenimientos is null || (!bd.Mantenimientos.Any())){
                 WriteLine("No se encontraron mantenimientos");
@@ -250,7 +274,7 @@ public static partial class CrudFuntions{
     }
 
     // Función para el READ de la tabla marcas
-    static void ReadMarcas(){
+    public static void ReadMarcas(){
         using (Almacen bd = new()){
             if (bd.Marcas is null || (!bd.Marcas.Any())){
                 WriteLine("No se encontraron marcas");
@@ -265,7 +289,7 @@ public static partial class CrudFuntions{
     }
 
     // Función para el READ de la tabla materiales
-    static void ReadMateriales(){
+    public static void ReadMateriales(){
         using (Almacen bd = new()){
             if (bd.Materiales is null || (!bd.Materiales.Any())){
                 WriteLine("No se encontraron materiales");
@@ -280,7 +304,7 @@ public static partial class CrudFuntions{
     }
 
     // Función para el READ de la tabla modelos
-    static void ReadModelos(){
+    public static void ReadModelos(){
         using (Almacen bd = new()){
             if (bd.Modelos is null || (!bd.Modelos.Any())){
                 WriteLine("No se encontraron modelos");
@@ -295,7 +319,7 @@ public static partial class CrudFuntions{
     }
 
     // Función para el READ de la tabla pedidos
-    static void ReadPedidos(){
+    public static void ReadPedidos(){
         using (Almacen bd = new()){
             if (bd.Pedidos is null || (!bd.Pedidos.Any())){
                 WriteLine("No se encontraron pedidos");
@@ -310,7 +334,7 @@ public static partial class CrudFuntions{
     }
 
     // Función para el READ de la tabla planteles
-    static void ReadPlanteles(){
+    public static void ReadPlanteles(){
         using (Almacen bd = new()){
             if (bd.Planteles is null || (!bd.Planteles.Any())){
                 WriteLine("No se encontraron planteles");
@@ -325,7 +349,7 @@ public static partial class CrudFuntions{
     }
 
     // Función para el READ de la tabla reportes de mantenimiento
-    static void ReadReporteMantenimientos(){
+    public static void ReadReporteMantenimientos(){
         using (Almacen bd = new()){
             if (bd.ReporteMantenimientos is null || (!bd.ReporteMantenimientos.Any())){
                 WriteLine("No se encontraron reportes de mantenimiento");
@@ -340,7 +364,7 @@ public static partial class CrudFuntions{
     }
 
     // Función para el READ de la tabla semestres
-    static void ReadSemestres(){
+    public static void ReadSemestres(){
         using (Almacen bd = new()){
             if (bd.Semestres is null || (!bd.Semestres.Any())){
                 WriteLine("No se encontraron semestres");
@@ -355,7 +379,7 @@ public static partial class CrudFuntions{
     }
 
     // Función para el READ de la tabla usuarios
-    static void ReadUsuarios(){
+    public static void ReadUsuarios(){
         using (Almacen bd = new()){
             if (bd.Usuarios is null || (!bd.Usuarios.Any())){
                 WriteLine("No se encontraron usuarios");
@@ -365,6 +389,26 @@ public static partial class CrudFuntions{
                 foreach (var us in bd.Usuarios){
                     WriteLine($"{us.UsuarioId,-10}|{us.Usuario1,-20}|{us.Password}");
                 }
+            }
+        }
+    }
+
+    //Funtions read for queries:
+
+    public static void ReadQueryCategorias(IQueryable<Categoria> categorias){
+        using (Almacen bd = new()){
+            WriteLine("{0,-10}|{1,-20}|{2,-20}|{3,-20}","CategoriaId", "Nombre", "Descripcion", "Acceso");
+            foreach (var cat in categorias){
+                WriteLine($"{cat.CategoriaId,-13}|{cat.Nombre,-20}|{cat.Descripcion,-20}|{cat.Acceso}");
+            }
+        }
+    }
+
+    public static void ReadQueryDocentes(IQueryable<Docente> docentes){
+        using (Almacen bd = new()){
+            WriteLine("{0,-10}|{1,-20}|{2,-20}|{3,-20}|{4,-20}|{5,-10}|{6,-10}","DocenteId", "Nombre", "Apellido Paterno", "ApellidoMaterno", "Correo", "PlantelId", "UsuarioId");
+            foreach (var dc in docentes){
+                WriteLine($"{dc.DocenteId,-10}|{dc.Nombre,-20}|{dc.ApellidoPaterno,-20}|{dc.ApellidoMaterno,-20}|{dc.Correo,-20}|{dc.PlantelId,-10}|{dc.UsuarioId}");
             }
         }
     }

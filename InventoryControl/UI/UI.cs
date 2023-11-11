@@ -6,19 +6,19 @@ public static partial class UI
     {
         while (true)
         {
-            Console.WriteLine("1: Login ");
-            Console.WriteLine("2: Signup");
-            string res = Console.ReadLine()??"";
-            Console.Clear();
+            WriteLine("1: Login ");
+            WriteLine("2: Signup");
+            string res = ReadLine()??"";
+            Clear();
             switch (res)
             {
                 case "1":
-                Console.WriteLine("Ingresa tu usuario:");
-                string userName = Console.ReadLine()??"";
-                Console.WriteLine("Ingresa tu contraseña:");
-                string password = Console.ReadLine()??"";
+                WriteLine("Ingresa tu usuario:");
+                string userName = ReadLine()??"";
+                WriteLine("Ingresa tu contraseña:");
+                string password = ReadLine()??"";
                 var user=LogIn(userName,password) ;
-                MenuSelected(user.MenuCorrespondiente);
+                MenuSelected(user.usuarioEncontrado,user.typeOfUser);
                 break;
                 case "2":
                     SignUpEstudent();

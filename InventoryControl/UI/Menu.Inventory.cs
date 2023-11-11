@@ -8,13 +8,13 @@ public static partial class UI
     {
         do
         {
-            Console.WriteLine("Administrar inventario Menu:");
-            Console.WriteLine("1: Agregar nuevo material");
-            Console.WriteLine("2: Modificar material");
-            Console.WriteLine("3: Eliminar material");
-            Console.WriteLine("4: Salir");
-            String option = Console.ReadLine()??"";
-            Console.Clear();
+            WriteLine("Administrar inventario Menu:");
+            WriteLine("1: Agregar nuevo material");
+            WriteLine("2: Modificar material");
+            WriteLine("3: Eliminar material");
+            WriteLine("4: Salir");
+            String option = ReadLine()??"";
+            Clear();
 
             switch (option)
             {
@@ -25,11 +25,11 @@ public static partial class UI
                     
                     break;
                 case "3":
-                    CrudFuntions.ListMaterials();
+                    CrudFuntions.ListMaterialsWithHighlight();
                     int deletedMaterials = CrudFuntions.DeleteMaterials();
-                    Console.WriteLine($"{deletedMaterials} materiales eliminados.");
-                    Console.WriteLine();
-                    CrudFuntions.ListMaterials();
+                    WriteLine($"{deletedMaterials} materiales eliminados.");
+                    WriteLine();
+                    CrudFuntions.ListMaterialsWithHighlight();
                     break;
                 case "4":
                     return;

@@ -25,6 +25,11 @@ public static partial class CrudFuntions{
             input = ReadLine();
             input = input.ToUpper();
             result = db.Categorias.Where(r => r.Nombre.Contains(input));
+            if(result is null || !result.Any())
+            {
+                WriteLine("No se encontro ningun elemento con el nombre ingresado :");
+                GeneralSearchCategory(typeOfUser);
+            }
             ReadQueryCategorias(result);
         }
     }
@@ -33,10 +38,15 @@ public static partial class CrudFuntions{
         using(Almacen db = new()){
             IQueryable<Docente> result;
             string? input = "";
-            WriteLine($"Por favor ingrese el elemento a buscar: ");
+            WriteLine($"Por favor ingrese el maestro a buscar: ");
             input = ReadLine();
             input = input.ToUpper();
             result = db.Docentes.Where(r => r.Nombre.Contains(input));
+            if(result is null || !result.Any())
+            {
+                WriteLine("No se encontro ningun profesor con el nombre ingresado :");
+                GeneralSearchTeacher();
+            }
             ReadQueryDocentes(result);
         }
     }
@@ -92,6 +102,25 @@ public static partial class CrudFuntions{
                     ForegroundColor = ConsoleColor.Green;
                 }
                 WriteLine($"{docentes.DocenteId,-3} | {docentes.ApellidoPaterno,-18} | {docentes.ApellidoMaterno,-18} | {docentes.Nombre,-30} | {docentes.Correo,-25} | {(docentes.PlantelId == 1 ? "Colomos" : (docentes.PlantelId == 2 ? "Tonala" : "Rio Santiago"))}");
+                ForegroundColor = backgroundColor;
+            }
+            WriteLine();
+        }
+    }
+
+    public static void ListLaboratories(int[]? laboratoriesIdHighlight = null){
+        using(Almacen db = new()){
+            if(db.Laboratorios is null || (!db.Laboratorios.Any())){
+                Program.Fail("No hay docentes registrados");
+                return;
+            }
+            WriteLine("{0,-3} | {1,-18} | {2,-18}","Id","Nombre", "Descripcion");
+            foreach(var labs in db.Laboratorios!){
+                ConsoleColor backgroundColor = ForegroundColor;
+                if((laboratoriesIdHighlight is not null) && laboratoriesIdHighlight.Contains(labs.LaboratorioId)){
+                    ForegroundColor = ConsoleColor.Green;
+                }
+                WriteLine($"{labs.LaboratorioId,-3} | {labs.Nombre,-18} | {labs.Descripcion,-18}");
                 ForegroundColor = backgroundColor;
             }
             WriteLine();

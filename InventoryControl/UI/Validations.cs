@@ -174,7 +174,7 @@ public static partial class UI
         {
             return 30;
         }
-        if (!Email.Substring(9,8).Contains("@ceti.mx"))
+        if (!Email.Substring(9, 8).Contains("@ceti.mx"))
         {
             return 40;
         }
@@ -188,146 +188,199 @@ public static partial class UI
     /// <returns></returns>
     public static int? GetGroupID(string? Grupo)
     {
-        using(Almacen db = new())
+        try
         {
-            Grupo Grupos = db.Grupos.First(g => g.Nombre == Grupo);
-            if(Grupos is null)
+            using (Almacen db = new())
             {
-                WriteLine("The value you were searching does not exists");
+                Grupo Grupos = db.Grupos.First(g => g.Nombre == Grupo);
+                if (Grupos is null)
+                {
+                    WriteLine("The value you were searching does not exists");
+                    return 0;
+                }
+                else
+                {
+                    return Grupos.GrupoId;
+                }
+            }
+        }
+        catch (System.InvalidOperationException)
+        {
+            Program.Fail("Ese grupo no exite");
+            return 0;
+            throw;
+        }
+    }
+
+/// <summary>
+///     Verifies if group ID exists
+/// </summary>
+/// <param name="grupo"></param>
+/// <returns>
+///      10 - grupo no encontrado
+///      01 - grupo encontrado    
+/// </returns>
+public static int GroupVerification(int grupo)
+{
+    using (Almacen db = new())
+    {
+        IQueryable<Grupo> Grupos = db.Grupos.Where(g => g.GrupoId == grupo);
+        if (Grupos is null)
+        {
+            WriteLine("The value you were searching does not exists");
+            return 10;
+        }
+        else
+        {
+            return 01;
+        }
+    }
+}
+
+public static bool NameValidation(string name)
+{
+    bool validName;
+    if (name.Any(n => "!1234567890".Contains(n)) || name.Any(n => "!@#$%^&*()-_+=<>?".Contains(n)))
+    {
+        Console.WriteLine("No debe contener numeros o carcateres especiales");
+        validName = false;
+    }
+    else
+    {
+        validName = true;
+    }
+    return validName;
+}
+
+public static bool EmailValidation(string email)
+{
+    bool validEmail;
+    if (email.Contains("@ceti.mx") || email.Contains("@live.ceti.mx"))
+    {
+        validEmail = true;
+    }
+    else
+    {
+        Console.WriteLine("Correo electrónico invalido");
+        validEmail = false;
+    }
+    return validEmail;
+}
+
+/// TODO:
+/// Docent Username Validations
+/// Almacenist Username Validations
+/// Administrator Username Validations
+/// Just length limitations
+/// 
+//Order validations:
+public static bool DateValidation(string? sDate)
+{
+    bool validDate;
+    try
+    {
+        if (DateTime.TryParse(sDate, out DateTime dateOnly))
+        {
+            if (dateOnly > DateTime.Now.Date && (dateOnly.Date - DateTime.Now.Date).TotalDays <= 7)
+            {
+                validDate = true;
+            }
+            else
+            {
+                validDate = false;
+                Program.Fail("La fecha debe ser un día posterior al día actual y no mayor a una semana.");
+            }
+        }
+        else
+        {
+            Program.Fail("Formato de fecha incorrecto. Intenta de nuevo.");
+            validDate = false;
+        }
+    }
+    catch (System.Exception)
+    {
+        Program.Fail("Formato de fecha incorrecto. Intenta de nuevo.");
+        validDate = false;
+        throw;
+    }
+    return validDate;
+}
+
+
+public static int GetLabID(string? sLab)
+{
+    using (Almacen db = new())
+    {
+        try
+        {
+            Laboratorio laboratorio = db.Laboratorios.First(l => l.Nombre == sLab);
+            if (laboratorio is null)
+            {
+                Program.Fail("Ese laboratorio no exite");
                 return 0;
             }
             else
             {
-                return Grupos.GrupoId;
+                return laboratorio.LaboratorioId;
             }
         }
-    }
-
-    /// <summary>
-    ///     Verifies if group ID exists
-    /// </summary>
-    /// <param name="grupo"></param>
-    /// <returns>
-    ///      10 - grupo no encontrado
-    ///      01 - grupo encontrado    
-    /// </returns>
-    public static int GroupVerification(int grupo)
-    {
-        using(Almacen db = new())
+        catch (System.InvalidOperationException)
         {
-            IQueryable<Grupo> Grupos = db.Grupos.Where(g => g.GrupoId == grupo);
-            if(Grupos is null)
+            Program.Fail("Ese laboratorio no exite");
+            return 0;
+            throw;
+        }
+    }
+}
+
+
+public static bool LabValidation(int realLab)
+{
+    bool validLab;
+    try
+    {
+        using (Almacen db = new())
+        {
+            IQueryable<Laboratorio> queryableLab = db.Laboratorios.Where(l => l.LaboratorioId == realLab);
+            if (queryableLab is null || (!queryableLab.Any()))
             {
-                WriteLine("The value you were searching does not exists");
-                return 10;
+                Program.Fail("Ese laboratorio no exite");
+                validLab = false;
             }
             else
             {
-                return 01;
+                validLab = true;
             }
         }
     }
-
-    public static bool NameValidation(string name){
-        bool validName;
-        if(name.Any(n => "!1234567890".Contains(n)) || name.Any(n => "!@#$%^&*()-_+=<>?".Contains(n))){
-            Console.WriteLine("No debe contener numeros o carcateres especiales");
-            validName = false;
-        }
-        else{
-            validName = true;
-        }
-        return validName;
+    catch (System.Exception)
+    {
+        Program.Fail("Introduce un numero por favor.");
+        validLab = false;
+        throw;
     }
-
-    public static bool EmailValidation(string email){
-        bool validEmail;
-        if(email.Contains("@ceti.mx") || email.Contains("@live.ceti.mx")){
-            validEmail = true;
-        }
-        else{
-            Console.WriteLine("Correo electrónico invalido");
-            validEmail = false;
-        }
-        return validEmail;
-    }
-
-    /// TODO:
-    /// Docent Username Validations
-    /// Almacenist Username Validations
-    /// Administrator Username Validations
-    /// Just length limitations
-    /// 
-    //Order validations:
-    public static bool DateValidation(string? sDate){
-        bool validDate;
-        try{
-            if (DateTime.TryParse(sDate, out DateTime dateOnly)){
-                if (dateOnly > DateTime.Now.Date && (dateOnly.Date - DateTime.Now.Date).TotalDays <= 7){
-                    validDate = true;
-                }
-                else{
-                    validDate = false;
-                    Program.Fail("La fecha debe ser un día posterior al día actual y no mayor a una semana.");
-                }
-            }
-            else{
-                Program.Fail("Formato de fecha incorrecto. Intenta de nuevo.");
-                validDate = false;
-            }
-        }
-        catch (System.Exception){
-            Program.Fail("Formato de fecha incorrecto. Intenta de nuevo.");
-            validDate = false;
-            throw;
-        }
-        return validDate;
-    }
-
-    public static bool LabValidation(string? sLab){
-        bool validLab;
-        try
+    return validLab;
+}
+public static bool HourValidation(string? sHour)
+{
+    bool validHour;
+    if (DateTime.TryParse(sHour, out DateTime hourOnly))
+    {
+        if (hourOnly.Hour < 7 || hourOnly.Hour > 14)
         {
-            if (int.TryParse(sLab, out int realLab)){
-                using(Almacen db = new()){
-                    IQueryable<Laboratorio> queryableLab = db.Laboratorios.Where(l => l.LaboratorioId == realLab);
-                    if(queryableLab is null || (!queryableLab.Any())){
-                        Program.Fail("Ese laboratorio no exite");
-                        validLab = false;
-                    }
-                    else{
-                        validLab = true;
-                    }
-                }
-            }
-            else{
-                Program.Fail("Introduce un numero por favor.");
-                validLab = false;
-            }
-        }
-        catch (System.Exception)
-        {
-            Program.Fail("Introduce un numero por favor.");
-            validLab = false;
-            throw;
-        }
-        return validLab;
-    }
-    public static bool HourValidation(string? sHour){
-        bool validHour;
-        if (DateTime.TryParse(sHour, out DateTime hourOnly)){
-            if (hourOnly.Hour < 7 || hourOnly.Hour > 14){
-                WriteLine("Horario no válido. Inténtalo de nuevo.");
-                validHour = false;
-            }
-            else{
-                validHour = true;
-            }
-        }
-        else{
-            Program.Fail("Formato de fecha incorrecto. Intenta de nuevo.");
+            WriteLine("Horario no válido. Inténtalo de nuevo.");
             validHour = false;
         }
-        return validHour;
+        else
+        {
+            validHour = true;
+        }
     }
+    else
+    {
+        Program.Fail("Formato de fecha incorrecto. Intenta de nuevo.");
+        validHour = false;
+    }
+    return validHour;
+}
 }

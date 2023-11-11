@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlmacenSQLiteEntities
 {
-
+    [Table("Categoria")]
     public class Categoria
     {
         [Key]
@@ -21,8 +21,8 @@ namespace AlmacenSQLiteEntities
         [Column(TypeName = "ntext")]
         public string Descripcion { get; set; } = null!;
 
-        [Column(TypeName = "bit")]
-        public bool Acceso { get; set; }
+        [Column(TypeName = "nvarchar(1)")]
+        public string? Acceso { get; set; }
 
         [InverseProperty("Categoria")]
         public virtual ICollection<Material>? Materiales { get; set; }

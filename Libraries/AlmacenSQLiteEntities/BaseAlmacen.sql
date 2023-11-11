@@ -20,10 +20,10 @@ CREATE TABLE "Categoria" (
 	"CategoriaId" INTEGER PRIMARY KEY,
 	"Nombre" nvarchar (50) NOT NULL ,
 	"Descripcion" "ntext" NOT NULL,
-  "Acceso" "bit" NULL DEFAULT (0)
+  "Acceso" nvarchar (1) NULL DEFAULT (0)
   /*1 - Todos
     2 - Docentes 
-    NULL - Nadie son del Almacen*/
+    3 - Nadie son del Almacen*/
 );
 
 -----------------------------------------------------
@@ -33,7 +33,7 @@ INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUE
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('3', 'CAMARA', 'CAMARA DE VIDEO', '2');
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('4', 'CAUTIN', 'CAUTIN DE ESTACION', '1');
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('5', 'CERTIFICADOR', 'CERTIFICADOR DE GAMA DE FRECUENCIAS', '2');
-INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('6', 'COMPUTADORA', 'COMPUTADORA', 'NULL');
+INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('6', 'COMPUTADORA', 'COMPUTADORA', '3');
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('7', 'ENGARGOLADORA', 'ENGARGOLADORA', '2');
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('8', 'EQUIPO', 'CONJUNTO DE INSTRUMENTACION CON 12 INSTRUMENTOS INTEGRADOS', '2');
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('9', 'ESTACION', 'ESTACION DE SOLDADO Y DESOLDADO', '1');
@@ -50,7 +50,7 @@ INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUE
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('20', 'PROGRAMADOR', 'PROGRAMADOR UNIVERSAL', '2');
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('21', 'PROYECTOR', 'PROYECTOR', '2');
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('22', 'PUENTE', 'PUENTE UNIVERSAL', '3');
-INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('23', 'REGULADOR', 'REGULADOR', 'NULL');
+INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('23', 'REGULADOR', 'REGULADOR', '3');
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('24', 'REPRODUCTOR', 'REPRODUCTOR MP3, CD, DVD, CD-RW/R, DVD-RW/R, SVCD, JPEG Y VHS', '2');
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('25', 'SAD', 'EQUIPO DE ADQUISICION DE DATOS', '2');
 
@@ -575,7 +575,7 @@ CREATE TABLE "Material" (
   "PlantelId" INTEGER NOT NULL,
   "Serie" nvarchar(255) NOT NULL,
   "ValorHistorico" decimal(18,2) NOT NULL,
-  "Condición" "bit" NOT NULL DEFAULT (0),
+  "Condición" nvarchar(1) NOT NULL DEFAULT (0),
   /*
   1 - normal
   2 - manteniemiento */

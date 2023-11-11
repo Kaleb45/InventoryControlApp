@@ -2,23 +2,27 @@
 using AlmacenDataContext;
 using AlmacenSQLiteEntities;
 
-public static partial class UI
-{
-    static void StudentUI(Estudiante? estudiante)
-    {
-        do
-        {
-            Console.WriteLine("Alumno Menu:");
-            Console.WriteLine("1: Ver material");
-            Console.WriteLine("2: Solicitar un material");
-            Console.WriteLine("3: Ver solicitudes");
-            Console.WriteLine("4: Cambiar contraseña");
-            Console.WriteLine("9: Logout");
-            String option = Console.ReadLine()??"";
-            Console.Clear();
-
-            switch (option)
-            {
+public static partial class UI{
+    static void StudentUI(Estudiante? estudiante){
+        do{
+            WriteLine("Alumno Menu:");
+            WriteLine("1: Ver materiales"); //check
+            WriteLine("2: Solicitar un material"); //
+            WriteLine("3: Ver solicitudes");
+            WriteLine("4: Cambiar contraseña");
+            WriteLine("9: Logout");
+            String option = ReadLine()??"";
+            Clear();
+            switch (option){
+                case "1":
+                    CrudFuntions.ListCategories(2);
+                    break;
+                case "2":
+                    CrudFuntions.OrderMaterial(2,estudiante.UsuarioId);
+                    break;
+                case "3":
+                    CrudFuntions.ListOrders(2,estudiante.EstudianteId);
+                    break;
                 case "9":
                     return;
                 default:
@@ -27,19 +31,18 @@ public static partial class UI
         } while (true);
     }
 
-    static void TeacherUI(Docente? docente)
-    {
-        do
-        {
-            Console.WriteLine("Profesor Menu:");
-            Console.WriteLine("1: Historial de solicitudes");
-            Console.WriteLine("2: Ver solicitudes");
-            Console.WriteLine("3: Hacer una solicitud");
-            Console.WriteLine("4: Ver materiales");
-            Console.WriteLine("5: Cambiar contraseña");
-            Console.WriteLine("9: Logout");
-            String option = Console.ReadLine()??"";
-            Console.Clear();
+    static void TeacherUI(Docente? docente){
+        do{
+            WriteLine("Profesor Menu:");
+            WriteLine("1: Historial de solicitudes");
+            WriteLine("2: Ver solicitudes");
+            WriteLine("3: Hacer una solicitud");
+            WriteLine("4: Ver materiales");
+            WriteLine("5: Cambiar contraseña");
+            WriteLine("9: Logout");
+
+            String option = ReadLine()??"";
+            Clear();
 
             switch (option)
             {
@@ -55,18 +58,19 @@ public static partial class UI
     {
         do
         {
-            Console.WriteLine("Almacenista Menu:");
-            Console.WriteLine("1: Administrar inventario");
-            Console.WriteLine("2: Ver solicitudes");
-            Console.WriteLine("3: Generar informes");
-            Console.WriteLine("4: Agregar pedido");
-            Console.WriteLine("5: Modificar pedido");
-            Console.WriteLine("6: Eliminar pedido");
-            Console.WriteLine("7: Cambiar contraseña");
-            Console.WriteLine("8: Agendar mantenimiento");
-            Console.WriteLine("9: Logout");
-            String option = Console.ReadLine()??"";
-            Console.Clear();
+            WriteLine("Almacenista Menu:");
+            WriteLine("1: Administrar inventario");
+            WriteLine("2: Ver solicitudes");
+            WriteLine("3: Generar informes");
+            WriteLine("4: Agregar pedido");
+            WriteLine("5: Modificar pedido");
+            WriteLine("6: Eliminar pedido");
+            WriteLine("7: Cambiar contraseña");
+            WriteLine("8: Agendar mantenimiento");
+            WriteLine("9: Logout");
+
+            string option = ReadLine()??"";
+            Clear();
 
             switch (option)
             {
@@ -85,55 +89,55 @@ public static partial class UI
     {
         do
         {
-            Console.WriteLine("Administrador Menu:");
-            Console.WriteLine("1: Eliminar pedido");
-            Console.WriteLine("2: Eliminar maestro");
-            Console.WriteLine("3: Eliminar almacenista");
-            Console.WriteLine("4: Eliminar estudiante");
-            Console.WriteLine("5: Eliminar mantenimiento");
-            Console.WriteLine("6: Modificar pedido");
-            Console.WriteLine("7: Modificar maestro");
-            Console.WriteLine("8: Modificar almacenista");
-            Console.WriteLine("9: Modificar estudiante"); 
-            Console.WriteLine("10: Modificar mantenimiento");
-            Console.WriteLine("11: Agregar pedido");
-            Console.WriteLine("12: Agregar maestro");
-            Console.WriteLine("13: Agregar almacenista");
-            Console.WriteLine("14: Agregar estudiante");
-            Console.WriteLine("15: Agregar mantenimiento");
-            Console.WriteLine("16: Cambiar contraseña");
-            Console.WriteLine("17: Logout");
-            String option = Console.ReadLine()??"";
-            Console.Clear();
+            WriteLine("Administrador Menu:");
+            WriteLine("1: Eliminar pedido");
+            WriteLine("2: Eliminar maestro");
+            WriteLine("3: Eliminar almacenista");
+            WriteLine("4: Eliminar estudiante");
+            WriteLine("5: Eliminar mantenimiento");
+            WriteLine("6: Modificar pedido");
+            WriteLine("7: Modificar maestro");
+            WriteLine("8: Modificar almacenista");
+            WriteLine("9: Modificar estudiante"); 
+            WriteLine("10: Modificar mantenimiento");
+            WriteLine("11: Agregar pedido");
+            WriteLine("12: Agregar maestro");
+            WriteLine("13: Agregar almacenista");
+            WriteLine("14: Agregar estudiante");
+            WriteLine("15: Agregar mantenimiento");
+            WriteLine("16: Cambiar contraseña");
+            WriteLine("17: Logout");
+            String option = ReadLine()??"";
+            Clear();
 
             switch (option)
             {
                 case "1":
-                    CrudFuntions.ListOrders();
+                    CrudFuntions.ListOrdersWithHighlight();
                     int deletedOrders = CrudFuntions.DeleteOrders();
-                    Console.WriteLine($"{deletedOrders} pedidos eliminados.");
-                    Console.WriteLine();
-                    CrudFuntions.ListOrders();
+                    WriteLine($"{deletedOrders} pedidos eliminados.");
+                    WriteLine();
+                    CrudFuntions.ListOrdersWithHighlight();
                     break;
                 case "2":
                     CrudFuntions.ListTeachers();
                     int deletedTeachers = CrudFuntions.DeleteTeachers();
-                    Console.WriteLine($"{deletedTeachers} maestros eliminados.");
-                    Console.WriteLine();
+                    WriteLine($"{deletedTeachers} maestros eliminados.");
+                    WriteLine();
                     CrudFuntions.ListTeachers();
                     break;
                 case "3":
                     CrudFuntions.ListInventoryManager();
                     int deletedInventoryManager = CrudFuntions.DeleteInventoryManager();
-                    Console.WriteLine($"{deletedInventoryManager} almacenistas eliminados.");
-                    Console.WriteLine();
+                    WriteLine($"{deletedInventoryManager} almacenistas eliminados.");
+                    WriteLine();
                     CrudFuntions.ListInventoryManager();
                     break;
                 case "4":
                     CrudFuntions.ListStudents();
                     int deletedStudents = CrudFuntions.DeleteStudents();
-                    Console.WriteLine($"{deletedStudents} estudiantes eliminados.");
-                    Console.WriteLine();
+                    WriteLine($"{deletedStudents} estudiantes eliminados.");
+                    WriteLine();
                     CrudFuntions.ListStudents();
                     break;
                 case "9":

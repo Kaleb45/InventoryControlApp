@@ -6,8 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlmacenSQLiteEntities
 {
-
-
     [Table("Grupo")]
     public class Grupo
     {

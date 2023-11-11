@@ -11,32 +11,39 @@ public static partial class UI
     /// <param name="userName">usuario</param>
     /// <param name="password">contraseña</param>
     /// <returns></returns>
-    static (Usuario? usuarioEncontrado,int typeOfUser) LogIn(string userName,string password){
-        using (Almacen db = new()){
+    static (Usuario? usuarioEncontrado,int typeOfUser) LogIn(string userName,string password)
+    {
+        using (Almacen db = new())
+        {
             var user = db.Usuarios.FirstOrDefault(u => u.Usuario1 == userName && u.Password == password);//busca al usuario en la BD 
-            //si no es nulo , osea que si encontro un usuario regresara al usuario encontrado junto con su tipo
-            if (user != null){
-                Console.Clear();
-                Console.WriteLine($"¡Bienvenido, {userName}!");
-                Console.WriteLine("");
+            if (user != null)//si no es nulo , osea que si encontro un usuario regresara al usuario encontrado junto con su tipo
+            {
+                Clear();
+                WriteLine($"¡Bienvenido, {userName}!");
+                WriteLine("");
                 int TipoUsuario=0;
-                if (user.Docentes.Any()){
+                if (user.Docentes.Any())
+                {
                     TipoUsuario=1;
                 }
-                else if (user.Estudiantes.Any()){
+                else if (user.Estudiantes.Any())
+                {
                     TipoUsuario=2;
                 }
-                else if (user.Almacenistas.Any()){
+                else if (user.Almacenistas.Any())
+                {
                     TipoUsuario=3;
                 }
-                else if (user.Coordinadores.Any()){
+                else if (user.Coordinadores.Any())
+                {
                     TipoUsuario=4;
                 }
                 return (user,TipoUsuario);
             }
-            else{
-                Console.Clear();
-                Console.WriteLine("Usuario o contraseña incorrectos. Inténtalo nuevamente.");
+            else
+            {
+                Clear();
+                WriteLine("Usuario o contraseña incorrectos. Inténtalo nuevamente.");
                 return (user,0);
             }
         }
@@ -45,30 +52,30 @@ public static partial class UI
     /// <summary>
     /// Metodo que segun el tipo de usuario encontrado desplegara el menu correspondiente 
     /// </summary>
-    /// <param name="typeOfUser">tipo de usuario 1,2,3,4</param> <summary>
+    /// <param name="i">tipo de usuario 1,2,3,4</param> <summary>
     /// 
     /// </summary>
-    /// <param name="typeOfUser"></param>
-    static public void MenuSelected(int typeOfUser, int userID){
+    /// <param name="i"></param>
+    static public void MenuSelected(Usuario currentUser, int typeOfUser){
         using(Almacen db = new()){
             switch(typeOfUser){
-            case 1:
-                Docente? docente = db.Docentes!.FirstOrDefault(p => p.UsuarioId == userID);
+                case 1:
+                Docente? docente = db.Docentes!.FirstOrDefault(r => r.UsuarioId == currentUser.UsuarioId);
                 TeacherUI(docente);
                 break;
-            case 2:
-                Estudiante? estudiante = db.Estudiantes!.FirstOrDefault(p => p.UsuarioId == userID);
+                case 2:
+                Estudiante? estudiante = db.Estudiantes!.FirstOrDefault(r => r.UsuarioId == currentUser.UsuarioId);
                 StudentUI(estudiante);
                 break;
-            case 3:
-                Almacenista? almacenista = db.Almacenistas!.FirstOrDefault(p => p.UsuarioId == userID);
+                case 3:
+                Almacenista? almacenista = db.Almacenistas!.FirstOrDefault(r => r.UsuarioId == currentUser.UsuarioId);
                 InventoryManagerUI(almacenista);
                 break;
-            case 4:
-                Coordinador? coordinador = db.Coordinadores!.FirstOrDefault(p => p.UsuarioId == userID);
+                case 4:
+                Coordinador? coordinador = db.Coordinadores!.FirstOrDefault(r => r.UsuarioId == currentUser.UsuarioId);
                 AdministratorUI(coordinador);
-            break;
-        }
+                break;
+            }
         }
     }
 }

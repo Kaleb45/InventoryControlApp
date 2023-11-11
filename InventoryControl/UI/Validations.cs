@@ -228,7 +228,6 @@ public static partial class UI
         }
     }
 
-
     public static bool NameValidation(string name){
         bool validName;
         if(name.Any(n => "!1234567890".Contains(n)) || name.Any(n => "!@#$%^&*()-_+=<>?".Contains(n))){
@@ -258,4 +257,77 @@ public static partial class UI
     /// Almacenist Username Validations
     /// Administrator Username Validations
     /// Just length limitations
+    /// 
+    //Order validations:
+    public static bool DateValidation(string? sDate){
+        bool validDate;
+        try{
+            if (DateTime.TryParse(sDate, out DateTime dateOnly)){
+                if (dateOnly > DateTime.Now.Date && (dateOnly.Date - DateTime.Now.Date).TotalDays <= 7){
+                    validDate = true;
+                }
+                else{
+                    validDate = false;
+                    Program.Fail("La fecha debe ser un día posterior al día actual y no mayor a una semana.");
+                }
+            }
+            else{
+                Program.Fail("Formato de fecha incorrecto. Intenta de nuevo.");
+                validDate = false;
+            }
+        }
+        catch (System.Exception){
+            Program.Fail("Formato de fecha incorrecto. Intenta de nuevo.");
+            validDate = false;
+            throw;
+        }
+        return validDate;
+    }
+
+    public static bool LabValidation(string? sLab){
+        bool validLab;
+        try
+        {
+            if (int.TryParse(sLab, out int realLab)){
+                using(Almacen db = new()){
+                    IQueryable<Laboratorio> queryableLab = db.Laboratorios.Where(l => l.LaboratorioId == realLab);
+                    if(queryableLab is null || (!queryableLab.Any())){
+                        Program.Fail("Ese laboratorio no exite");
+                        validLab = false;
+                    }
+                    else{
+                        validLab = true;
+                    }
+                }
+            }
+            else{
+                Program.Fail("Introduce un numero por favor.");
+                validLab = false;
+            }
+        }
+        catch (System.Exception)
+        {
+            Program.Fail("Introduce un numero por favor.");
+            validLab = false;
+            throw;
+        }
+        return validLab;
+    }
+    public static bool HourValidation(string? sHour){
+        bool validHour;
+        if (DateTime.TryParse(sHour, out DateTime hourOnly)){
+            if (hourOnly.Hour < 7 || hourOnly.Hour > 14){
+                WriteLine("Horario no válido. Inténtalo de nuevo.");
+                validHour = false;
+            }
+            else{
+                validHour = true;
+            }
+        }
+        else{
+            Program.Fail("Formato de fecha incorrecto. Intenta de nuevo.");
+            validHour = false;
+        }
+        return validHour;
+    }
 }

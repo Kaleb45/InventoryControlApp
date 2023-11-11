@@ -6,8 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlmacenSQLiteEntities
 {
-
-
     [Table("Pedido")]
     public class Pedido
     {
@@ -34,6 +32,9 @@ namespace AlmacenSQLiteEntities
         [Column(TypeName = "int")]
         public int? DocenteId { get; set; }
 
+        [Column(TypeName = "int")]
+        public int? CoordinadorId { get; set; }
+
         [Column(TypeName = "bit")]
         public bool Estado { get; set; }
 
@@ -42,16 +43,16 @@ namespace AlmacenSQLiteEntities
 
         [ForeignKey("DocenteId")]
         [InverseProperty("Pedidos")]
-        public virtual Docente Docente { get; set; } = null!;
+        public virtual Docente? Docente { get; set; } = null!;
 
         [ForeignKey("EstudianteId")]
         [InverseProperty("Pedidos")]
-        public virtual Estudiante Estudiante { get; set; } = null!;
+        public virtual Estudiante? Estudiante { get; set; } = null!;
 
         [ForeignKey("CoordinadorId")]
         [InverseProperty("Pedidos")]
-        public virtual Coordinador Coordinador { get; set; } = null!;
-
+        public virtual Coordinador? Coordinador { get; set; } = null!;
+        
         [ForeignKey("LaboratorioId")]
         [InverseProperty("Pedidos")]
         public virtual Laboratorio Laboratorio { get; set; } = null!;

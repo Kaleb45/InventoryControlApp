@@ -470,4 +470,166 @@ public static bool PedidoValidation(int realPedido)
     }
     return validPedido;
 }
+
+public static int GetDocenteID(string? id)
+{
+    using (Almacen db = new())
+    {
+        try
+        {
+            Docente docente = db.Docentes.First(d => d.DocenteId == int.Parse(id));
+            if (docente is null)
+            {
+                Program.Fail("Ese docente no exite");
+                return 0;
+            }
+            else
+            {
+                return docente.DocenteId;
+            }
+        }
+        catch (System.InvalidOperationException)
+        {
+            Program.Fail("Ese docente no exite");
+            return 0;
+            throw;
+        }
+    }
+}
+
+public static bool DocenteValidation(int realDocente)
+{
+    bool validDocente;
+    try
+    {
+        using (Almacen db = new())
+        {
+            IQueryable<Docente> queryableDocente = db.Docentes.Where(d => d.DocenteId == realDocente);
+            if (queryableDocente is null || (!queryableDocente.Any()))
+            {
+                Program.Fail("Ese docente no exite");
+                validDocente = false;
+            }
+            else
+            {
+                validDocente = true;
+            }
+        }
+    }
+    catch (System.Exception)
+    {
+        Program.Fail("Introduce un numero por favor.");
+        validDocente = false;
+        throw;
+    }
+    return validDocente;
+}
+
+public static int GetAlmacenistaID(string? id)
+{
+    using (Almacen db = new())
+    {
+        try
+        {
+            Almacenista almacenista = db.Almacenistas.First(d => d.AlmacenistaId == int.Parse(id));
+            if (almacenista is null)
+            {
+                Program.Fail("Ese almacenista no exite");
+                return 0;
+            }
+            else
+            {
+                return almacenista.AlmacenistaId;
+            }
+        }
+        catch (System.InvalidOperationException)
+        {
+            Program.Fail("Ese almacenista no exite");
+            return 0;
+            throw;
+        }
+    }
+}
+
+public static bool AlmacenistaValidation(int realAlmacenista)
+{
+    bool validAlmacenista;
+    try
+    {
+        using (Almacen db = new())
+        {
+            IQueryable<Almacenista> queryableAlmacenista = db.Almacenistas.Where(d => d.AlmacenistaId == realAlmacenista);
+            if (queryableAlmacenista is null || (!queryableAlmacenista.Any()))
+            {
+                Program.Fail("Ese almacenista no exite");
+                validAlmacenista = false;
+            }
+            else
+            {
+                validAlmacenista = true;
+            }
+        }
+    }
+    catch (System.Exception)
+    {
+        Program.Fail("Introduce un numero por favor.");
+        validAlmacenista = false;
+        throw;
+    }
+    return validAlmacenista;
+}
+
+public static int GetEstudianteID(string? id)
+{
+    using (Almacen db = new())
+    {
+        try
+        {
+            Estudiante estudiante = db.Estudiantes.First(d => d.EstudianteId == int.Parse(id));
+            if (estudiante is null)
+            {
+                Program.Fail("Ese estudiante no exite");
+                return 0;
+            }
+            else
+            {
+                return estudiante.EstudianteId;
+            }
+        }
+        catch (System.InvalidOperationException)
+        {
+            Program.Fail("Ese estudiante no exite");
+            return 0;
+            throw;
+        }
+    }
+}
+
+public static bool EstudianteValidation(int realEstudiante)
+{
+    bool validEstudiante;
+    try
+    {
+        using (Almacen db = new())
+        {
+            IQueryable<Estudiante> queryableEstudiante = db.Estudiantes.Where(d => d.EstudianteId == realEstudiante);
+            if (queryableEstudiante is null || (!queryableEstudiante.Any()))
+            {
+                Program.Fail("Ese estudiante no exite");
+                validEstudiante = false;
+            }
+            else
+            {
+                validEstudiante = true;
+            }
+        }
+    }
+    catch (System.Exception)
+    {
+        Program.Fail("Introduce un numero por favor.");
+        validEstudiante = false;
+        throw;
+    }
+    return validEstudiante;
+}
 }

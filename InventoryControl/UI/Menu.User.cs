@@ -157,22 +157,36 @@ public static partial class UI{
                     CrudFuntions.ListStudents();
                     break;
                 case "5":
+                    break;
+                case "6":
                     CrudFuntions.ListOrdersWithHighlight();
                     int updateOrders = CrudFuntions.UpdateOrders();
                     WriteLine($"{updateOrders} pedidos modificados.");
                     WriteLine();
                     CrudFuntions.ListOrdersWithHighlight();
                     break;
-                case "6":
+                case "7":
+                    CrudFuntions.ListTeachers();
+                    int updateTeachers = CrudFuntions.UpdateDataUsers(1);
+                    WriteLine($"{updateTeachers} maestros modificados.");
+                    WriteLine();
                     CrudFuntions.ListTeachers();
                     break;
-                case "7":
+                case "8":
+                    CrudFuntions.ListInventoryManager();
+                    int updateInventoryManager = CrudFuntions.UpdateDataUsers(2);
+                    WriteLine($"{updateInventoryManager} almacenistas modificados.");
+                    WriteLine();
                     CrudFuntions.ListInventoryManager();
                     break;
-                case "8":
+                case "9":
+                    CrudFuntions.ListStudents();
+                    int updateStudents = CrudFuntions.UpdateDataUsers(3);
+                    WriteLine($"{updateStudents} estudiantes modificados.");
+                    WriteLine();
                     CrudFuntions.ListStudents();
                     break;
-                case "9":
+                case "17":
                     return;
                 default:
                     break;

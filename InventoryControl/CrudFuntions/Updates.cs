@@ -3,6 +3,7 @@ using AlmacenDataContext;
 using AlmacenSQLiteEntities;
 public static partial class CrudFuntions
 {
+    
     public static int UpdateOrders(){
         using(Almacen db = new()){
             string? input;

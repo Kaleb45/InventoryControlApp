@@ -8,16 +8,10 @@ public static partial class CrudFuntions{
             DescPedido descPedido = new DescPedido();
             pedido = GetDataOfOrder(userID,typeOfUser);
             GeneralSearchCategory(2);
-            descPedido.MaterialId = SearchId();
+            descPedido.MaterialId = UI.GetMaterialID(SearchId());
             WriteLine("Ingresa la cantidad:");
             descPedido.Cantidad = int.Parse(ReadLine());
-            int? lastPedidoId = db.Pedidos.OrderByDescending(u => u.PedidoId).Select(u => u.PedidoId).FirstOrDefault();
-            int pedidoId = lastPedidoId.HasValue ? lastPedidoId.Value + 1 : 1;
-            pedido.PedidoId = pedidoId;
-            descPedido.PedidoId = pedido.PedidoId;
-            AddPedido(pedido);
-            
-            //AddDescPedido(descPedido); no funciona
+            AddPedido(pedido, descPedido);
         }
     }
 
@@ -30,7 +24,6 @@ public static partial class CrudFuntions{
             WriteLine("Ingresa la fecha");
             input = ReadLine();
         }while(UI.DateValidation(input) == false);
-
         pedido.Fecha = DateTime.Parse(input);
 
         do{
@@ -46,7 +39,7 @@ public static partial class CrudFuntions{
             input = ReadLine();
         } while (UI.HourValidation(input) == false);
         pedido.HoraEntrega = DateTime.Parse(input);
-        
+
         do{
             WriteLine("Ingresa la hora de devolucion:");
             input = ReadLine();

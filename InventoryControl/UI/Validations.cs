@@ -333,7 +333,6 @@ public static int GetLabID(string? sLab)
     }
 }
 
-
 public static bool LabValidation(int realLab)
 {
     bool validLab;
@@ -382,5 +381,28 @@ public static bool HourValidation(string? sHour)
         validHour = false;
     }
     return validHour;
+}
+
+public static int GetMaterialID(int categoryId){
+    using (Almacen db = new()){
+        try{
+            Material material = db.Materiales.Where(m => m.Condicion == "1").First(m => m.CategoriaId == categoryId);
+            if (material is null){
+                Program.Fail("Ese laboratorio no esta disponible");
+                return 0;
+            }
+            else
+            {
+                return material.MaterialId;
+            }
+        }
+        catch (Exception e)
+        {
+            WriteLine($"{e.Message}");
+            Program.Fail("Ese material no exite");
+            return 0;
+            throw;
+        }
+    }
 }
 }

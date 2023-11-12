@@ -120,4 +120,35 @@ public static partial class CrudFuntions{
             WriteLine();
         }
     }
+
+    public static void HistoryOfOrders(int typeOfUser, int? userID){
+        using(Almacen db = new()){
+            if(db.Pedidos is null || (!db.Pedidos.Any())){
+                Program.Fail("No hay pedidos registrados");
+                return;
+            }
+            IQueryable<Pedido> pedidosAnteriores;
+            IQueryable<Pedido> pedidosActuales;
+            if(typeOfUser == 2){
+                pedidosAnteriores = db.Pedidos.Where(p => p.EstudianteId == userID && p.Fecha.Value.Date < DateTime.Now.Date);
+                pedidosActuales = db.Pedidos.Where(p => p.EstudianteId == userID && p.Fecha.Value.Date > DateTime.Now.Date);
+            } 
+            else if(typeOfUser == 1){
+                pedidosAnteriores = db.Pedidos.Where(p => p.DocenteId == userID && p.Fecha.Value.Date < DateTime.Now.Date);
+                pedidosActuales = db.Pedidos.Where(p => p.DocenteId == userID && p.Fecha.Value.Date > DateTime.Now.Date);
+            }
+            else if (typeOfUser == 4){
+                pedidosAnteriores = db.Pedidos.Where(p => p.CoordinadorId == userID && p.Fecha.Value.Date < DateTime.Now.Date);
+                pedidosActuales = db.Pedidos.Where(p => p.CoordinadorId == userID && p.Fecha.Value.Date > DateTime.Now.Date);
+            }
+            else{
+                pedidosAnteriores = db.Pedidos;
+                pedidosActuales = db.Pedidos;
+            }
+            Program.SectionTitle("Pedidos anteriores:");
+            ReadQueryHistory(pedidosAnteriores);
+            Program.SectionTitle("Pedidos actuales:");
+            ReadQueryHistory(pedidosActuales);
+        }
+    }
 }

@@ -128,16 +128,30 @@ public static partial class CrudFuntions{
             int? lastPedidoId = db.Pedidos.OrderByDescending(u => u.PedidoId).Select(u => u.PedidoId).FirstOrDefault();
             int pedidoID = lastPedidoId.HasValue ? lastPedidoId.Value + 1 : 1;
             pedido.PedidoId = pedidoID;
-            descPedido.PedidoId = 1;
+            descPedido.PedidoId = pedidoID;
+
+            int? lastDesPedidoId = db.DescPedidos.OrderByDescending(u => u.DescPedidoId).Select(u => u.DescPedidoId).FirstOrDefault();
+            int desPedidoID = lastDesPedidoId.HasValue ? lastDesPedidoId.Value + 1 : 1;
+            descPedido.DescPedidoId = desPedidoID;
+            WriteLine($"{pedido.PedidoId} | {descPedido.PedidoId}");
+            
             var CheckStudent = db.Pedidos.FirstOrDefault(r => r.PedidoId == pedido.PedidoId);
             if (CheckStudent != null)
             {
                 WriteLine("Datos de docentes ya existentes");
                 return;
             }
-            db.Pedidos.Add(pedido);
-            db.DescPedidos.Add(descPedido);
-            db.SaveChanges();
+            try
+            {
+                db.Pedidos.Add(pedido);
+                db.DescPedidos.Add(descPedido);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                WriteLine($"{e}");
+                throw;
+            }
         }
     }
 

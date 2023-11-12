@@ -396,6 +396,8 @@ public static int GetMaterialID(int categoryId){
     using (Almacen db = new()){
         try{
             Material material = db.Materiales.Where(m => m.Condicion == "1").First(m => m.CategoriaId == categoryId);
+            material.Condicion = "2";
+            db.SaveChanges();
             if (material is null){
                 Program.Fail("Ese laboratorio no esta disponible");
                 return 0;

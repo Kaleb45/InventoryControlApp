@@ -81,4 +81,20 @@ public static partial class CrudFuntions{
             return affected;
         }
     }
+
+    public static int DeleteMant(){
+        using(Almacen db = new()){
+            int mantenimientoId = SearchId();
+            Mantenimiento? mantenimiento = db.Mantenimientos!.FirstOrDefault(p => p.MantenimientoId == mantenimientoId);
+            if((mantenimiento is null)){
+                WriteLine("No se encontro un mantenimiento para eliminar");
+            }
+            else{
+                if(db.Mantenimientos is null) return 0;
+                db.Mantenimientos.RemoveRange(mantenimiento);
+            }
+            int affected = db.SaveChanges();
+            return affected;
+        }
+    }
 }

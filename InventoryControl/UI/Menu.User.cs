@@ -162,6 +162,7 @@ public static partial class UI{
                     WriteLine($"{updateOrders} pedidos modificados.");
                     WriteLine();
                     CrudFuntions.ListOrdersWithHighlight();
+                    
                     break;
                 case "6":
                     CrudFuntions.ListTeachers();

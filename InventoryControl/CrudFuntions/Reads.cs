@@ -7,14 +7,20 @@ using System.Linq;
 public static partial class CrudFuntions{
 
     public static int SearchId(){
-        Program.SectionTitle("Selecciona alguno se los anteriores");
-        string? input;
-        int Id;
-        do{
-            WriteLine("Ingresa el ID: ");
-            input = ReadLine();
-        } while (!int.TryParse(input, out Id));
-        return Id;
+        try{
+            Program.SectionTitle("Selecciona alguno se los anteriores");
+            string? input;
+            int Id;
+            do{
+                WriteLine("Ingresa el ID: ");
+                input = ReadLine();
+            } while (!int.TryParse(input, out Id));
+            return Id;
+        }
+        catch(System.NullReferenceException){
+            WriteLine("No existe el id indicado");
+            return 0;
+        }
     }
 
     public static void GeneralSearchCategory(int typeOfUser){
@@ -74,13 +80,13 @@ public static partial class CrudFuntions{
                 Program.Fail("No hay pedidos registrados");
                 return;
             }
-            WriteLine("{0,-3} | {1,-35} | {2,-8} | {3,-25} | {4,-25} | {5,-10} | {6,-10} | {7}","Id","Fecha","Laboratorio","Hora de Entrega","Hora de Devolucion","Estudiante","Docente","Aprovado");
-            foreach(var pedidos in db.Pedidos!){
+            WriteLine("{0,-2} | {1,-22} | {2,-13} | {3,-22} | {4,-22} | {5,-10} | {6,-10} | {7}","Id","Fecha","Laboratorio","Hora de Entrega","Hora de Devolucion","Estudiante","Docente","Aprovado");
+            foreach(var pedido in db.Pedidos!){
                 ConsoleColor backgroundColor = ForegroundColor;
-                if((ordersIdHighlight is not null) && ordersIdHighlight.Contains(pedidos.PedidoId)){
+                if((ordersIdHighlight is not null) && ordersIdHighlight.Contains(pedido.PedidoId)){
                     ForegroundColor = ConsoleColor.Green;
                 }
-                WriteLine($"{pedidos.PedidoId,-3} | {pedidos.Fecha,-35} | {pedidos.Laboratorio.Nombre,-11} | {pedidos.HoraEntrega,-6} | {pedidos.HoraDevolucion,-5} | {pedidos.Estudiante.Nombre,-10} | {pedidos.Docente.Nombre,-10} | {(pedidos.Estado ? "SI" : "NO")}");
+                WriteLine($"{pedido.PedidoId,-2} | {pedido.Fecha,-22} | {pedido.Laboratorio.Nombre,-13} | {pedido.HoraEntrega,-22} | {pedido.HoraDevolucion,-5} | {(pedido.EstudianteId is null ? "No hay" : pedido.Estudiante.Nombre),-10} | {pedido.Docente.Nombre,-10} | {(pedido.Estado ? "SI" : "NO")}");
                 ForegroundColor = backgroundColor;
             }
             WriteLine();

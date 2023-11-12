@@ -38,13 +38,16 @@ public static partial class CrudFuntions{
             WriteLine("Ingresa la hora de entrega:");
             input = ReadLine();
         } while (UI.HourValidation(input) == false);
-        pedido.HoraEntrega = DateTime.Parse(input);
+        pedido.HoraEntrega = DateTime.Parse($"{pedido.Fecha:yyyy-MM-dd} {input}");
 
         do{
             WriteLine("Ingresa la hora de devolucion:");
             input = ReadLine();
         } while (UI.HourValidation(input) == false);
-        pedido.HoraDevolucion = DateTime.Parse(input);
+        pedido.HoraDevolucion = DateTime.Parse($"{pedido.Fecha:yyyy-MM-dd} {input}");
+
+        //Para que la fecha tome el valor de Hora de Entrega
+        pedido.Fecha = DateTime.Parse($"{pedido.Fecha:yyyy-MM-dd} {pedido.HoraEntrega:HH:mm:ss}");
 
         using(Almacen db = new()){
             switch(typeOfUser){

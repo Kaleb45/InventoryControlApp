@@ -447,7 +447,7 @@ public static partial class CrudFuntions{
             }
             WriteLine("{0,-2} | {1,-22} | {2,-13} | {3,-22} | {4,-22} | {5,-10} | {6,-10} | {7}","Id","Fecha","Laboratorio","Hora de Entrega","Hora de Devolucion","Estudiante","Docente","Aprovado");
             foreach(var pedido in pedidos){
-                WriteLine($"{pedido.PedidoId,-2} | {pedido.Fecha,-22} | {pedido.Laboratorio.Nombre,-13} | {pedido.HoraEntrega,-22} | {pedido.HoraDevolucion,-5} | {pedido.Estudiante.Nombre,-10} | {pedido.Docente.Nombre,-10} | {(pedido.Estado ? "SI" : "NO")}");
+                WriteLine($"{pedido.PedidoId,-2} | {pedido.Fecha,-22} | {pedido.Laboratorio.Nombre,-13} | {pedido.HoraEntrega,-22} | {pedido.HoraDevolucion,-5} | {(pedido.EstudianteId is null ? "No hay" : pedido.Estudiante.Nombre),-10} | {pedido.Docente.Nombre,-10} | {(pedido.Estado ? "SI" : "NO")}");
             }
         }
     }

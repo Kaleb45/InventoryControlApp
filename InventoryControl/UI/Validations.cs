@@ -416,4 +416,58 @@ public static int GetMaterialID(int categoryId){
         }
     }
 }
+
+public static int GetPedidoID(string? id)
+{
+    using (Almacen db = new())
+    {
+        try
+        {
+            Pedido pedido = db.Pedidos.First(l => l.PedidoId == int.Parse(id));
+            if (pedido is null)
+            {
+                Program.Fail("Ese pedido no exite");
+                return 0;
+            }
+            else
+            {
+                return pedido.PedidoId;
+            }
+        }
+        catch (System.InvalidOperationException)
+        {
+            Program.Fail("Ese pedido no exite");
+            return 0;
+            throw;
+        }
+    }
+}
+
+public static bool PedidoValidation(int realPedido)
+{
+    bool validPedido;
+    try
+    {
+        using (Almacen db = new())
+        {
+            IQueryable<Pedido> queryablePedido = db.Pedidos.Where(l => l.PedidoId == realPedido);
+            if (queryablePedido is null || (!queryablePedido.Any()))
+            {
+                Program.Fail("Ese pedido no exite");
+                validPedido = false;
+            }
+            else
+            {
+                validPedido = true;
+            }
+        }
+    }
+    catch (System.Exception)
+    {
+        Program.Fail("Introduce un numero por favor.");
+        validPedido = false;
+        throw;
+    }
+    return validPedido;
+}
 }

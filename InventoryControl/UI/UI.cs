@@ -8,6 +8,7 @@ public static partial class UI
         {
             WriteLine("1: Login ");
             WriteLine("2: Signup");
+            WriteLine("3: Olvidé mi contraseña");
             string res = ReadLine()??"";
             Clear();
             switch (res)
@@ -24,6 +25,7 @@ public static partial class UI
                     SignUpEstudent();
                     break;
                 case "3":
+                    ForgotPassword();
                 return;
                 default:
                     Console.WriteLine("Opción no válida, intentelo de nuevo");

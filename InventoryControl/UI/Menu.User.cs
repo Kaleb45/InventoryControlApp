@@ -42,7 +42,8 @@ public static partial class UI{
             WriteLine("2: Ver solicitudes");
             WriteLine("3: Hacer una solicitud");
             WriteLine("4: Ver materiales");
-            WriteLine("5: Cambiar contraseña");
+            WriteLine("5: Aprovar solicitudes");
+            WriteLine("6: Cambiar contraseña");
             WriteLine("9: Logout");
 
             String option = ReadLine()??"";
@@ -50,6 +51,23 @@ public static partial class UI{
 
             switch (option)
             {
+                case "1":
+                    CrudFuntions.HistoryOfOrders(1,docente.DocenteId);
+                    break;
+                case "2":
+                    CrudFuntions.ListOrders(1,docente.DocenteId);
+                    break;
+                case "3":
+                    CrudFuntions.OrderMaterial(1,docente.UsuarioId);
+                    break;
+                case "4":
+                    CrudFuntions.ListCategories(1);
+                    break;
+                case "5":
+                    CrudFuntions.ApprovedOrder(1,docente.DocenteId);
+                    break;
+                case "6":
+                    break;
                 case "9":
                     return;
                 default:
@@ -58,10 +76,8 @@ public static partial class UI{
         } while (true);
     }
 
-    static void InventoryManagerUI(Almacenista? almacenista)
-    {
-        do
-        {
+    static void InventoryManagerUI(Almacenista? almacenista){
+        do{
             WriteLine("Almacenista Menu:");
             WriteLine("1: Administrar inventario");
             WriteLine("2: Ver solicitudes");
@@ -76,8 +92,7 @@ public static partial class UI{
             string option = ReadLine()??"";
             Clear();
 
-            switch (option)
-            {
+            switch (option){
                 case "1":
                     ManageInventory();
                     break;
@@ -89,10 +104,8 @@ public static partial class UI{
         } while (true);
     }
 
-    static void AdministratorUI(Coordinador? coordinador)
-    {
-        do
-        {
+    static void AdministratorUI(Coordinador? coordinador){
+        do{
             WriteLine("Administrador Menu:");
             WriteLine("1: Eliminar pedido");
             WriteLine("2: Eliminar maestro");
@@ -114,8 +127,7 @@ public static partial class UI{
             String option = ReadLine()??"";
             Clear();
 
-            switch (option)
-            {
+            switch (option){
                 case "1":
                     CrudFuntions.ListOrdersWithHighlight();
                     int deletedOrders = CrudFuntions.DeleteOrders();

@@ -115,7 +115,7 @@ public static partial class CrudFuntions{
             }
             WriteLine("{0,-2} | {1,-22} | {2,-13} | {3,-22} | {4,-22} | {5,-10} | {6,-10} | {7}","Id","Fecha","Laboratorio","Hora de Entrega","Hora de Devolucion","Estudiante","Docente","Aprovado");
             foreach(var pedido in pedidos){
-                WriteLine($"{pedido.PedidoId,-2} | {pedido.Fecha,-22} | {pedido.Laboratorio.Nombre,-13} | {pedido.HoraEntrega,-22} | {pedido.HoraDevolucion,-5} | {pedido.Estudiante.Nombre,-10} | {pedido.Docente.Nombre,-10} | {(pedido.Estado ? "SI" : "NO")}");
+                WriteLine($"{pedido.PedidoId,-2} | {pedido.Fecha,-22} | {pedido.Laboratorio.Nombre,-13} | {pedido.HoraEntrega,-22} | {pedido.HoraDevolucion,-5} | {(pedido.EstudianteId is null ? "No hay" : pedido.Estudiante.Nombre),-10} | {pedido.Docente.Nombre,-10} | {(pedido.Estado ? "SI" : "NO")}");
             }
             WriteLine();
         }
@@ -149,6 +149,25 @@ public static partial class CrudFuntions{
             ReadQueryHistory(pedidosAnteriores);
             Program.SectionTitle("Pedidos actuales:");
             ReadQueryHistory(pedidosActuales);
+        }
+    }
+
+    public static void ApprovedOrder(int typeOfUser, int? userID){
+        Program.SectionTitle("Vamos a aprovar un pedido");
+        using(Almacen db = new()){
+            string? input;
+            int PedidoId;
+            IQueryable<Pedido> pedidos = db.Pedidos.Where(p => p.DocenteId == userID && p.Estado == false);
+            ReadQueryHistory(pedidos);
+            do{
+                WriteLine("Que pedido quiere aprobar?");
+                input = ReadLine();
+                PedidoId = UI.GetPedidoID(input);
+            } while (UI.LabValidation(PedidoId) == false);
+            Pedido pedido = db.Pedidos.Find(PedidoId);
+            pedido.Estado = true;
+            db.SaveChanges();
+            Program.SectionTitle("Aprovado");
         }
     }
 }

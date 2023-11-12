@@ -9,7 +9,8 @@ public static partial class UI{
             WriteLine("1: Ver materiales"); //check
             WriteLine("2: Solicitar un material"); //
             WriteLine("3: Ver solicitudes");
-            WriteLine("4: Cambiar contraseña");
+            WriteLine("4: Historial de solicitudes");
+            WriteLine("5: Cambiar contraseña");
             WriteLine("9: Logout");
             String option = ReadLine()??"";
             Clear();
@@ -22,6 +23,9 @@ public static partial class UI{
                     break;
                 case "3":
                     CrudFuntions.ListOrders(2,estudiante.EstudianteId);
+                    break;
+                case "4":
+                    CrudFuntions.HistoryOfOrders(2,estudiante.EstudianteId);
                     break;
                 case "9":
                     return;

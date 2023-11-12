@@ -35,7 +35,7 @@ public static partial class UI
             {
                 return 20;
             }
-
+                
             string periodo = username.Substring(2, 3);
             if (periodo != "100" && periodo != "300")
             {

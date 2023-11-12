@@ -16,6 +16,7 @@ public static partial class CrudFuntions{
             pedido.PedidoId = pedidoId;
             descPedido.PedidoId = pedido.PedidoId;
             AddPedido(pedido);
+            
             //AddDescPedido(descPedido); no funciona
         }
     }
@@ -23,6 +24,7 @@ public static partial class CrudFuntions{
     public static Pedido GetDataOfOrder(int? userID, int typeOfUser){
         Pedido pedido = new Pedido();
         string? input;
+        int LabID;
         Program.SectionTitle("Vamos a hacer un pedido!!!");
         do{
             WriteLine("Ingresa la fecha");
@@ -32,10 +34,12 @@ public static partial class CrudFuntions{
         pedido.Fecha = DateTime.Parse(input);
 
         do{
+            ListLaboratories();
             WriteLine("Ingresa el laboratorio:");
             input = ReadLine();
-        } while (UI.LabValidation(input) == false);
-        pedido.LaboratorioId = int.Parse(input);
+            LabID = UI.GetLabID(input);
+        } while (UI.LabValidation(LabID) == false);
+        pedido.LaboratorioId =LabID;
 
         do{
             WriteLine("Ingresa la hora de entrega:");

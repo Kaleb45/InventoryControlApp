@@ -7,7 +7,7 @@ public static partial class CrudFuntions{
             Pedido pedido = new Pedido();
             DescPedido descPedido = new DescPedido();
             pedido = GetDataOfOrder(userID,typeOfUser);
-            GeneralSearchCategory(2);
+            GeneralSearchCategory(typeOfUser);
             descPedido.MaterialId = UI.GetMaterialID(SearchId());
             WriteLine("Ingresa la cantidad:");
             descPedido.Cantidad = int.Parse(ReadLine());

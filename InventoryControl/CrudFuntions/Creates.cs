@@ -162,4 +162,60 @@ public static partial class CrudFuntions{
             db.SaveChanges();
         } 
     }
+
+    public static void NewMant(){
+        Mantenimiento mantenimiento = GetDataOfMantenimiento();
+        AddMant(mantenimiento);
+    }
+
+    public static Mantenimiento GetDataOfMantenimiento(){
+        Mantenimiento mantenimiento = new Mantenimiento();
+        Program.SectionTitle("Vamoa introducir un nuevo mantenimiento");
+        do{
+            WriteLine("Dame el nombre:");
+            mantenimiento.Nombre = ReadLine();
+        } while (mantenimiento.Nombre.Length > 50);
+        do{
+            WriteLine("Dame la descripcion:");
+            mantenimiento.Descripcion = ReadLine();
+        } while (mantenimiento.Descripcion.Length > 100);
+        using (Almacen db = new()){
+            int? lastMantId = db.Mantenimientos.OrderByDescending(u => u.MantenimientoId).Select(u => u.MantenimientoId).FirstOrDefault();
+            int MantID = lastMantId.HasValue ? lastMantId.Value + 1 : 1;
+            mantenimiento.MantenimientoId = MantID;
+        }
+        return mantenimiento;
+    }
+
+    public static void NewReportMant(){
+        ReporteMantenimiento reporteMantenimiento = GetDataOfReportMant();
+        AddReporteMant(reporteMantenimiento);
+    }
+
+    public static ReporteMantenimiento GetDataOfReportMant(){
+        using(Almacen db = new()){
+            ReporteMantenimiento reporteMantenimiento = new ReporteMantenimiento();
+            Program.SectionTitle("Vamoa introducir un nuevo reporte de mantenimiento");
+            string? input;
+            do{
+                WriteLine("Ingresa la fecha");
+                input = ReadLine();
+            }while(UI.DateValidation(input) == false);
+            reporteMantenimiento.Fecha = DateTime.Parse(input);
+            ReadMantenimientos();
+            int mantenimientoId;
+            Mantenimiento? mantenimiento;
+            do{
+                mantenimientoId = SearchId();
+                mantenimiento = db.Mantenimientos!.FirstOrDefault(p => p.MantenimientoId == mantenimientoId);
+                if((mantenimiento is null)){
+                    WriteLine("No se encontro un mantenimiento para eliminar");
+                }
+                reporteMantenimiento.MantenimientoId = mantenimientoId;
+            } while (mantenimiento == null && db.Mantenimientos != null);
+            GeneralSearchCategory(4);
+            reporteMantenimiento.MaterialId = UI.GetMaterialID(SearchId());
+            return reporteMantenimiento;
+        }
+    }
 }

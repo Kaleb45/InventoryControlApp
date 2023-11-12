@@ -283,7 +283,16 @@ public static bool DateValidation(string? sDate)
         {
             if (dateOnly > DateTime.Now.Date && (dateOnly.Date - DateTime.Now.Date).TotalDays <= 7)
             {
-                validDate = true;
+                // Verifica si la fecha es un sábado o domingo
+                if (dateOnly.DayOfWeek == DayOfWeek.Saturday || dateOnly.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    validDate = false;
+                    Program.Fail("No se permiten selecciones en sábados ni domingos.");
+                }
+                else
+                {
+                    validDate = true;
+                }
             }
             else
             {

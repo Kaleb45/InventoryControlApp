@@ -156,6 +156,22 @@ public static partial class UI{
                     WriteLine();
                     CrudFuntions.ListStudents();
                     break;
+                case "5":
+                    CrudFuntions.ListOrdersWithHighlight();
+                    int updateOrders = CrudFuntions.UpdateOrders();
+                    WriteLine($"{updateOrders} pedidos modificados.");
+                    WriteLine();
+                    CrudFuntions.ListOrdersWithHighlight();
+                    break;
+                case "6":
+                    CrudFuntions.ListTeachers();
+                    break;
+                case "7":
+                    CrudFuntions.ListInventoryManager();
+                    break;
+                case "8":
+                    CrudFuntions.ListStudents();
+                    break;
                 case "9":
                     return;
                 default:

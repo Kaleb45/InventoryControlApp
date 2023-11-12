@@ -22,8 +22,7 @@ public static partial class CrudFuntions{
             IQueryable<Categoria> result;
             string? input = "";
             WriteLine($"Por favor ingrese el elemento a buscar: ");
-            input = ReadLine();
-            input = input.ToUpper();
+            input = ReadLine().ToUpper();
             result = db.Categorias.Where(r => r.Nombre.Contains(input));
             if(result is null || !result.Any())
             {
@@ -39,8 +38,7 @@ public static partial class CrudFuntions{
             IQueryable<Docente> result;
             string? input = "";
             WriteLine($"Por favor ingrese el maestro a buscar: ");
-            input = ReadLine();
-            input = input.ToUpper();
+            input = ReadLine().ToUpper();
             result = db.Docentes.Where(r => r.Nombre.Contains(input));
             if(result is null || !result.Any())
             {
@@ -111,7 +109,7 @@ public static partial class CrudFuntions{
     public static void ListLaboratories(int[]? laboratoriesIdHighlight = null){
         using(Almacen db = new()){
             if(db.Laboratorios is null || (!db.Laboratorios.Any())){
-                Program.Fail("No hay docentes registrados");
+                Program.Fail("No hay laboratorios registrados");
                 return;
             }
             WriteLine("{0,-3} | {1,-18} | {2,-18}","Id","Nombre", "Descripcion");
@@ -424,7 +422,7 @@ public static partial class CrudFuntions{
 
     //Funtions read for queries:
 
-    public static void ReadQueryCategorias(IQueryable<Categoria> categorias){
+    public static void ReadQueryCategorias(IQueryable<Categoria>? categorias){
         using (Almacen bd = new()){
             WriteLine("{0,-10}|{1,-20}|{2,-20}|{3,-20}","CategoriaId", "Nombre", "Descripcion", "Acceso");
             foreach (var cat in categorias){

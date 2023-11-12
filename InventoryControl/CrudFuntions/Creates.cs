@@ -123,12 +123,22 @@ public static partial class CrudFuntions{
         } 
     }
 
-    public static void AddPedido(Pedido pedido){
-        using (Almacen db = new Almacen()){
-            Clear();
+    public static void AddPedido(Pedido pedido, DescPedido descPedido){
+        using (Almacen db = new()){
+            int? lastPedidoId = db.Pedidos.OrderByDescending(u => u.PedidoId).Select(u => u.PedidoId).FirstOrDefault();
+            int pedidoID = lastPedidoId.HasValue ? lastPedidoId.Value + 1 : 1;
+            pedido.PedidoId = pedidoID;
+            descPedido.PedidoId = 1;
+            var CheckStudent = db.Pedidos.FirstOrDefault(r => r.PedidoId == pedido.PedidoId);
+            if (CheckStudent != null)
+            {
+                WriteLine("Datos de docentes ya existentes");
+                return;
+            }
             db.Pedidos.Add(pedido);
+            db.DescPedidos.Add(descPedido);
             db.SaveChanges();
-        } 
+        }
     }
 
     public static void AddDescPedido(DescPedido descPedido){

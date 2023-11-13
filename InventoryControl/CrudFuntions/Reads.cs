@@ -27,14 +27,15 @@ public static partial class CrudFuntions{
         using(Almacen db = new()){
             IQueryable<Categoria> result;
             string? input = "";
-            WriteLine($"Por favor ingrese el elemento a buscar: ");
-            input = ReadLine().ToUpper();
-            result = db.Categorias.Where(r => r.Nombre.Contains(input));
-            if(result is null || !result.Any())
-            {
-                WriteLine("No se encontro ningun elemento con el nombre ingresado :");
-                GeneralSearchCategory(typeOfUser);
-            }
+            do{
+                WriteLine($"Por favor ingrese la categoria a buscar: ");
+                input = ReadLine().ToUpper();
+                result = db.Categorias.Where(r => r.Nombre.Contains(input));
+                if(result is null || !result.Any())
+                {
+                    WriteLine("No se encontro ninguna categoria con el nombre ingresado :");
+                }
+            }while(result is null || !result.Any());
             ReadQueryCategorias(result);
         }
     }
@@ -52,6 +53,38 @@ public static partial class CrudFuntions{
                 GeneralSearchTeacher();
             }
             ReadQueryDocentes(result);
+        }
+    }
+
+    public static void GeneralSearchModels(){
+        using(Almacen db = new()){
+            IQueryable<Modelo> result;
+            string? input = "";
+            do{
+                WriteLine($"Por favor ingrese el modelo a buscar: ");
+                input = ReadLine().ToUpper();
+                result = db.Modelos.Where(r => r.Nombre.Contains(input));
+                if(result is null || !result.Any()){
+                    WriteLine("No se encontro ningun modelo  con el nombre ingresado :");
+                }
+            } while(result is null || !result.Any());
+            ReadQueryModelos(result);
+        }
+    }
+
+    public static void GeneralSearchMarcas(){
+        using(Almacen db = new()){
+            IQueryable<Marca> result;
+            string? input = "";
+            do{
+                WriteLine($"Por favor ingrese la marca a buscar: ");
+                input = ReadLine().ToUpper();
+                result = db.Marcas.Where(r => r.Nombre.Contains(input));
+                if(result is null || !result.Any()){
+                    WriteLine("No se encontro ninguna marca  con el nombre ingresado :");
+                }
+            } while(result is null || !result.Any());
+            ReadQueryMarcas(result);
         }
     }
 
@@ -192,9 +225,9 @@ public static partial class CrudFuntions{
                 WriteLine("No se encontraron categorías");
             }
             else{
-                WriteLine("{0,-10}|{1,-20}|{2,-20}|{3,-20}","CategoriaId", "Nombre", "Descripcion", "Materiales");
+                WriteLine("{0,-10}|{1,-20}|{2,-20}|{3,-20}","CategoriaId", "Nombre", "Descripcion", "Acceso");
                 foreach (var cat in bd.Categorias){
-                    WriteLine($"{cat.CategoriaId,-13}|{cat.Nombre,-20}|{cat.Descripcion,-20}|{cat.Materiales}");
+                    WriteLine($"{cat.CategoriaId,-13}|{cat.Nombre,-20}|{cat.Descripcion,-20}|{cat.Acceso}");
                 }
             }
         }
@@ -454,6 +487,34 @@ public static partial class CrudFuntions{
             WriteLine("{0,-2} | {1,-22} | {2,-13} | {3,-22} | {4,-22} | {5,-10} | {6,-10} | {7}","Id","Fecha","Laboratorio","Hora de Entrega","Hora de Devolucion","Estudiante","Docente","Aprovado");
             foreach(var pedido in pedidos){
                 WriteLine($"{pedido.PedidoId,-2} | {pedido.Fecha,-22} | {pedido.Laboratorio.Nombre,-13} | {pedido.HoraEntrega,-22} | {pedido.HoraDevolucion,-5} | {(pedido.EstudianteId is null ? "No hay" : pedido.Estudiante.Nombre),-10} | {pedido.Docente.Nombre,-10} | {(pedido.Estado ? "SI" : "NO")}");
+            }
+        }
+    }
+
+    public static void ReadQueryModelos(IQueryable<Modelo>? modelos){
+        using (Almacen bd = new()){
+            if (bd.Modelos is null || (!bd.Modelos.Any())){
+                WriteLine("No se encontraron modelos");
+            }
+            else{
+                WriteLine("{0,-10}|{1,-20}|{2}","ModeloId", "Nombre", "Descripcion");
+                foreach (var mod in modelos){
+                    WriteLine($"{mod.ModeloId,-10}|{mod.Nombre,-20}|{mod.Descripcion}");
+                }
+            }
+        }
+    }
+
+    public static void ReadQueryMarcas(IQueryable<Marca>? marcas){
+        using (Almacen bd = new()){
+            if (bd.Marcas is null || (!bd.Marcas.Any())){
+                WriteLine("No se encontraron marcas");
+            }
+            else{
+                WriteLine("{0,-10}|{1,-20}|{2}","MarcaId", "Nombre", "Descripcion");
+                foreach (var mar in bd.Marcas){
+                    WriteLine($"{mar.MarcaId,-10}|{mar.Nombre,-20}|{mar.Descripcion}");
+                }
             }
         }
     }

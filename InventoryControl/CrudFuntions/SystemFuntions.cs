@@ -12,6 +12,10 @@ public static partial class CrudFuntions{
             WriteLine("Ingresa la cantidad:");
             descPedido.Cantidad = int.Parse(ReadLine());
             AddPedido(pedido, descPedido);
+            if(typeOfUser == 2){
+                Estudiante estudiante = db.Estudiantes.FirstOrDefault(p => p.UsuarioId == userID);
+                UI.SendNotTeacher(estudiante,descPedido,pedido);
+            }
         }
     }
 
@@ -159,15 +163,36 @@ public static partial class CrudFuntions{
             int PedidoId;
             IQueryable<Pedido> pedidos = db.Pedidos.Where(p => p.DocenteId == userID && p.Estado == false);
             ReadQueryHistory(pedidos);
+            int pedidoId;
             do{
-                WriteLine("Que pedido quiere aprobar?");
+                WriteLine("Que pedido quieres modificar?");
                 input = ReadLine();
-                PedidoId = UI.GetPedidoID(input);
-            } while (UI.LabValidation(PedidoId) == false);
-            Pedido pedido = db.Pedidos.Find(PedidoId);
-            pedido.Estado = true;
-            db.SaveChanges();
-            Program.SectionTitle("Aprovado");
+                pedidoId = UI.GetPedidoID(input);
+            } while (UI.PedidoValidation(pedidoId) == false);
+            Pedido? pedido = db.Pedidos!.FirstOrDefault(p => p.PedidoId == pedidoId);
+            do{
+                WriteLine("¿Quiere aprobar o denegar el pedido?");
+                WriteLine("1. Aprovar");
+                WriteLine("2. Denegar");
+                input = ReadLine();
+            } while (input == "1\n" || input == "2\n");
+            input = input!.Trim();
+            if(input == "1"){
+                pedido.Estado = true;
+                Estudiante estudiante = db.Estudiantes.FirstOrDefault(p => p.EstudianteId == pedido.EstudianteId);
+                UI.SendEmailForOrderState(estudiante,"",pedido);
+                db.SaveChanges();
+                Program.SectionTitle("Aprovado");
+            }
+            else if(input == "2"){
+                pedido.Estado = false;
+                Estudiante estudiante = db.Estudiantes.FirstOrDefault(p => p.EstudianteId == pedido.EstudianteId);
+                WriteLine($"Razon para denegar la peticion:");
+                input = ReadLine();
+                UI.SendEmailForOrderState(estudiante,input,pedido);
+                db.SaveChanges();
+                Program.Fail("Denegado");
+            }
         }
     }
 }

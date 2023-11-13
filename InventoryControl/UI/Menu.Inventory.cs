@@ -9,9 +9,9 @@ public static partial class UI
         do
         {
             WriteLine("Administrar inventario Menu:");
-            WriteLine("1: Agregar nuevo material");
+            WriteLine("1: Agregar nuevo material"); //check
             WriteLine("2: Modificar material");
-            WriteLine("3: Eliminar material");
+            WriteLine("3: Eliminar material"); //check
             WriteLine("4: Salir");
             String option = ReadLine()??"";
             Clear();
@@ -19,7 +19,7 @@ public static partial class UI
             switch (option)
             {
                 case "1":
-                    
+                    CrudFuntions.NewMaterial();
                     break;
                 case "2":
                     

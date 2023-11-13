@@ -7,10 +7,10 @@ public static partial class UI{
         do{
             WriteLine("Alumno Menu:");
             WriteLine("1: Ver materiales"); //check
-            WriteLine("2: Solicitar un material"); //
-            WriteLine("3: Ver solicitudes");
-            WriteLine("4: Historial de solicitudes");
-            WriteLine("5: Cambiar contraseña");
+            WriteLine("2: Solicitar un material"); //check
+            WriteLine("3: Ver solicitudes"); //check
+            WriteLine("4: Historial de solicitudes"); //check
+            WriteLine("5: Cambiar contraseña"); //check
             WriteLine("9: Logout");
             String option = ReadLine()??"";
             Clear();
@@ -27,6 +27,9 @@ public static partial class UI{
                 case "4":
                     CrudFuntions.HistoryOfOrders(2,estudiante.EstudianteId);
                     break;
+                case "5":
+                    ForgotPassword();
+                    break;
                 case "9":
                     return;
                 default:
@@ -38,12 +41,12 @@ public static partial class UI{
     static void TeacherUI(Docente? docente){
         do{
             WriteLine("Profesor Menu:");
-            WriteLine("1: Historial de solicitudes");
-            WriteLine("2: Ver solicitudes");
-            WriteLine("3: Hacer una solicitud");
-            WriteLine("4: Ver materiales");
-            WriteLine("5: Aprovar solicitudes");
-            WriteLine("6: Cambiar contraseña");
+            WriteLine("1: Historial de solicitudes"); //check
+            WriteLine("2: Ver solicitudes"); //check
+            WriteLine("3: Hacer una solicitud"); //check
+            WriteLine("4: Ver materiales"); //check
+            WriteLine("5: Aprovar solicitudes"); //check
+            WriteLine("6: Cambiar contraseña"); //check
             WriteLine("9: Logout");
 
             String option = ReadLine()??"";
@@ -67,6 +70,7 @@ public static partial class UI{
                     CrudFuntions.ApprovedOrder(1,docente.DocenteId);
                     break;
                 case "6":
+                    ForgotPassword();
                     break;
                 case "9":
                     return;
@@ -79,14 +83,14 @@ public static partial class UI{
     static void InventoryManagerUI(Almacenista? almacenista){
         do{
             WriteLine("Almacenista Menu:");
-            WriteLine("1: Administrar inventario");
-            WriteLine("2: Ver solicitudes");
+            WriteLine("1: Administrar inventario"); //medio check
+            WriteLine("2: Ver solicitudes"); //check
             WriteLine("3: Generar informes");
-            WriteLine("4: Agregar pedido");
-            WriteLine("5: Modificar pedido");
-            WriteLine("6: Eliminar pedido");
-            WriteLine("7: Cambiar contraseña");
-            WriteLine("8: Agendar mantenimiento");
+            WriteLine("4: Agregar pedido"); //check
+            WriteLine("5: Modificar pedido");//check
+            WriteLine("6: Eliminar pedido");//check  casi
+            WriteLine("7: Cambiar contraseña"); //check
+            WriteLine("8: Agendar mantenimiento");//check
             WriteLine("9: Logout");
 
             string option = ReadLine()??"";
@@ -95,6 +99,35 @@ public static partial class UI{
             switch (option){
                 case "1":
                     ManageInventory();
+                    break;
+                case "2":
+                    CrudFuntions.ListOrders(3,almacenista.AlmacenistaId);
+                    break;
+                case "3":
+
+                    break;
+                case "4":
+                    CrudFuntions.OrderMaterial(3,almacenista.AlmacenistaId);
+                    break;
+                case "5":
+                    CrudFuntions.ListOrdersWithHighlight();
+                    int updateOrders = CrudFuntions.UpdateOrders();
+                    WriteLine($"{updateOrders} pedidos modificados.");
+                    WriteLine();
+                    CrudFuntions.ListOrdersWithHighlight();
+                    break;
+                case "6":
+                    CrudFuntions.ListOrdersWithHighlight();
+                    int deletedOrders = CrudFuntions.DeleteOrders();
+                    WriteLine($"{deletedOrders} pedidos eliminados.");
+                    WriteLine();
+                    CrudFuntions.ListOrdersWithHighlight();
+                    break;
+                case "7":
+                    ForgotPassword();
+                    break;
+                case "8":
+                    CrudFuntions.NewReportMant();
                     break;
                 case "9":
                     return;
@@ -107,23 +140,24 @@ public static partial class UI{
     static void AdministratorUI(Coordinador? coordinador){
         do{
             WriteLine("Administrador Menu:");
-            WriteLine("1: Eliminar pedido");
-            WriteLine("2: Eliminar maestro");
-            WriteLine("3: Eliminar almacenista");
-            WriteLine("4: Eliminar estudiante");
-            WriteLine("5: Eliminar mantenimiento");
-            WriteLine("6: Modificar pedido");
-            WriteLine("7: Modificar maestro");
-            WriteLine("8: Modificar almacenista");
-            WriteLine("9: Modificar estudiante"); 
-            WriteLine("10: Modificar mantenimiento");
-            WriteLine("11: Agregar pedido");
-            WriteLine("12: Agregar maestro");
-            WriteLine("13: Agregar almacenista");
-            WriteLine("14: Agregar estudiante");
-            WriteLine("15: Agregar mantenimiento");
-            WriteLine("16: Cambiar contraseña");
-            WriteLine("17: Logout");
+            WriteLine("1: Eliminar pedido"); //check casi
+            WriteLine("2: Eliminar maestro"); //check casi
+            WriteLine("3: Eliminar almacenista"); //check casi
+            WriteLine("4: Eliminar estudiante"); //check casi
+            //WriteLine("5: Eliminar mantenimiento"); //check
+            WriteLine("6: Modificar pedido"); //check
+            WriteLine("7: Modificar maestro"); //check
+            WriteLine("8: Modificar almacenista"); //check
+            WriteLine("9: Modificar estudiante"); //check
+            WriteLine("10: Modificar mantenimiento"); 
+            WriteLine("11: Agregar pedido"); //check
+            WriteLine("12: Agregar maestro"); //check
+            WriteLine("13: Agregar almacenista"); //check
+            WriteLine("14: Agregar estudiante"); //check
+            WriteLine("15: Agregar mantenimiento"); //check
+            WriteLine("16: Agregar reporte mantenimiento"); //check
+            WriteLine("17: Cambiar contraseña"); //check
+            WriteLine("18: Logout"); //check
             String option = ReadLine()??"";
             Clear();
 
@@ -156,8 +190,15 @@ public static partial class UI{
                     WriteLine();
                     CrudFuntions.ListStudents();
                     break;
+                    /*
                 case "5":
+                    CrudFuntions.ReadMantenimientos();
+                    int deletedMat = CrudFuntions.DeleteMant();
+                    WriteLine($"{deletedMat} mantenimientos eliminados.");
+                    WriteLine();
+                    CrudFuntions.ReadMantenimientos();
                     break;
+                    */
                 case "6":
                     CrudFuntions.ListOrdersWithHighlight();
                     int updateOrders = CrudFuntions.UpdateOrders();
@@ -186,7 +227,30 @@ public static partial class UI{
                     WriteLine();
                     CrudFuntions.ListStudents();
                     break;
+                case "10":
+                    break;
+                case "11":
+                    CrudFuntions.OrderMaterial(4,coordinador.UsuarioId);
+                    break;
+                case "12":
+                    UI.SignUpDocente();
+                    break;
+                case "13":
+                    UI.SignUpAlmacenista();
+                    break;
+                case "14":
+                    UI.SignUpEstudent();
+                    break;
+                case "15":
+                    CrudFuntions.NewMant();
+                    break;
+                case "16":
+                    CrudFuntions.NewReportMant();
+                    break;
                 case "17":
+                    ForgotPassword();
+                    break;
+                case "18":
                     return;
                 default:
                     break;

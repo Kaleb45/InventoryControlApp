@@ -26,7 +26,9 @@ public static partial class UI
                     break;
                 case "3":
                     ForgotPassword();
-                return;
+                    break;
+                case "4":
+                    return;
                 default:
                     Console.WriteLine("Opción no válida, intentelo de nuevo");
                     break;

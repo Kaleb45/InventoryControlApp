@@ -225,7 +225,7 @@ public static int GroupVerification(int grupo)
     using (Almacen db = new())
     {
         IQueryable<Grupo> Grupos = db.Grupos.Where(g => g.GrupoId == grupo);
-        if (Grupos is null)
+        if (Grupos is null || !Grupos.Any())
         {
             WriteLine("The value you were searching does not exists");
             return 10;

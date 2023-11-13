@@ -6,13 +6,13 @@ public class UnitTest1
     public void PasswordValidation_ValidPassword_ReturnsZero()
     {
         // Arrange
-        string validPassword = "SecureP@ss123";
+        string validPassword = "3hfyT4)#f.nlJ";
 
         // Act
         int result = UI.PasswordValidation(validPassword);
 
         // Assert
-        Assert.Equal(01, result);
+        Assert.Equal(1, result);
     }
 
     [Fact]
@@ -34,7 +34,7 @@ public class UnitTest1
     public void PasswordValidation_PasswordWithoutUppercase_ReturnsTwenty()
     {
         // Arrange
-        string passwordWithoutUppercase = "lowercase123!";
+        string passwordWithoutUppercase = "lower&case6980#";
 
         // Act
         int result = UI.PasswordValidation(passwordWithoutUppercase);
@@ -47,7 +47,7 @@ public class UnitTest1
     public void PasswordValidation_PasswordWithoutDigit_ReturnsThirty()
     {
         // Arrange
-        string passwordWithoutDigit = "NoDigits!";
+        string passwordWithoutDigit = "NoDigits!@";
 
         // Act
         int result = UI.PasswordValidation(passwordWithoutDigit);
@@ -60,7 +60,7 @@ public class UnitTest1
     public void PasswordValidation_PasswordWithoutSpecialCharacter_ReturnsForty()
     {
         // Arrange
-        string passwordWithoutSpecialChar = "NoSpecialChar123";
+        string passwordWithoutSpecialChar = "NoSpecialChar12365";
 
         // Act
         int result = UI.PasswordValidation(passwordWithoutSpecialChar);
@@ -68,4 +68,72 @@ public class UnitTest1
         // Assert
         Assert.Equal(40, result);
     }
+
+    
+    [Fact]
+    public void PasswordValidation_PasswordWithoutLowercase_ReturnsFifty()
+    {
+        // Arrange
+        string passwordWithoutLowercase = "UPPERCASE123&#!";
+
+        // Act
+        int result = UI.PasswordValidation(passwordWithoutLowercase);
+
+        // Assert
+        Assert.Equal(50, result);
+    }
+
+    [Fact]
+    public void PasswordValidation_PasswordWithoutAlphanumeric_ReturnsSeventy()
+    {
+        // Arrange
+        string passwordWithoutAlphanumeric = "!@#$%^&*()-_+=<>?";
+
+        // Act
+        int result = UI.PasswordValidation(passwordWithoutAlphanumeric);
+
+        // Assert
+        Assert.Equal(20, result);
+    }
+
+    [Fact]
+    public void PasswordValidation_CommonPassword_ReturnsEighty()
+    {
+        // Arrange
+        string commonPassword = "contraseña";
+
+        // Act
+        int result = UI.PasswordValidation(commonPassword);
+
+        // Assert
+        Assert.Equal(20, result);
+    }
+
+    [Fact]
+    public void PasswordValidation_PasswordWithoutNonAlphanumeric_ReturnsNinety()
+    {
+        // Arrange
+        string passwordWithoutNonAlphanumeric = "AlphanumericOnly123";
+
+        // Act
+        int result = UI.PasswordValidation(passwordWithoutNonAlphanumeric);
+
+        // Assert
+        Assert.Equal(40, result);
+    }
+
+    [Fact]
+    public void PasswordValidation_PasswordWithoutUppercaseOrLowercase_ReturnsOneHundred()
+    {
+        // Arrange
+        string passwordWithoutUppercaseOrLowercase = "123456!890";
+
+        // Act
+        int result = UI.PasswordValidation(passwordWithoutUppercaseOrLowercase);
+
+        // Assert
+        Assert.Equal(20, result);
+    }
+
+    
 }

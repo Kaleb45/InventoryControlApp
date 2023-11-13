@@ -58,7 +58,7 @@ public static partial class UI
                             default:
                                 break;
                         }
-                    } while (validationCode != 01);
+                    } while (validationCode != 1);
 
                     usuario.Password = newPassword;
                     db.SaveChanges();

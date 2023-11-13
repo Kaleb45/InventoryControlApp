@@ -65,33 +65,64 @@ public static partial class UI
     ///     40 - Password does not contains special characters || 
     ///     01 - Password is valid
     /// </returns>
-    public static int PasswordValidation(string password)
-    {
-        if (password.Length < 8)
+    public static int PasswordValidation(string password){
+        List<string> commonPasswords = new List<string>
         {
-            Console.WriteLine("La contraseña es muy corta");
-            return 10;
-        }
+            "password",
+            "12345678",
+            "abc123456",
+            "contraseña",
+            "qwerty",
+            "admin",
+            "letmein",
+            "welcome",
+            "123456789",
+            "admin123",
+            "iloveyou",
+            "1234",
+            "abc123",
+            "password123",
+            "test123",
+            "123abc",
+            "abcdef",
+            "changeme",
+            "12345",
+            "qwerty123", 
+            "Pasword123#"
+        };
 
-        if (!password.Any(char.IsUpper))
+        if (password.Length <= 8)
         {
+            Console.WriteLine("La contraseña es muy corta. Debe tener al menos 8 caracteres.");
+            return 10;
+        }else if (!password.Any(char.IsUpper)){
             Console.WriteLine("La contraseña debe contener al menos un caracter en mayusculas");
             return 20;
-        }
-
-        if (!password.Any(char.IsDigit))
-        {
+        }else if (!password.Any(char.IsDigit)){
             Console.WriteLine("La contraseña debe contener al menos un caracter numerico");
             return 30;
-        }
-
-        if (!password.Any(c => "!@#$%^&*()-_+=<>?".Contains(c)))
-        {
-            Console.WriteLine("La contraseña debe contener al menos un caracter especial");
+        }else if (!password.Any(c => char.IsSymbol(c) || char.IsPunctuation(c))){
+            Console.WriteLine("La contraseña debe contener al menos un caracter especial no alfanumérico.");
             return 40;
+        }else if (!password.Any(char.IsLower)){
+            Console.WriteLine("La contraseña debe contener al menos un caracter en minúsculas.");
+            return 50; 
+        }else if (commonPasswords.Contains(password.ToLower())){
+            Console.WriteLine("La contraseña es muy común o fácil de adivinar.");
+            return 80;
+        }else if (!password.Any(c => !char.IsLetterOrDigit(c))){
+            Console.WriteLine("La contraseña debe contener al menos un caracter no alfanumérico.");
+            return 90;
+        }else if (!password.Any(char.IsUpper) || !password.Any(char.IsLower)){
+            Console.WriteLine("La contraseña debe contener una combinación de mayúsculas y minúsculas.");
+            return 100;
+        }else{
+
+            return 1;
+
         }
 
-        return 01;
+       
     }
 
     public static string GenerateUsername(string nombre, string ApellidoPaterno, string ApellidoMaterno)
@@ -180,7 +211,30 @@ public static partial class UI
         {
             return 40;
         }
-        return 01;
+
+        if (Email.Length != 17)
+        {
+            return 50;
+        }
+
+
+        if (!long.TryParse(Email.Substring(1, 8), out long parsedRegistro) || parsedRegistro != registro)
+        {
+            return 70;
+        }
+
+        if (Email.Substring(17) != "")
+        {
+            return 80;
+        }
+
+
+        if (!Email.Substring(9, 8).Equals("@ceti.mx", StringComparison.OrdinalIgnoreCase))
+        {
+            return 100;
+        }
+
+        return 1;
     }
 
     /// <summary>

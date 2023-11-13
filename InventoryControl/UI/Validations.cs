@@ -1,6 +1,8 @@
 ﻿using System;
 using AlmacenDataContext;
 using AlmacenSQLiteEntities;
+using System.Text.RegularExpressions;
+
 
 public static partial class UI
 {
@@ -239,18 +241,56 @@ public static int GroupVerification(int grupo)
 
 public static bool NameValidation(string name)
 {
-    bool validName;
-    if (name.Any(n => "!1234567890".Contains(n)) || name.Any(n => "!@#$%^&*()-_+=<>?".Contains(n)))
+    const int minLength = 2; // Define la longitud mínima permitida para el nombre
+    const int maxLength = 50; // Define la longitud máxima permitida para el nombre
+
+    bool validName = true;
+
+    // Longitud del nombre
+    if (name.Length < minLength || name.Length > maxLength)
     {
-        Console.WriteLine("No debe contener numeros o carcateres especiales");
+        Console.WriteLine("La longitud del nombre debe estar entre " + minLength + " y " + maxLength + ".");
         validName = false;
     }
-    else
+
+    // Nombre no puede estar vacío
+    if (string.IsNullOrWhiteSpace(name))
     {
-        validName = true;
+        Console.WriteLine("El nombre no puede estar vacío.");
+        validName = false;
     }
+
+    // Nombre solo puede contener letras
+    if (!name.All(char.IsLetter))
+    {
+        Console.WriteLine("El nombre solo puede contener letras.");
+        validName = false;
+    }
+
+    // Nombre no puede empezar o terminar con espacios en blanco
+    if (name.StartsWith(" ") || name.EndsWith(" "))
+    {
+        Console.WriteLine("El nombre no puede empezar o terminar con espacios en blanco.");
+        validName = false;
+    }
+
+    // No se permiten espacios en blanco consecutivos en el nombre
+    if (name.Contains("  "))
+    {
+        Console.WriteLine("No se permiten espacios en blanco consecutivos en el nombre.");
+        validName = false;
+    }
+
+    // Validación original de caracteres especiales y números
+    if (name.Any(n => "!1234567890".Contains(n)) || name.Any(n => "!@#$%^&*()-_+=<>?".Contains(n)))
+    {
+        Console.WriteLine("No debe contener números o caracteres especiales.");
+        validName = false;
+    }
+
     return validName;
 }
+
 
 public static bool EmailValidation(string email)
 {

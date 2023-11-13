@@ -104,7 +104,7 @@ public static partial class UI{
                     CrudFuntions.ListOrders(3,almacenista.AlmacenistaId);
                     break;
                 case "3":
-
+                    CrudFuntions.GenerateReports();
                     break;
                 case "4":
                     CrudFuntions.OrderMaterial(3,almacenista.AlmacenistaId);

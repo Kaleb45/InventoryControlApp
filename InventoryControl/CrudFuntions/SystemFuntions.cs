@@ -38,17 +38,23 @@ public static partial class CrudFuntions{
         } while (UI.LabValidation(LabID) == false);
         pedido.LaboratorioId =LabID;
 
-        do{
-            WriteLine("Ingresa la hora de entrega:");
-            input = ReadLine();
-        } while (UI.HourValidation(input) == false);
-        pedido.HoraEntrega = DateTime.Parse($"{pedido.Fecha:yyyy-MM-dd} {input}");
+        do
+        {
+            do{
+                WriteLine("Ingresa la hora de entrega:");
+                input = ReadLine();
+            } while (UI.HourValidation(input) == false);
+            pedido.HoraEntrega = DateTime.Parse($"{pedido.Fecha:yyyy-MM-dd} {input}");
 
-        do{
-            WriteLine("Ingresa la hora de devolucion:");
-            input = ReadLine();
-        } while (UI.HourValidation(input) == false);
-        pedido.HoraDevolucion = DateTime.Parse($"{pedido.Fecha:yyyy-MM-dd} {input}");
+            do{
+                WriteLine("Ingresa la hora de devolucion:");
+                input = ReadLine();
+            } while (UI.HourValidation(input) == false);
+            pedido.HoraDevolucion = DateTime.Parse($"{pedido.Fecha:yyyy-MM-dd} {input}");
+            if(pedido.HoraDevolucion <= pedido.HoraEntrega){
+                Program.Fail("La hora de devolucion debe ser posterior a la hora de entrega");
+            }
+        } while (pedido.HoraDevolucion <= pedido.HoraEntrega);
 
         //Para que la fecha tome el valor de Hora de Entrega
         pedido.Fecha = DateTime.Parse($"{pedido.Fecha:yyyy-MM-dd} {pedido.HoraEntrega:HH:mm:ss}");
@@ -195,4 +201,50 @@ public static partial class CrudFuntions{
             }
         }
     }
+    public static void EntregaMaterial(){
+        using(Almacen db = new()){
+            IQueryable<Material> materials = db.Materiales.Where(m => m.Condicion == "2");
+            ReadQueryMateriales(materials);
+            string? input;
+            int materialId;
+            do{
+                WriteLine("Que material desea entregar?");
+                input = ReadLine();
+                materialId = UI.GetMaterialForID(input);
+            }while(UI.MaterialValidation(materialId) == false);
+            Material material = db.Materiales.FirstOrDefault(m => m.MaterialId == materialId);
+            material.Condicion = "1";
+            db.SaveChanges();
+        }
+    }
+
+    public static void CalcularAdeudo()
+    {
+        using (Almacen db = new())
+        {
+            foreach (Estudiante alumno in db.Estudiantes)
+            {
+                DateTime fechaActual = DateTime.Now.Date;
+                
+                var pedidos = db.Pedidos
+                    .Where(p => p.EstudianteId == alumno.EstudianteId)
+                    .AsEnumerable() // Forzar la evaluación en el lado del cliente
+                    .Where(p => (fechaActual - p.Fecha.Value.Date).TotalDays >= 0);
+                if (pedidos is null || !pedidos.Any()){
+                    alumno.Adeudo = 0;
+                }
+                else
+                {
+                    alumno.Adeudo = 0;
+                    foreach (var item in pedidos){
+                        fechaActual = DateTime.Now.Date;
+                        alumno.Adeudo = alumno.Adeudo + (int)(10 * (fechaActual - item.Fecha.Value.Date).TotalDays);
+                    }
+                    UI.NotificationOfOrders(alumno);
+                }
+                db.SaveChanges();
+            }
+        }
+    }
+
 }

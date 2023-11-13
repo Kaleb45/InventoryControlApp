@@ -15,9 +15,9 @@ public static partial class UI
         {
             Usuario usuario = db.Usuarios
                 .FirstOrDefault(u => u.Almacenistas.Any(a => a.Correo == email)
-                                   || u.Coordinadores.Any(c => c.Correo == email)
-                                   || u.Docentes.Any(d => d.Correo == email)
-                                   || u.Estudiantes.Any(e => e.Correo == email));
+                                    || u.Coordinadores.Any(c => c.Correo == email)
+                                    || u.Docentes.Any(d => d.Correo == email)
+                                    || u.Estudiantes.Any(e => e.Correo == email));
 
             if (usuario != null)
             {
@@ -89,6 +89,37 @@ public static partial class UI
         emailSender.setDestinatary(email);
         emailSender.setSubject("Código de Verificación");
         emailSender.setBody($"Tu código de verificación es: {verificationCode}", containsHTML: false);
+        emailSender.sendMail();
+    }
+
+    public static void SendNotTeacher(Estudiante estudiante, DescPedido descPedido, Pedido pedido){
+        using (Almacen db = new()){
+            EmailSender emailSender = new EmailSender();
+            Docente docente = db.Docentes.FirstOrDefault(p => p.DocenteId == pedido.DocenteId);
+            Material material = db.Materiales.FirstOrDefault(p => p.MaterialId == descPedido.MaterialId);
+            emailSender.setDestinatary(docente.Correo);
+            emailSender.setSubject("Tienes una nueva solicitud de aprovacion de material");
+            string message = $"Datos del alumno\n Nombre: {estudiante.Nombre}";
+            message += $"{estudiante.ApellidoPaterno}  {estudiante.ApellidoMaterno}\n";
+            message += $"Registro: {estudiante.EstudianteId} \n";
+            message += $"Grupo: {estudiante.Grupo.Nombre} \n";
+            message += $"Datos del pedido \n";
+            message += $"Cantidad: {material.Descripcion}\n";
+            message += $"Cantidad: {descPedido.Cantidad}\n";
+            emailSender.setBody(message, containsHTML: false);
+            emailSender.sendMail();
+        }
+    }
+    public static void SendEmailForOrderState(Estudiante? estudiante, string? razon, Pedido pedido){
+        EmailSender emailSender = new EmailSender();
+        emailSender.setDestinatary(estudiante.Correo);
+        emailSender.setSubject("Tu profesor ya reviso tu solicitud");
+        if(pedido.Estado == true){
+            emailSender.setBody($"Tu solicitud de pedido fue aprovada", containsHTML: false);
+        }
+        else{
+            emailSender.setBody($"Tu solicitud de pedido fue denegada por que: {razon}", containsHTML: false);
+        }
         emailSender.sendMail();
     }
 }

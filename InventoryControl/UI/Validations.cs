@@ -399,7 +399,7 @@ public static int GetMaterialID(int categoryId){
             material.Condicion = "2";
             db.SaveChanges();
             if (material is null){
-                Program.Fail("Ese laboratorio no esta disponible");
+                Program.Fail("Ese material no esta disponible");
                 return 0;
             }
             else
@@ -415,6 +415,60 @@ public static int GetMaterialID(int categoryId){
             throw;
         }
     }
+}
+
+public static int GetMaterialForID(string? id)
+{
+    using (Almacen db = new())
+    {
+        try
+        {
+            Material material = db.Materiales.First(l => l.MaterialId == int.Parse(id));
+            if (material is null)
+            {
+                Program.Fail("Ese material no exite");
+                return 0;
+            }
+            else
+            {
+                return material.MaterialId;
+            }
+        }
+        catch (System.InvalidOperationException)
+        {
+            Program.Fail("Ese material no exite");
+            return 0;
+            throw;
+        }
+    }
+}
+
+public static bool MaterialValidation(int realMaterial)
+{
+    bool validMaterial;
+    try
+    {
+        using (Almacen db = new())
+        {
+            IQueryable<Material> queryableMaterial = db.Materiales.Where(l => l.MaterialId == realMaterial);
+            if (queryableMaterial is null || (!queryableMaterial.Any()))
+            {
+                Program.Fail("Ese material no exite");
+                validMaterial = false;
+            }
+            else
+            {
+                validMaterial = true;
+            }
+        }
+    }
+    catch (System.Exception)
+    {
+        Program.Fail("Introduce un numero por favor.");
+        validMaterial = false;
+        throw;
+    }
+    return validMaterial;
 }
 
 public static int GetPedidoID(string? id)
@@ -631,5 +685,221 @@ public static bool EstudianteValidation(int realEstudiante)
         throw;
     }
     return validEstudiante;
+}
+
+public static int GetMarcaID(string? id)
+{
+    using (Almacen db = new())
+    {
+        try
+        {
+            Marca marca = db.Marcas.First(d => d.MarcaId == int.Parse(id));
+            if (marca is null)
+            {
+                Program.Fail("Esa marca no exite");
+                return 0;
+            }
+            else
+            {
+                return marca.MarcaId;
+            }
+        }
+        catch (System.InvalidOperationException)
+        {
+            Program.Fail("Ese marca no exite");
+            return 0;
+            throw;
+        }
+    }
+}
+
+public static bool MarcaValidation(int realMarca)
+{
+    bool validMarca;
+    try
+    {
+        using (Almacen db = new())
+        {
+            IQueryable<Marca> queryableMarca = db.Marcas.Where(d => d.MarcaId == realMarca);
+            if (queryableMarca is null || (!queryableMarca.Any()))
+            {
+                Program.Fail("Ese marca no exite");
+                validMarca = false;
+            }
+            else
+            {
+                validMarca = true;
+            }
+        }
+    }
+    catch (System.Exception)
+    {
+        Program.Fail("Introduce un numero por favor.");
+        validMarca = false;
+        throw;
+    }
+    return validMarca;
+}
+
+public static int GetModeloID(string? id)
+{
+    using (Almacen db = new())
+    {
+        try
+        {
+            Modelo modelo = db.Modelos.First(d => d.ModeloId == int.Parse(id));
+            if (modelo is null)
+            {
+                Program.Fail("Esa modelo no exite");
+                return 0;
+            }
+            else
+            {
+                return modelo.ModeloId;
+            }
+        }
+        catch (System.InvalidOperationException)
+        {
+            Program.Fail("Ese modelo no exite");
+            return 0;
+            throw;
+        }
+    }
+}
+
+public static bool ModeloValidation(int realModelo)
+{
+    bool validModelo;
+    try
+    {
+        using (Almacen db = new())
+        {
+            IQueryable<Modelo> queryableModelo = db.Modelos.Where(d => d.ModeloId == realModelo);
+            if (queryableModelo is null || (!queryableModelo.Any()))
+            {
+                Program.Fail("Ese modelo no exite");
+                validModelo = false;
+            }
+            else
+            {
+                validModelo = true;
+            }
+        }
+    }
+    catch (System.Exception)
+    {
+        Program.Fail("Introduce un numero por favor.");
+        validModelo = false;
+        throw;
+    }
+    return validModelo;
+}
+
+public static int GetCategoriaID(string? id)
+{
+    using (Almacen db = new())
+    {
+        try
+        {
+            Categoria categoria = db.Categorias.First(d => d.CategoriaId == int.Parse(id));
+            if (categoria is null)
+            {
+                Program.Fail("Esa categoria no exite");
+                return 0;
+            }
+            else
+            {
+                return categoria.CategoriaId;
+            }
+        }
+        catch (System.InvalidOperationException)
+        {
+            Program.Fail("Ese categoria no exite");
+            return 0;
+            throw;
+        }
+    }
+}
+
+public static bool CategoriaValidation(int realCategoria)
+{
+    bool validCategoria;
+    try
+    {
+        using (Almacen db = new())
+        {
+            IQueryable<Categoria> queryableCategoria = db.Categorias.Where(d => d.CategoriaId == realCategoria);
+            if (queryableCategoria is null || (!queryableCategoria.Any()))
+            {
+                Program.Fail("Ese categoria no exite");
+                validCategoria = false;
+            }
+            else
+            {
+                validCategoria = true;
+            }
+        }
+    }
+    catch (System.Exception)
+    {
+        Program.Fail("Introduce un numero por favor.");
+        validCategoria = false;
+        throw;
+    }
+    return validCategoria;
+}
+
+public static int GetMantenimientoID(string? id)
+{
+    using (Almacen db = new())
+    {
+        try
+        {
+            Mantenimiento mantenimiento = db.Mantenimientos.First(d => d.MantenimientoId == int.Parse(id));
+            if (mantenimiento is null)
+            {
+                Program.Fail("Esa mantenimiento no exite");
+                return 0;
+            }
+            else
+            {
+                return mantenimiento.MantenimientoId;
+            }
+        }
+        catch (System.InvalidOperationException)
+        {
+            Program.Fail("Ese mantenimiento no exite");
+            return 0;
+            throw;
+        }
+    }
+}
+
+public static bool MantenimientoValidation(int realMantenimiento)
+{
+    bool validMantenimiento;
+    try
+    {
+        using (Almacen db = new())
+        {
+            IQueryable<Mantenimiento> queryableMantenimiento = db.Mantenimientos.Where(d => d.MantenimientoId == realMantenimiento);
+            if (queryableMantenimiento is null || (!queryableMantenimiento.Any()))
+            {
+                Program.Fail("Ese mantenimiento no exite");
+                validMantenimiento = false;
+            }
+            else
+            {
+                validMantenimiento = true;
+            }
+        }
+    }
+    catch (System.Exception)
+    {
+        Program.Fail("Introduce un numero por favor.");
+        validMantenimiento = false;
+        throw;
+    }
+    return validMantenimiento;
 }
 }

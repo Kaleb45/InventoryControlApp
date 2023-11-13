@@ -122,4 +122,34 @@ public static partial class UI
         }
         emailSender.sendMail();
     }
+
+    public static void NotificationOfOrders(Estudiante estudiante){
+        if (estudiante == null)
+        {
+            // Manejar el caso en el que estudiante es null, por ejemplo, lanzar una excepción o salir de la función.
+            return;
+        }
+        using (Almacen db = new()){
+            EmailSender emailSender = new EmailSender(); 
+            DateTime fechaActual = DateTime.Now.Date;
+            emailSender.setDestinatary(estudiante.Correo);
+            emailSender.setSubject("Entregas de pedidos atrasados");
+            string message = "Debes al almacen los siguientes materiales: \n";
+            List<Pedido> pedidos = db.Pedidos
+                        .Where(p => p.EstudianteId == estudiante.EstudianteId)
+                        .AsEnumerable() // Forzar la evaluación en el lado del cliente
+                        .Where(p => (fechaActual - p.Fecha.Value.Date).TotalDays >= 0).ToList();
+            foreach (Pedido item in pedidos)
+            {
+                DescPedido descPedido = db.DescPedidos.FirstOrDefault(d => d.PedidoId == item.PedidoId);
+                Material material = db.Materiales.FirstOrDefault(p => p.MaterialId == descPedido.MaterialId);
+                message += $"Material: {material.Descripcion}\n";
+                message += $"Cantidad: {descPedido.Cantidad}\n";
+            }
+            message += $"Devuelvelo lo antes posible o la deuda de adeudo incrementara\n";
+            message += $"Adeudo actual: {estudiante.Adeudo}";
+            emailSender.setBody(message, containsHTML: false);
+            emailSender.sendMail();
+        }
+    }
 }

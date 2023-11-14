@@ -80,7 +80,9 @@ public static partial class UI
 
     private static string GenerateRandomString()
     {
-        return Guid.NewGuid().ToString();
+        string guid = Guid.NewGuid().ToString();
+        string[] parts = guid.Split('-');
+        return parts[0];
     }
 
     private static void SendVerificationCodeByEmail(string email, string verificationCode)

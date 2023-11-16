@@ -9,8 +9,17 @@ namespace AlmacenSQLiteEntities
     [Table("Usuario")]
     public class Usuario
     {
+        public Usuario()
+        {
+            Almacenistas = new HashSet<Almacenista>();
+            Coordinadores = new HashSet<Coordinador>();
+            Docentes = new HashSet<Docente>();
+            Estudiantes = new HashSet<Estudiante>();
+        }
+
         [Key]
         [Column(TypeName = "int")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UsuarioId { get; set; }
 
         [Required]

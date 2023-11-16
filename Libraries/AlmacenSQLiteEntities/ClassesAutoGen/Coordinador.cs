@@ -11,6 +11,11 @@ namespace AlmacenSQLiteEntities
     [Table("Coordinador")]
     public class Coordinador
     {
+        public Coordinador()
+        {
+            Pedidos = new HashSet<Pedido>();
+        }
+
         [Key]
         [Column(TypeName = "int")]
         public int CoordinadorId { get; set; }

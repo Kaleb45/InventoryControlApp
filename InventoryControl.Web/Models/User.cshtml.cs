@@ -8,9 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using AlmacenSQLiteEntities;
 using AlmacenDataContext;
-using InventoryControl.UI;
 
-namespace InventoryControl.Pages
+namespace InventoryControlPages
 {
     public class UserModel : PageModel
     {
@@ -40,32 +39,27 @@ namespace InventoryControl.Pages
 
                 if (result.usuarioEncontrado != null)
                 {
-                    // Redirige al menú correspondiente según el tipo de usuario
-                    UI.MenuSelected(result.usuarioEncontrado, result.typeOfUser);
-                    return RedirectToPage("/Menu"); // Asegúrate de que la página exista
+                    // Almacena la información del usuario en TempData
+                    TempData["UserName"] = result.usuarioEncontrado.Usuario1;
+
+                    Usuario usuario = result.usuarioEncontrado;
+
+                    switch (result.typeOfUser)
+                    {
+                        case 1:
+                            return RedirectToPage("/DocenteMenu", usuario);
+                        case 2:
+                            return RedirectToPage("/EstudianteMenu", usuario);
+                        case 3:
+                            return RedirectToPage("/AlmacenistaMenu", usuario);
+                        case 4:
+                            return RedirectToPage("/CoordinadorMenu", usuario);
+                    }
                 }
             }
 
             // Si las credenciales no son válidas o hay un error, permanece en la misma página
             return Page();
-        }
-
-        static public IActionResult MenuSelected(Usuario currentUser, int typeOfUser)
-        {
-            switch (typeOfUser)
-            {
-                case 1:
-                    return RedirectToPage("/DocenteMenu"); // Reemplaza con la página de menú de docente
-                case 2:
-                    return RedirectToPage("/EstudianteMenu"); // Reemplaza con la página de menú de estudiante
-                case 3:
-                    return RedirectToPage("/AlmacenistaMenu"); // Reemplaza con la página de menú de almacenista
-                case 4:
-                    return RedirectToPage("/CoordinadorMenu"); // Reemplaza con la página de menú de coordinador
-                default:
-                    // Manejar cualquier otro caso aquí, posiblemente una página de error
-                    return RedirectToPage("/Menu");
-            }
         }
     }
 }

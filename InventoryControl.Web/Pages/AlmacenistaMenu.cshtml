@@ -1,7 +1,7 @@
 @page
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.EntityFrameworkCore.ChangeTracking
-@model InventoryControl.Pages.UserModel
+@model InventoryControlPages.UserModel
 @addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
 @using AlmacenSQLiteEntities;
 @using AlmacenDataContext;
@@ -16,7 +16,8 @@
 </head>
 <body>
     <div class="titles">
-        <p>Usuarios</p>
+        <h1>Bienvenido, @TempData["UserName"]</h1>
+        <p>Almacenista</p>
     </div>
     
 </body>

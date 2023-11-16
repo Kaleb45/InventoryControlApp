@@ -22,13 +22,13 @@ namespace AlmacenSQLiteEntities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UsuarioId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El nombre de usuario es obligatorio.")]
         [Column("Usuario", TypeName = "nvarchar(50)")]
         [StringLength(50)]
         public string Usuario1 { get; set; } = null!;
 
         
-        [Required]
+        [Required(ErrorMessage = "La contraseña es obligatoria.")]
         [Column(TypeName = "nvarchar(8)")]
         [StringLength(8)]
         public string Password { get; set; } = null!;

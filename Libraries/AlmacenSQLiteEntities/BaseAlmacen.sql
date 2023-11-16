@@ -49,7 +49,7 @@ INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUE
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('19', 'PROBADOR', 'PROBADOR Y PROGRAMADOR UNIVERSAL', '2');
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('20', 'PROGRAMADOR', 'PROGRAMADOR UNIVERSAL', '2');
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('21', 'PROYECTOR', 'PROYECTOR', '2');
-INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('22', 'PUENTE', 'PUENTE UNIVERSAL', '3');
+INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('22', 'PUENTE', 'PUENTE UNIVERSAL', '2');
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('23', 'REGULADOR', 'REGULADOR', '3');
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('24', 'REPRODUCTOR', 'REPRODUCTOR MP3, CD, DVD, CD-RW/R, DVD-RW/R, SVCD, JPEG Y VHS', '2');
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('25', 'SAD', 'EQUIPO DE ADQUISICION DE DATOS', '2');
@@ -270,6 +270,14 @@ CREATE TABLE "Mantenimiento" (
 
 -----------------------------------------------------
 
+INSERT INTO 'Mantenimiento' ('MantenimientoId', 'Nombre', 'Descripcion') VALUES ('1', 'LIMPIEZA', 'SE LE HARA UNA LIMPIEZA AL EQUIPO INGRESADO');
+INSERT INTO 'Mantenimiento' ('MantenimientoId', 'Nombre', 'Descripcion') VALUES ('2', 'REPARACION', 'SE LE HARA UNA REPARACION AL EQUIPO INGRESADO');
+INSERT INTO 'Mantenimiento' ('MantenimientoId', 'Nombre', 'Descripcion') VALUES ('3', 'CAMBIO DE PIEZA', 'SE LE HARA UN CAMBIO DE PIEZA AL EQUIPO INGRESADO');
+INSERT INTO 'Mantenimiento' ('MantenimientoId', 'Nombre', 'Descripcion') VALUES ('4', 'SOLDADO DE PIEZA', 'SE LE SOLDARA UNA DE LAS PIEZA AL EQUIPO INGRESADO');
+INSERT INTO 'Mantenimiento' ('MantenimientoId', 'Nombre', 'Descripcion') VALUES ('5', 'CAMBIO DE BATERIA', 'SE LE HARA UN CAMBIO DE BATERIA AL EQUIPO INGRESADO');
+
+-----------------------------------------------------
+
 CREATE TABLE "Usuario" (
   "UsuarioId" INTEGER PRIMARY KEY,
   "Usuario" nvarchar(50) NOT NULL,
@@ -282,66 +290,66 @@ CREATE TABLE "Usuario" (
 
 -----------------------------------------------------
 
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('1', 'ANDRES', '@ANDRES#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('2', 'MARIA DEL CARMEN', '@MARIADELCARMEN#1 ', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('3', 'MELISSA', '@MELISSA#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('4', 'YAIR', '@YAIR#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('5', 'JORDAN', '@JORDAN#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('6', 'ROMAN', '@ROMAN#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('7', 'ANTONIO', '@ANTONIO#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('8', 'CARLOS', '@CARLOS#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('9', 'JORGE', '@JORGE#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('10', 'JAIR', '@JAIR#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('11', 'ANDREA', '@ANDREA#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('12', 'MONSERRAT', '@MONSERRAT#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('13', 'LUIS ALEJANDRO', '@LUISALEJANDRO#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('14', 'PAULINA', '@PAULINA#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('15', 'SARA', '@SARA#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('16', 'ANEEL', '@ANEEL#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('17', 'JUAN', '@JUAN#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('18', 'MARIA', '@MARIA#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('19', 'ANA', '@ANA#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('20', 'ALEJANDRO', '@ALEJANDRO#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('21', 'DANIELA', '@DANIELA#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('22', 'MARISOL', '@MARISOL#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('23', 'JAVIER', '@JAVIER#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('24', 'SOFIA', '@SOFIA#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('25', 'DANIEL', '@DANIEL#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('26', 'MARIAN', '@MARIAN#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('27', 'MARIANA', '@MARIANA#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('28', 'JULIO', '@JULIO#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('29', 'MIGUEL', '@MIGUEL#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('30', 'ANGEL', '@ANGEL#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('31', 'LUZ ARACELI', '@LUZARACELI#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('32', 'KARLA ARELY', '@KARLAARELY#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('33', 'NANCY DEL CARMEN', '@NANCYDELCARMEN#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('34', 'CARLOS ALBERTO', '@CARLOSALBERTO#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('35', 'LUIS RENE', '@LUISRENE#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('36', 'ANGEL EMMANUEL', '@ANGELEMMANUEL#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('37', 'ERNESTO ALEJANDRO', '@ERNESTOALEJANDRO#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('38', 'ALEJANDRA', '@ALEJANDRA#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('39', 'ELIZABETH ALVAREZ', '@ELIZABETHALVAREZ#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('40', 'ULYSES', '@ULYSES#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('41', 'ANTONIO', '@ANTONIO#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('42', 'SERGIO ANTONIO', '@SERGIOANTONIO#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('43', 'SONIA ERIKA', '@SONIAERIKA#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('44', 'SUSANA ELIZABETH', '@SUSANAELIZABETH#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('45', 'SERGIO', '@SERGIO#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('46', 'DIEGO', '@DIEGO#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('47', 'RODRIGO', '@RODRIGO#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('48', 'JARED', '@JARED#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('49', 'GABRIELA', '@GABRIELA#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('50', 'BRUNO', '@BRUNO#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('51', 'PERLA DAYANE', '@PERLADAYANE#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('52', 'DENAHI', '@DENAHI#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('53', 'ALEXIS ABRAHAM', '@ALEXISABRAHAM#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('54', 'DIEGO ANTONIO', '@DIEGOANTONIO#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('55', 'DAVID KALEB', '@DAVIDKALEB#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('56', 'DIEGO EMILIANO', '@DIEGOEMILIANO#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('57', 'ARELY JAZMIN', '@ARELYJAZMIN#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('58', 'DANIEL', '@DANIEL#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('59', 'SERGIO YAEL', '@SERGIOYAEL#1', '0');
-INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('60', 'FERNANDO', '@FERNANDO#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('1', 'ANFLTR', '@ANDRES#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('2', 'MASARA', '@MARIADELCARMEN#1 ', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('3', 'MECOPE', '@MELISSA#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('4', 'YAFUME', '@YAIR#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('5', 'JOARHE', '@JORDAN#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('6', 'ROCODE', '@ROMAN#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('7', 'ANLOVA', '@ANTONIO#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('8', 'CARABA', '@CARLOS#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('9', 'JOECJI', '@JORGE#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('10', 'JADERO', '@JAIR#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('11', 'ANRUAV', '@ANDREA#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('12', 'MOVAAY', '@MONSERRAT#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('13', 'LUROCA', '@LUISALEJANDRO#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('14', 'PAPERA', '@PAULINA#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('15', 'SALOOC', '@SARA#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('16', 'ANMARO', '@ANEEL#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('17', 'JUPEGO', '@JUAN#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('18', 'MAGAMA', '@MARIA#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('19', 'ANHESA', '@ANA#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('20', 'ALROGO', '@ALEJANDRO#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('21', 'DARUTO', '@DANIELA#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('22', 'MATORE', '@MARISOL#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('23', 'JAGOAV', '@JAVIER#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('24', 'SOCALO', '@SOFIA#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('25', 'DAARSO', '@DANIEL#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('26', 'MAPISE', '@MARIAN#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('27', 'MAMEES', '@MARIANA#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('28', 'JUOZES', '@JULIO#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('29', 'MIGOLA', '@MIGUEL#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('30', 'ANRAMO', '@ANGEL#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('31', 'LUGABE', '@LUZARACELI#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('32', 'KAISRO', '@KARLAARELY#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('33', 'NABEME', '@NANCYDELCARMEN#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('34', 'CARAGA', '@CARLOSALBERTO#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('35', 'LUDUHE', '@LUISRENE#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('36', 'ANBRSA', '@ANGELEMMANUEL#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('37', 'ERPLOY', '@ERNESTOALEJANDRO#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('38', 'ALALTO', '@ALEJANDRA#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('39', 'ELDESO', '@ELIZABETHALVAREZ#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('40', 'ULVACA', '@ULYSES#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('41', 'ANLOGO', '@ANTONIO#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('42', 'SEELRO', '@SERGIOANTONIO#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('43', 'SOIBTO', '@SONIAERIKA#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('44', 'SUFEHE', '@SUSANAELIZABETH#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('45', 'SEBEDE', '@SERGIO#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('46', 'DIROCO', '@DIEGO#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('47', 'ROROCO', '@RODRIGO#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('48', 'JADUFL', '@JARED#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('49', 'GAARGO', '@GABRIELA#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('50', 'BRCASO', '@BRUNO#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('51', 'PERAPI', '@PERLADAYANE#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('52', 'DELOMO', '@DENAHI#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('53', 'ALOCLO', '@ALEXISABRAHAM#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('54', 'DIROAN', '@DIEGOANTONIO#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('55', 'DAREHA', '@DAVIDKALEB#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('56', 'DIGOMA', '@DIEGOEMILIANO#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('57', 'ARZAUL', '@ARELYJAZMIN#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('58', 'DACRME', '@DANIEL#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('59', 'SECRNA', '@SERGIOYAEL#1', '0');
+INSERT INTO 'Usuario' ('UsuarioId', 'Usuario', 'Password', 'Temporal') VALUES ('60', 'FEGAAP', '@FERNANDO#1', '0');
 
 -----------------------------------------------------
 
@@ -384,7 +392,7 @@ INSERT INTO "Docente" ("DocenteId", "Nombre", "ApellidoPaterno", "ApellidoMatern
 INSERT INTO "Docente" ("DocenteId", "Nombre", "ApellidoPaterno", "ApellidoMaterno", "Correo", "PlantelId", "UsuarioId") VALUES ('10', 'ULYSES', 'VAZQUEZ', 'CARDENAS', 'uvazquez@ceti.mx', '1', '40');
 INSERT INTO "Docente" ("DocenteId", "Nombre", "ApellidoPaterno", "ApellidoMaterno", "Correo", "PlantelId", "UsuarioId") VALUES ('11', 'ANTONIO', 'LOZANO', 'GONZALEZ', 'lozano@ceti.mx', '1', '41');
 INSERT INTO "Docente" ("DocenteId", "Nombre", "ApellidoPaterno", "ApellidoMaterno", "Correo", "PlantelId", "UsuarioId") VALUES ('12', 'SERGIO ANTONIO', 'ELLEBRACKE', 'ROMAN', 'sellebracke@ceti.mx', '1', '42');
-INSERT INTO "Docente" ("DocenteId", "Nombre", "ApellidoPaterno", "ApellidoMaterno", "Correo", "PlantelId", "UsuarioId") VALUES ('13', 'SONIA ERIKA', 'IBAnEZ', 'TORRE', 'sdtorrre@ceti.mx', '1', '43');
+INSERT INTO "Docente" ("DocenteId", "Nombre", "ApellidoPaterno", "ApellidoMaterno", "Correo", "PlantelId", "UsuarioId") VALUES ('13', 'SONIA ERIKA', 'IBAÑEZ', 'TORRE', 'sdtorrre@ceti.mx', '1', '43');
 INSERT INTO "Docente" ("DocenteId", "Nombre", "ApellidoPaterno", "ApellidoMaterno", "Correo", "PlantelId", "UsuarioId") VALUES ('14', 'SUSANA ELIZABETH', 'FERRER', 'HERNANDEZ', 'susanah@ceti.mx', '1', '44');
 INSERT INTO "Docente" ("DocenteId", "Nombre", "ApellidoPaterno", "ApellidoMaterno", "Correo", "PlantelId", "UsuarioId") VALUES ('15', 'SERGIO', 'BECERRA', 'DELGADO', 'sergiobd@ceti.mx', '1', '45');
 
@@ -560,8 +568,15 @@ CREATE TABLE "ReporteMantenimiento" (
 	) REFERENCES "Material" (
 		"MaterialId"
     )
-
 );
+
+-----------------------------------------------------
+
+INSERT INTO 'ReporteMantenimiento' ('ReporteMantenimientoId', 'Fecha', 'MantenimientoId', 'MaterialId') VALUES ('1', '2023-11-20', '1', '31590');
+INSERT INTO 'ReporteMantenimiento' ('ReporteMantenimientoId', 'Fecha', 'MantenimientoId', 'MaterialId') VALUES ('2', '2023-11-21', '2', '31495');
+INSERT INTO 'ReporteMantenimiento' ('ReporteMantenimientoId', 'Fecha', 'MantenimientoId', 'MaterialId') VALUES ('3', '2023-11-22', '3', '31564');
+INSERT INTO 'ReporteMantenimiento' ('ReporteMantenimientoId', 'Fecha', 'MantenimientoId', 'MaterialId') VALUES ('4', '2023-11-23', '4', '31774');
+INSERT INTO 'ReporteMantenimiento' ('ReporteMantenimientoId', 'Fecha', 'MantenimientoId', 'MaterialId') VALUES ('5', '2023-11-24', '5', '11475');
 
 -----------------------------------------------------
 
@@ -710,7 +725,7 @@ INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31593', '1', 'GENERADOR DE FUNCIONES IMPEDANCIA DE ENTRADA 10 HOMS Y RANGO 2 HZ A 20 MHZ', '2004', '1', '12', 'S/S', '4457.4', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31589', '1', 'GENERADOR DE FUNCIONES IMPEDANCIA DE ENTRADA 10 HOMS Y RANGO 2 HZ A 20 MHZ', '2004', '1', '12', 'S/S', '4457.4', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31591', '1', 'GENERADOR DE FUNCIONES IMPEDANCIA DE ENTRADA 10 HOMS Y RANGO 2 HZ A 20 MHZ', '2004', '1', '12', 'S/S', '4457.4', '1', '1');
-INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31590', '1', 'GENERADOR DE FUNCIONES IMPEDANCIA DE ENTRADA 10 HOMS Y RANGO 2 HZ A 20 MHZ', '2004', '1', '12', 'S/S', '4457.4', '1', '1');
+INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31590', '1', 'GENERADOR DE FUNCIONES IMPEDANCIA DE ENTRADA 10 HOMS Y RANGO 2 HZ A 20 MHZ', '2004', '1', '12', 'S/S', '4457.4', '1', '2');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31592', '1', 'GENERADOR DE FUNCIONES IMPEDANCIA DE ENTRADA 10 HOMS Y RANGO 2 HZ A 20 MHZ', '2004', '1', '12', 'S/S', '4457.4', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31595', '1', 'GENERADOR DE FUNCIONES IMPEDANCIA DE ENTRADA 10 HOMS Y RANGO 2 HZ A 20 MHZ', '2004', '1', '12', 'S/S', '4457.4', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31579', '1', 'GENERADOR DE FUNCIONES IMPEDANCIA DE ENTRADA 10 HOMS Y RANGO 2 HZ A 20 MHZ', '2004', '1', '12', 'S/S', '4457.4', '1', '1');
@@ -805,7 +820,7 @@ INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31562', '1', 'MULTIMETRO DIGITAL AUTORANGO CON MICROAMPERIMETRO', '2004', '1', '16', 'S/S', '448.96', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31571', '1', 'MULTIMETRO DIGITAL AUTORANGO CON MICROAMPERIMETRO', '2004', '1', '16', 'S/S', '448.96', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31569', '1', 'MULTIMETRO DIGITAL AUTORANGO CON MICROAMPERIMETRO', '2004', '1', '16', 'S/S', '448.96', '1', '1');
-INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31564', '1', 'MULTIMETRO DIGITAL AUTORANGO CON MICROAMPERIMETRO', '2004', '1', '16', 'S/S', '448.96', '1', '1');
+INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31564', '1', 'MULTIMETRO DIGITAL AUTORANGO CON MICROAMPERIMETRO', '2004', '1', '16', 'S/S', '448.96', '1', '2');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('30143', '2', 'MULTIMETRO ANALOGICO MCA B&K PRESICION MOD 114B', '2003', '4', '16', 'S/S', '433.93', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31561', '1', 'MULTIMETRO DIGITAL AUTORANGO CON MICROAMPERIMETRO', '2004', '1', '16', 'S/S', '448.96', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('27048', '23', 'MULTIMETRO DIGITAL MCA SUN EQUIPAMENT MOD DMM-1230', '2001', '33', '16', 'S/S', '1026.95', '1', '1');
@@ -821,7 +836,7 @@ INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('24669', '5', 'OSCILOSOPIO PORTATIL MCA FLUKE MODELO 192 SERIE DM7670296', '2000', '14', '17', 'DM7670296', '22482.5', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('26866', '38', 'OSCILOSCOPIO DIGITAL TEXTRONIX MODELO TDS220 S:C035986', '2001', '1', '17', 'C035986', '17825', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('28060', '39', 'OSCILOSCOPIO DIGITAL DE 100 MHZ MCA TEKTRONIX MOD TDS1012 SC014980', '2002', '34', '17', 'SC014980', '12535', '1', '1');
-INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31495', '1', 'OSCILOSCOPIO DIGITAL PORTATIL RANGO 100 MHZ C/PUNTAS ATEN FREC. O.5 S/C042982', '2004', '1', '17', 'C042982', '15687.5', '1', '1');
+INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31495', '1', 'OSCILOSCOPIO DIGITAL PORTATIL RANGO 100 MHZ C/PUNTAS ATEN FREC. O.5 S/C042982', '2004', '1', '17', 'C042982', '15687.5', '1', '2');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('34433', '39', 'OSCILOSCOPIO DE ALMACENAMIENTO DIGITAL; 100MHZ, 1GS/S 2 CANALES MCA. TEKTRANIC MOD. TDS 1012', '2007', '34', '17', 'S/S', '12670.7', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('28070', '39', 'OSCILOSCOPIO DIGITAL DE 100 MHZ MCA TEKTRONIX MOD TDS1012 C014936', '2002', '34', '17', 'C014936', '12535', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31492', '1', 'OSCILOSCOPIO DIGITAL PORTATIL RANGO 100 MHZ C/PUNTAS ATEN FREC. O.5 S/C042983', '2004', '1', '17', 'C042983', '15697.5', '1', '1');
@@ -881,15 +896,15 @@ INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('40905', '1', 'LOGO POWER SUPPPLY, 230VAC INPUT, 24V/10A DC OUTPUT NS:Q6B4373186', '2011', '1', '18', 'Q6B4373186', '4724.16', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('40903', '1', 'LOGO POWER SUPPPLY, 230VAC INPUT, 24V/10A DC OUTPUT NS:Q6B4373031', '2011', '1', '18', 'Q6B4373031', '4724.16', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('40902', '1', 'LOGO POWER SUPPPLY, 230VAC INPUT, 24V/10A DC OUTPUT NS:Q6B4373186', '2011', '1', '18', 'Q6B4373186', '4724.16', '1', '1');
-INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('26720', '1', 'PLC MICRO CCHIP PORTATIL MCA, FESTO SERE ID0012335353', '2001', '13', '18', 'ID0012335353', '4577', '1', '1');
-INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('26721', '1', 'PLC MICRO CCHIP PORTATIL MCA, FESTO SERE ID0012335407', '2001', '13', '18', 'ID0012335407', '4577', '1', '1');
-INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('26723', '1', 'PLC MICRO CCHIP PORTATIL MCA, FESTO SERE ID0012335446', '2001', '13', '18', 'ID0012335446', '4577', '1', '1');
-INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('26717', '1', 'PLC MICRO CCHIP PORTATIL MCA, FESTO SERE ID0012335513', '2001', '13', '18', 'ID0012335513', '4577', '1', '1');
+INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('26720', '1', 'PLC MICRO CHIP PORTATIL MCA, FESTO SERE ID0012335353', '2001', '13', '18', 'ID0012335353', '4577', '1', '1');
+INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('26721', '1', 'PLC MICRO CHIP PORTATIL MCA, FESTO SERE ID0012335407', '2001', '13', '18', 'ID0012335407', '4577', '1', '1');
+INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('26723', '1', 'PLC MICRO CHIP PORTATIL MCA, FESTO SERE ID0012335446', '2001', '13', '18', 'ID0012335446', '4577', '1', '1');
+INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('26717', '1', 'PLC MICRO CHIP PORTATIL MCA, FESTO SERE ID0012335513', '2001', '13', '18', 'ID0012335513', '4577', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31780', '6', 'PLC FCP 202 COMPLETO SERIE I0001239681', '2004', '12', '18', 'I0001239681', '7529.74', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31778', '6', 'PLC FCP 202 COMPLETO SERIE I0001237766', '2004', '12', '18', 'I0001237766', '7529.74', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31776', '6', 'PLC FCP 202 COMPLETO SERIE I0001239619', '2004', '12', '18', 'I0001239619', '7529.74', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31775', '6', 'PLC FCP 202 COMPLETO SERIE I0001239637', '2004', '12', '18', '10001239637', '7529.74', '1', '1');
-INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31774', '6', 'PLC FCP 202 COMPLETO SERIE I0001231774', '2004', '12', '18', 'I0001231774', '7529.74', '1', '1');
+INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31774', '6', 'PLC FCP 202 COMPLETO SERIE I0001231774', '2004', '12', '18', 'I0001231774', '7529.74', '1', '2');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('32106', '40', 'PROBADOR Y PROGRAMADOR LOGICO UNIVERSAL MOD. TOP MAX TM-A48, EE TOOLS S:TMC6532', '2004', '8', '19', 'TMC6532', '9726.93', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('26867', '41', 'PROBADOR Y PROGRAMADOR LOGICO UNIVERSAL MOD. TOP MAX TM-A48 MCAA EE TOOLS S:TMC3870', '2001', '8', '19', 'TM3870', '12190', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('32107', '40', 'PROBADOR Y PROGRAMADOR LOGICO UNIVERSAL MOD. TOP MAX TM-A48, EE TOOLS S:TMC6531', '2004', '8', '19', 'TMC6531', '9726.93', '1', '1');
@@ -923,7 +938,7 @@ INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('32555', '1', 'CANON DE PROYECCION PARA PC 1400 ANSILUMENS PARA SVGA DE 80 X 600 MCA VISSION', '2005', '35', '21', 'S/S', '100499.5', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('43406', '43', 'LUMINOSIDAD 2300, TECNOLOGIA 3LCD, MC:SONY, MOD:VPL-EX100 S:015176558N', '2012', '30', '21', 'S:015176558N', '6378.93', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('26700', '21', 'RETROPROYECTOR, MARCA: MARCA: APOLO, MODELO: CONCEPT 2210, SERIE No. 517028A011104801', '2023', '2', '21', '517028A011104801', '1', '1', '1');
-INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('11475', '34', 'CAÑON, MARCA: VISION, MODELO:PRO 260', '2023', '35', '21', 'W449DMAT01928', '1', '1', '1');
+INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('11475', '34', 'CAÑON, MARCA: VISION, MODELO:PRO 260', '2023', '35', '21', 'W449DMAT01928', '1', '1', '2');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('11309', '34', 'PROYECTOR, MARCA: VISION SYSTEM, MODELO:PRO 260', '2023', '35', '21', 'W449DMAT01906', '1', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('2670', '21', 'RETROPROYECTOR, MARCA: MARCA: APOLO, MODELO: CONCEPT 2210, SERIE No. 517028A011101613', '2023', '2', '21', '517028A011101613', '1', '1', '1');
 INSERT INTO "Material" ('MaterialId', 'ModeloId', 'Descripcion', 'YearEntrada', 'MarcaId', 'CategoriaId', 'Serie', 'ValorHistorico', 'PlantelId', 'Condicion') VALUES ('31720', '1', 'PUENTE UNIVERSAL (RLC) RANGOS AUTOMATICOS 31/2 DIGITAL S:82388', '2004', '1', '22', 'S/S', '799.19', '1', '1');
@@ -951,7 +966,9 @@ CREATE TABLE "Pedido" (
   "DocenteId" INTEGER NULL,
   "CoordinadorId" INTEGER NULL,
   "Estado" "bit" NOT NULL DEFAULT (0),
-
+  /*
+  0 - Denegado
+  1 - Aprovado*/
   CONSTRAINT "FK_Pedido_Laboratorio" FOREIGN KEY 
 	(
 		"LaboratorioId"
@@ -982,6 +999,15 @@ CREATE TABLE "Pedido" (
 
 -----------------------------------------------------
 
+INSERT INTO 'Pedido' ('PedidoId', 'Fecha', 'LaboratorioId', 'HoraEntrega', 'HoraDevolucion', 'EstudianteId', 'DocenteId', 'CoordinadorId', 'Estado') VALUES ('1', '2023-11-06', '12', '07:00', '08:40', '20300663', '8', '2', '1');
+INSERT INTO 'Pedido' ('PedidoId', 'Fecha', 'LaboratorioId', 'HoraEntrega', 'HoraDevolucion', 'EstudianteId', 'DocenteId', 'CoordinadorId', 'Estado') VALUES ('2', '2023-11-06', '12', '07:00', '08:40', '20300663', '8', '2', '0');
+INSERT INTO 'Pedido' ('PedidoId', 'Fecha', 'LaboratorioId', 'HoraEntrega', 'HoraDevolucion', 'EstudianteId', 'DocenteId', 'CoordinadorId', 'Estado') VALUES ('3', '2023-11-14', '10', '12:50', '02:30', '20300846', '4', '2', '1');
+INSERT INTO 'Pedido' ('PedidoId', 'Fecha', 'LaboratorioId', 'HoraEntrega', 'HoraDevolucion', 'EstudianteId', 'DocenteId', 'CoordinadorId', 'Estado') VALUES ('4', '2023-11-21', '10', '09:30', '11:10', '20300666', '4', '2', '0');
+INSERT INTO 'Pedido' ('PedidoId', 'Fecha', 'LaboratorioId', 'HoraEntrega', 'HoraDevolucion', 'EstudianteId', 'DocenteId', 'CoordinadorId', 'Estado') VALUES ('5', '2023-11-22', '12', '10:20', '12:00', '20300668', '8', '2', '1');
+INSERT INTO 'Pedido' ('PedidoId', 'Fecha', 'LaboratorioId', 'HoraEntrega', 'HoraDevolucion', 'EstudianteId', 'DocenteId', 'CoordinadorId', 'Estado') VALUES ('6', '2023-11-23', '12', '07:50', '09:30', '20100320', '8', '2', '0');
+
+-----------------------------------------------------
+
 CREATE TABLE "Desc_Pedido" (
     "Desc_PedidoId" INTEGER PRIMARY KEY,
     "Cantidad" INTEGER NOT NULL,
@@ -1002,3 +1028,12 @@ CREATE TABLE "Desc_Pedido" (
 		"MaterialId"
     )
 );
+
+-----------------------------------------------------
+
+INSERT INTO 'Desc_Pedido' ('Desc_PedidoId', 'Cantidad', 'PedidoId', 'MaterialId') VALUES ('1', '1', '1', '31441');
+INSERT INTO 'Desc_Pedido' ('Desc_PedidoId', 'Cantidad', 'PedidoId', 'MaterialId') VALUES ('2', '2', '2', '31570');
+INSERT INTO 'Desc_Pedido' ('Desc_PedidoId', 'Cantidad', 'PedidoId', 'MaterialId') VALUES ('3', '1', '3', '32788');
+INSERT INTO 'Desc_Pedido' ('Desc_PedidoId', 'Cantidad', 'PedidoId', 'MaterialId') VALUES ('4', '2', '4', '31437');
+INSERT INTO 'Desc_Pedido' ('Desc_PedidoId', 'Cantidad', 'PedidoId', 'MaterialId') VALUES ('5', '1', '5', '42818');
+INSERT INTO 'Desc_Pedido' ('Desc_PedidoId', 'Cantidad', 'PedidoId', 'MaterialId') VALUES ('6', '2', '6', '31593');

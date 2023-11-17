@@ -29,8 +29,7 @@ namespace AlmacenSQLiteEntities
 
         
         [Required(ErrorMessage = "La contraseña es obligatoria.")]
-        [Column(TypeName = "nvarchar(8)")]
-        [StringLength(8)]
+        [Column(TypeName = "ntext")]
         public string Password { get; set; } = null!;
 
         [Column(TypeName = "bit")]

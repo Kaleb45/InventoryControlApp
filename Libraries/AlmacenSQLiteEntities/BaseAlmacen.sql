@@ -281,7 +281,7 @@ INSERT INTO 'Mantenimiento' ('MantenimientoId', 'Nombre', 'Descripcion') VALUES 
 CREATE TABLE "Usuario" (
   "UsuarioId" INTEGER PRIMARY KEY,
   "Usuario" nvarchar(50) NOT NULL,
-  "Password" nvarchar(8) NOT NULL,
+  "Password" nvarchar(50) NOT NULL,
   "Temporal" "bit" NOT NULL DEFAULT (0)
   /*
   0- no temporal

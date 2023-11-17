@@ -36,6 +36,7 @@ namespace InventoryControlPages
             {
                 
             }
+            return Page();
         }
     }
 }

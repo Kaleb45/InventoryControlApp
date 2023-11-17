@@ -36,6 +36,6 @@ app.UseStaticFiles();
 
 app.MapRazorPages();
 
-app.MapGet("/", () => "Hello World!");
+//app.MapGet("/", () => "Hello World!");
 
 app.Run();

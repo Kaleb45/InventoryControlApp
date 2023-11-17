@@ -32,6 +32,10 @@ namespace InventoryControlPages
 
         public IActionResult OnPost()
         {
+            if (ModelState.IsValid)
+            {
+                
+            }
         }
     }
 }

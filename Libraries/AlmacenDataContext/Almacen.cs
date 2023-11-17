@@ -9,6 +9,10 @@ public partial class Almacen : DbContext
 {
     public Almacen()
     {
+
+    }
+    public Almacen(DbContextOptions<Almacen> options) : base(options)
+    {
     }
 
     public DbSet<Almacenista> Almacenistas { get; set; }

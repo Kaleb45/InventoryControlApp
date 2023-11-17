@@ -6,11 +6,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlmacenSQLiteEntities
 {
-
-
     [Table("Material")]
     public class Material
     {
+        public Material()
+        {
+            DescPedidos = new HashSet<DescPedido>();
+            ReporteMantenimientos = new HashSet<ReporteMantenimiento>();
+        }
+        
         [Key]
         [Column(TypeName = "int")]
         public int MaterialId { get; set; }

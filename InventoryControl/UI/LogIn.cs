@@ -11,7 +11,7 @@ public static partial class UI
     /// <param name="userName">usuario</param>
     /// <param name="password">contraseña</param>
     /// <returns></returns>
-    static (Usuario? usuarioEncontrado,int typeOfUser) LogIn(string userName,string password)
+    static public (Usuario? usuarioEncontrado,int typeOfUser) LogIn(string userName,string password)
     {
         using (Almacen db = new())
         {

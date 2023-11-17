@@ -9,6 +9,11 @@ namespace AlmacenSQLiteEntities
     [Table("Estudiante")]
     public class Estudiante
     {
+        public Estudiante()
+        {
+            Pedidos = new HashSet<Pedido>();
+        }
+
         [Key]
         [Column(TypeName = "int")]
         public int EstudianteId { get; set; }

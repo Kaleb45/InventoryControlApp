@@ -9,6 +9,16 @@ namespace AlmacenSQLiteEntities
     [Table("Plantel")]
     public class Plantel
     {
+
+        public Plantel()
+        {
+            Almacenistas = new HashSet<Almacenista>();
+            Coordinadores = new HashSet<Coordinador>();
+            Docentes = new HashSet<Docente>();
+            Estudiantes = new HashSet<Estudiante>();
+            Materiales = new HashSet<Material>();
+        }
+
         [Key]
         [Column(TypeName = "int")]
         public int PlantelId { get; set; }

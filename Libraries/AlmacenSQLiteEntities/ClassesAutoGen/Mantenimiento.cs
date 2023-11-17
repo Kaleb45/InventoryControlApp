@@ -9,6 +9,11 @@ namespace AlmacenSQLiteEntities
     [Table("Mantenimiento")]
     public class Mantenimiento
     {
+        public Mantenimiento()
+        {
+            ReporteMantenimientos = new HashSet<ReporteMantenimiento>();
+        }
+
         [Key]
         [Column(TypeName = "int")]
         public int MantenimientoId { get; set; }

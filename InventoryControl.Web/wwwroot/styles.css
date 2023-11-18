@@ -27,10 +27,18 @@ header p {
     font-weight: bold;
 }
 
+.welcome-init {
+    text-align: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
 .titles {
     display: flex;
     margin-top: 40px;
-    text-align: left;
+    text-align: center;
     align-items: center;
     padding: 5px;
     color: #04364A;
@@ -39,9 +47,61 @@ header p {
     border-bottom: 1px solid #04364A;
 }
 
+.titles #bienvenida {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #176B87;
+    border-radius: 10px;
+    color: #fff;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width: 25%; /* Ajusta el ancho al 25% de la pantalla */
+    margin-left: auto;
+    margin-right: auto;
+    transition: height 0.3s ease-in-out, width 0.3s ease-in-out, background-color 0.3s;
+}
+
+.form-container:hover {
+    background-color: #04364A;
+    cursor: pointer;
+}
+
+.form {
+    display: none;
+    text-align: center;
+    align-items: center;
+}
+
+#loginBtn, #signinBtn {
+    text-align: center;
+    align-items: center;
+    background-color: #176B87;
+    border: none;
+    color: #fff;
+    border-radius: 10px;
+    width: 300px; /* Ajusta el ancho automáticamente */
+    transition: width 0.3s ease-in-out; /* Ajusta la duración y el efecto de la transición */
+}
+
+#loginBtn:hover, #signinBtn:hover {
+    background-color: #04364A;
+    color: #fff;
+}
+
 .table-database {
     display: flex;
-    text-align: left;
+    text-align: center;
     width: 100%;
     padding: 5px;
     justify-content:center;
@@ -94,7 +154,7 @@ header p {
 }
 
 .insert-database {
-    text-align: left;
+    text-align: center;
     margin-bottom: 2px;
     padding-top: 3px;
 }
@@ -106,11 +166,16 @@ header p {
 .fields-table {
     display: flex;
     flex-direction: column;
-    text-align: left;
-    width: 25%;
+    align-items: center; /* Alinea los campos al centro */
+    width: 100%;
+    max-width: 300px; /* Ajusta el ancho máximo según tus necesidades */
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
 }
 
 .fields-table input {
+    width: 90%;
     border-radius: 10px;
     margin-bottom: 10px;
     border: 1px solid #64CCC5;
@@ -122,15 +187,21 @@ header p {
 }
 
 .fields-table #enviar {
-    background-color: #176B87;
+    background-color: #04364A;
     border: none;
     color: #fff;
     border-radius: 10px;
+    transition: background-color 0.3s ease-in-out;
 }
 
-.fields-table #enviar:hover {
-    background-color: #04364A;
+.form-container:hover + .fields-table #enviar {
+    background-color: #176B87; /* Cambia a tu color deseado */
     color: #fff;
+}
+
+.form-container:hover .fields-table #enviar:hover {
+    background-color: #64CCC5; /* Cambia a tu color deseado */
+    color: #04364A;
 }
 
 footer {

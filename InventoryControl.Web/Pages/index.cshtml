@@ -29,10 +29,10 @@
                     <p>Inicie sesión</p>
                     <form method="POST">
                         <div class="fields-table">
-                            <input asp-for="Usuario.Usuario1" placeholder="Nombre de Usuario" class="form-control">
-                            <span asp-validation-for="Usuario.Usuario1" class="text-danger"></span>
-                            <input asp-for="Usuario.Password" placeholder="Contraseña" class="form-control">
-                            <span asp-validation-for="Usuario.Password" class="text-danger"></span>
+                            <input asp-for="usuario.Usuario1" placeholder="Nombre de Usuario" class="form-control">
+                            <span asp-validation-for="usuario.Usuario1" class="text-danger"></span>
+                            <input asp-for="usuario.Password" placeholder="Contraseña" class="form-control">
+                            <span asp-validation-for="usuario.Password" class="text-danger"></span>
                             <input id="enviar" type="submit" />
                         </div>
                     </form>
@@ -48,22 +48,35 @@
                     <p>Registre su Usuario</p>
                     <form method="POST" asp-page-handler="SignIn">
                         <div class="fields-table">
-                            <input type="number" asp-for="Person.Registro" placeholder="Registro" class="form-control">
-                            <span asp-validation-for="Person.Registro" class="text-danger"></span>
-                            <input type="text" asp-for="Person.Nombre" placeholder="Nombre" class="form-control">
-                            <span asp-validation-for="Person.Nombre" class="text-danger"></span>
-                            <input type="text" asp-for="Person.ApellidoPaterno" placeholder="Apellido paterno" class="form-control">
-                            <span asp-validation-for="Person.ApellidoPaterno" class="text-danger"></span>
-                            <input type="text" asp-for="Person.ApellidoMaterno" placeholder="Apellido materno" class="form-control">
-                            <span asp-validation-for="Person.ApellidoMaterno" class="text-danger"></span>
-                            <input type="number" asp-for="Person.Semestre" placeholder="Semestre" class="form-control">
-                            <span asp-validation-for="Person.Semestre" class="text-danger"></span>
-                            <input type="text" asp-for="Person.GrupoID" placeholder="Grupo" class="form-control">
-                            <span asp-validation-for="Person.GrupoID" class="text-danger"></span>
-                            <input type="email" asp-for="Person.Correo" placeholder="Correo" class="form-control">
-                            <span asp-validation-for="Person.Correo" class="text-danger"></span>
-                            <input type="number" asp-for="Person.plantel" placeholder="Plantel" class="form-control">
-                            <span asp-validation-for="Person.plantel" class="text-danger"></span>
+                            <input asp-for="estudiante.EstudianteId" placeholder="Registro" class="form-control" required>
+                            <span asp-validation-for="estudiante.EstudianteId" class="text-danger"></span>
+
+                            <input asp-for="estudiante.Nombre" placeholder="Nombre" class="form-control" required>
+                            <span asp-validation-for="estudiante.Nombre" class="text-danger"></span>
+
+                            <input asp-for="estudiante.ApellidoPaterno" placeholder="Apellido paterno" class="form-control" required>
+                            <span asp-validation-for="estudiante.ApellidoPaterno" class="text-danger"></span>
+
+                            <input asp-for="estudiante.ApellidoMaterno" placeholder="Apellido materno" class="form-control" required>
+                            <span asp-validation-for="estudiante.ApellidoMaterno" class="text-danger"></span>
+
+                            <input asp-for="estudiante.SemestreId" placeholder="Semestre" class="form-control" required>
+                            <span asp-validation-for="estudiante.SemestreId" class="text-danger"></span>
+
+                            <input asp-for="estudiante.GrupoId" placeholder="Grupo" class="form-control" required>
+                            <span asp-validation-for="estudiante.GrupoId" class="text-danger"></span>
+
+                            <input asp-for="estudiante.Correo" placeholder="Correo" class="form-control" required>
+                            <span asp-validation-for="estudiante.Correo" class="text-danger"></span>
+
+                            <input asp-for="estudiante.PlantelId" placeholder="Plantel" class="form-control" required>
+                            <span asp-validation-for="estudiante.PlantelId" class="text-danger"></span>
+                            
+                            <input asp-for="usuario.Usuario1" placeholder="Nombre de Usuario" class="form-control" required>
+                            <span asp-validation-for="usuario.Usuario1" class="text-danger"></span>
+                            
+                            <input asp-for="usuario.Password" placeholder="Contraseña" class="form-control" required>
+                            <span asp-validation-for="usuario.Password" class="text-danger"></span>
                             <input id="enviar" type="submit" />
                         </div>
                     </form>

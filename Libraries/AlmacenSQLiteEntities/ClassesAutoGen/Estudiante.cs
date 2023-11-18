@@ -16,6 +16,7 @@ namespace AlmacenSQLiteEntities
 
         [Key]
         [Column(TypeName = "int")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EstudianteId { get; set; }
 
         [Required]

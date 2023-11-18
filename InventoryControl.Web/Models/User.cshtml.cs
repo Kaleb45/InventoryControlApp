@@ -22,6 +22,7 @@ namespace InventoryControlPages
         }
 
         public List<Usuario>? usuarios { get; set; }
+        public List<Estudiante>? estudiantes { get; set; }
 
         public void OnGet()
         {
@@ -29,34 +30,34 @@ namespace InventoryControlPages
         }
 
         [BindProperty]
-        public Usuario? Usuario { get; set; }
-        public Estudiante Estudiante {get; set;}
-        public Person Person {get; set;}
+        public Usuario? usuario { get; set; }
+        [BindProperty]
+        public Estudiante? estudiante {get; set;}
 
         public IActionResult OnPost()
         {
             if (ModelState.IsValid)
             {
                 // Llama a la función de login desde tu programa de consola
-                var result = UI.LogIn(Usuario.Usuario1, Usuario.Password);
+                var result = UI.LogIn(usuario.Usuario1, usuario.Password);
 
                 if (result.usuarioEncontrado != null)
                 {
                     // Almacena la información del usuario en TempData
                     TempData["UserName"] = result.usuarioEncontrado.Usuario1;
 
-                    Usuario usuario = result.usuarioEncontrado;
+                    Usuario usuarios = result.usuarioEncontrado;
 
                     switch (result.typeOfUser)
                     {
                         case 1:
-                            return RedirectToPage("/DocenteMenu", usuario);
+                            return RedirectToPage("/DocenteMenu", usuarios);
                         case 2:
-                            return RedirectToPage("/EstudianteMenu", usuario);
+                            return RedirectToPage("/EstudianteMenu", usuarios);
                         case 3:
-                            return RedirectToPage("/AlmacenistaMenu", usuario);
+                            return RedirectToPage("/AlmacenistaMenu", usuarios);
                         case 4:
-                            return RedirectToPage("/CoordinadorMenu", usuario);
+                            return RedirectToPage("/CoordinadorMenu", usuarios);
                     }
                 }
             }
@@ -67,31 +68,15 @@ namespace InventoryControlPages
 
         public IActionResult OnPostSignIn()
         {
-            if (ModelState.IsValid)
+             if ((estudiante is not null) && !ModelState.IsValid)
             {
-                Estudiante estudiante = new Estudiante();
-                Usuario usuario = new Usuario();
-            
-                estudiante.EstudianteId = Person.Registro;
-                estudiante.Nombre = Person.Nombre;
-                estudiante.ApellidoPaterno = Person.ApellidoPaterno;
-                estudiante.ApellidoMaterno = Person.ApellidoMaterno;
-                estudiante.SemestreId = Person.Semestre;
-                estudiante.GrupoId = Person.GrupoID;
-                estudiante.PlantelId = Person.plantel;
-                estudiante.Correo = Person.Correo;
-                estudiante.Adeudo = 0;
-                usuario.Usuario1 = Person.newUsername;
-                usuario.Password = Person.Contrasena;
-                usuario.Temporal = false;
-
-                // Llama a la función AddStudent para agregar el nuevo estudiante y usuario
                 CrudFuntions.AddStudent(estudiante,usuario);
                 return RedirectToPage("/index");
             }
-
-            // Si hay errores de validación, permanece en la misma página
-            return Page();
+            else
+            {
+                return Page();
+            }
         }
     }
 }

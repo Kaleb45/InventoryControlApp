@@ -36,7 +36,7 @@ namespace InventoryControlPages
 
         public IActionResult OnPost()
         {
-            if (ModelState.IsValid)
+            if ((usuario is not null) &&!ModelState.IsValid)
             {
                 // Llama a la función de login desde tu programa de consola
                 var result = UI.LogIn(usuario.Usuario1, usuario.Password);
@@ -46,18 +46,23 @@ namespace InventoryControlPages
                     // Almacena la información del usuario en TempData
                     TempData["UserName"] = result.usuarioEncontrado.Usuario1;
 
-                    Usuario usuarios = result.usuarioEncontrado;
-
-                    switch (result.typeOfUser)
-                    {
+                    switch(result.typeOfUser){
                         case 1:
-                            return RedirectToPage("/DocenteMenu", usuarios);
+                            Docente? docente = db.Docentes!.FirstOrDefault(r => r.UsuarioId == result.usuarioEncontrado.UsuarioId);
+                            return RedirectToPage("/DocenteMenu", docente);
+                            break;
                         case 2:
-                            return RedirectToPage("/EstudianteMenu", usuarios);
+                            Estudiante? alumno = db.Estudiantes!.FirstOrDefault(r => r.UsuarioId == result.usuarioEncontrado.UsuarioId);
+                            return RedirectToPage("/EstudianteMenu", alumno);
+                            break;
                         case 3:
-                            return RedirectToPage("/AlmacenistaMenu", usuarios);
+                            Almacenista? almacenista = db.Almacenistas!.FirstOrDefault(r => r.UsuarioId == result.usuarioEncontrado.UsuarioId);
+                            return RedirectToPage("/AlmacenistaMenu", almacenista);
+                            break;
                         case 4:
-                            return RedirectToPage("/CoordinadorMenu", usuarios);
+                            Coordinador? coordinador = db.Coordinadores!.FirstOrDefault(r => r.UsuarioId == result.usuarioEncontrado.UsuarioId);
+                            return RedirectToPage("/CoordinadorMenu", coordinador);
+                            break;
                     }
                 }
             }

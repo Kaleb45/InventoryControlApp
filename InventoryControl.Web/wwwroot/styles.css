@@ -27,18 +27,10 @@ header p {
     font-weight: bold;
 }
 
-.welcome-init {
-    text-align: center;
-    justify-content: center;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-}
-
 .titles {
     display: flex;
     margin-top: 40px;
-    text-align: center;
+    text-align: left;
     align-items: center;
     padding: 5px;
     color: #04364A;
@@ -47,28 +39,9 @@ header p {
     border-bottom: 1px solid #04364A;
 }
 
-.form {
-    display: none;
-    margin-top: 20px;
-    transition: margin-top 0.5s ease-in-out;
-}
-
-#loginBtn, #signinBtn{
-    background-color: #176B87;
-    border: none;
-    color: #fff;
-    border-radius: 10px;
-}
-
-#loginBtn:hover, #signinBtn:hover {
-    background-color: #04364A;
-    color: #fff;
-}
-
-
 .table-database {
     display: flex;
-    text-align: center;
+    text-align: left;
     width: 100%;
     padding: 5px;
     justify-content:center;
@@ -121,7 +94,7 @@ header p {
 }
 
 .insert-database {
-    text-align: center;
+    text-align: left;
     margin-bottom: 2px;
     padding-top: 3px;
 }
@@ -133,12 +106,8 @@ header p {
 .fields-table {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Alinea los campos al centro */
-    width: 100%;
-    max-width: 300px; /* Ajusta el ancho máximo según tus necesidades */
-    margin-left: auto;
-    margin-right: auto;
-    width: 600px;
+    text-align: left;
+    width: 25%;
 }
 
 .fields-table input {

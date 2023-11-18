@@ -69,21 +69,20 @@ namespace InventoryControlPages
         {
             if (ModelState.IsValid)
             {
-                Person person = new Person();
                 Estudiante estudiante = new Estudiante();
                 Usuario usuario = new Usuario();
             
-                estudiante.EstudianteId = person.Registro;
-                estudiante.Nombre = person.Nombre;
-                estudiante.ApellidoPaterno = person.ApellidoPaterno;
-                estudiante.ApellidoMaterno = person.ApellidoMaterno;
-                estudiante.SemestreId = person.Semestre;
-                estudiante.GrupoId = person.GrupoID;
-                estudiante.PlantelId = person.plantel;
-                estudiante.Correo = person.Correo;
+                estudiante.EstudianteId = Person.Registro;
+                estudiante.Nombre = Person.Nombre;
+                estudiante.ApellidoPaterno = Person.ApellidoPaterno;
+                estudiante.ApellidoMaterno = Person.ApellidoMaterno;
+                estudiante.SemestreId = Person.Semestre;
+                estudiante.GrupoId = Person.GrupoID;
+                estudiante.PlantelId = Person.plantel;
+                estudiante.Correo = Person.Correo;
                 estudiante.Adeudo = 0;
-                usuario.Usuario1 = person.newUsername;
-                usuario.Password = person.Contrasena;
+                usuario.Usuario1 = Person.newUsername;
+                usuario.Password = Person.Contrasena;
                 usuario.Temporal = false;
 
                 // Llama a la función AddStudent para agregar el nuevo estudiante y usuario

@@ -45,7 +45,7 @@ namespace InventoryControlPages
                 {
                     // Almacena la información del usuario en TempData
                     TempData["UserName"] = result.usuarioEncontrado.Usuario1;
-
+                    TempData["UserType"] = result.typeOfUser;
                     switch(result.typeOfUser){
                         case 1:
                             Docente? docente = db.Docentes!.FirstOrDefault(r => r.UsuarioId == result.usuarioEncontrado.UsuarioId);

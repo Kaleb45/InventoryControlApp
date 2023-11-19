@@ -7,10 +7,12 @@ internal partial class Program
 {
     static void Main()
     {
+        StudentOrders();
+        /*
         Console.Clear();
         Almacen db = new();
         CrudFuntions.CalcularAdeudo();
         WriteLine($"Provider: {db.Database.ProviderName}");
-        UI.Manage();
+        UI.Manage();*/
     }
 }

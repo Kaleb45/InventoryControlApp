@@ -49,19 +49,19 @@ namespace InventoryControlPages
                     switch(result.typeOfUser){
                         case 1:
                             Docente? docente = db.Docentes!.FirstOrDefault(r => r.UsuarioId == result.usuarioEncontrado.UsuarioId);
-                            return RedirectToPage("/DocenteMenu", docente);
+                            return RedirectToPage("/DocenteMenu", new{id = docente.DocenteId});
                             break;
                         case 2:
                             Estudiante? alumno = db.Estudiantes!.FirstOrDefault(r => r.UsuarioId == result.usuarioEncontrado.UsuarioId);
-                            return RedirectToPage("/EstudianteMenu", alumno);
+                            return RedirectToPage("/EstudianteMenu", new{id = alumno.EstudianteId});
                             break;
                         case 3:
                             Almacenista? almacenista = db.Almacenistas!.FirstOrDefault(r => r.UsuarioId == result.usuarioEncontrado.UsuarioId);
-                            return RedirectToPage("/AlmacenistaMenu", almacenista);
+                            return RedirectToPage("/AlmacenistaMenu", new{id = almacenista.AlmacenistaId});
                             break;
                         case 4:
                             Coordinador? coordinador = db.Coordinadores!.FirstOrDefault(r => r.UsuarioId == result.usuarioEncontrado.UsuarioId);
-                            return RedirectToPage("/CoordinadorMenu", coordinador);
+                            return RedirectToPage("/CoordinadorMenu", new{id = coordinador.CoordinadorId});
                             break;
                     }
                 }

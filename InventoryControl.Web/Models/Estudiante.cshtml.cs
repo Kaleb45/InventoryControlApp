@@ -22,13 +22,14 @@ namespace InventoryControlPages
 
         public List<Estudiante>? estudiantes { get; set; }
 
-        public void OnGet()
+        [BindProperty]
+        public Estudiante? estudiante { get; set; }
+
+        public void OnGet(int id)
         {
+            estudiante = db.Estudiantes.FirstOrDefault(e => e.EstudianteId == id);
             ViewData["Title"] = "";
         }
-
-        [BindProperty]
-        public Estudiante? Estudiante { get; set; }
 
         public IActionResult OnPost()
         {

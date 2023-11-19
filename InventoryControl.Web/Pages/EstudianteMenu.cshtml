@@ -1,7 +1,7 @@
 @page
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.EntityFrameworkCore.ChangeTracking
-@model InventoryControlPages.UserModel
+@model InventoryControlPages.EstudianteModel
 @addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
 @using AlmacenSQLiteEntities;
 @using AlmacenDataContext;
@@ -19,6 +19,44 @@
         <h1>Bienvenido, @TempData["UserName"]</h1>
         <p>Estudiantes</p>
     </div>
-    
+        <p>Pedidos</p>
+        <div class="table-database">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td><p>Id</p></td>
+                        <td><p>Laboratorio</p></td>
+                        <td><p>Hora de entrega</p></td>
+                        <td><p>Hora de devolucion</p></td>
+                        <td><p>Docente</p></td>
+                        <td><p>Estado</p></td>
+                        <td><p>Material</p></td>
+                        <td><p>Cantidad</p></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{using(Almacen db = new ()){
+                            IQueryable<DescPedido> descPedidos = db.DescPedidos.Include(d => d.Pedido).Include(d => d.Material).Where(d => d.Pedido.EstudianteId == Model.estudiante.EstudianteId);
+                            if(descPedidos is null || (!descPedidos.Any())) // Para revisar si no esta vacio o es null
+                            {
+                                return;
+                            }
+                            foreach(var pedido in descPedidos){
+                                <tr>
+                                    <td id="id">@pedido.Pedido.PedidoId</td>
+                                    <td id="campos">@pedido.Pedido.Laboratorio.Nombre</td>
+                                    <td id="campos">@pedido.Pedido.HoraEntrega</td>
+                                    <td id="campos">@pedido.Pedido.HoraDevolucion</td>
+                                    <td id="campos">@pedido.Pedido.Docente.Nombre</td>
+                                    <td id="campos">@pedido.Pedido.Estado</td>
+                                    <td id="campos">@pedido.Material.Categoria.Nombre</td>
+                                    <td id="campos">@pedido.Cantidad</td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
 </body>
 </html>

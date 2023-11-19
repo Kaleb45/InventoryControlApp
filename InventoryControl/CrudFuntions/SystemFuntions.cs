@@ -1,6 +1,7 @@
 using System;
 using AlmacenDataContext;
 using AlmacenSQLiteEntities;
+using Microsoft.EntityFrameworkCore;
 public static partial class CrudFuntions{
     
     public static void OrderMaterial(int typeOfUser, int? userID){
@@ -162,6 +163,45 @@ public static partial class CrudFuntions{
             ReadQueryHistory(pedidosActuales);
         }
     }
+
+        public static IQueryable<DescPedido> ActualOrdersWeb(int typeOfUser, int? userID){
+            using(Almacen db = new()){
+                IQueryable<DescPedido> pedidosActuales;
+                if(typeOfUser == 2){
+                    pedidosActuales = db.DescPedidos.Include(p => p.Pedido).Include(p => p.Material).Where(p => p.Pedido.EstudianteId == userID && p.Pedido.Fecha.Value.Date > DateTime.Now.Date);
+                } 
+                else if(typeOfUser == 1){
+                    pedidosActuales = db.DescPedidos.Include(p => p.Pedido).Include(p => p.Material).Where(p => p.Pedido.DocenteId == userID && p.Pedido.Fecha.Value.Date > DateTime.Now.Date);
+                }
+                else if (typeOfUser == 4){
+                    pedidosActuales = db.DescPedidos.Include(p => p.Pedido).Include(p => p.Material).Where(p => p.Pedido.CoordinadorId == userID && p.Pedido.Fecha.Value.Date > DateTime.Now.Date);
+                }
+                else{
+                    pedidosActuales = db.DescPedidos;
+                }
+                return pedidosActuales;
+            }
+        }
+
+        public static IQueryable<DescPedido> PreviousOrdersWeb(int typeOfUser, int? userID){
+            using(Almacen db = new()){
+                IQueryable<DescPedido> pedidosAnteriores;
+                if(typeOfUser == 2){
+                    pedidosAnteriores = db.DescPedidos.Include(p => p.Pedido).Include(p => p.Material).Where(p => p.Pedido.EstudianteId == userID && p.Pedido.Fecha.Value.Date < DateTime.Now.Date);
+                } 
+                else if(typeOfUser == 1){
+                    pedidosAnteriores = db.DescPedidos.Include(p => p.Pedido).Include(p => p.Material).Where(p => p.Pedido.DocenteId == userID && p.Pedido.Fecha.Value.Date < DateTime.Now.Date);
+                }
+                else if (typeOfUser == 4){
+                    pedidosAnteriores = db.DescPedidos.Include(p => p.Pedido).Include(p => p.Material).Where(p => p.Pedido.CoordinadorId == userID && p.Pedido.Fecha.Value.Date < DateTime.Now.Date);
+                }
+                else{
+                    pedidosAnteriores = db.DescPedidos;
+                }
+                return pedidosAnteriores;
+            }
+        }
+
 
     public static void ApprovedOrder(int typeOfUser, int? userID){
         Program.SectionTitle("Vamos a aprovar un pedido");

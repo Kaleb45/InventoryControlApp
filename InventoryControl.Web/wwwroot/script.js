@@ -48,3 +48,8 @@ function myFunction() {
         x.className = "";
     }
 }
+
+function recargarPagina() {
+    location.reload();
+    location.reload();
+}

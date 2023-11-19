@@ -27,7 +27,7 @@
                     <ul>
                         @if (userType == 1)
                         {
-                            <a>Inicio</a>
+                            <a href="#Pedidos">Inicio</a>
                             <a>Pedido</a>
                             <a>Historial</a>
                             <a>Materiales</a>
@@ -38,10 +38,10 @@
                         }
                         else if (userType == 2)
                         {
-                            <a>Inicio</a>
-                            <a>Pedido</a>
-                            <a>Historial</a>
-                            <a>Log Out</a>
+                            <a href="#Inicio">Inicio</a>
+                            <a href="#Pedido">Pedido</a>
+                            <a href="#Historial">Historial</a>
+                            <a href="/index">Log Out</a>
                             <a href="javascript:void(0);" class="icon" onclick="myFunction()">
                                 &#9776;
                             </a>

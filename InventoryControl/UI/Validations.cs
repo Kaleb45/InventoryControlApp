@@ -251,7 +251,7 @@ public static partial class UI
                 Grupo Grupos = db.Grupos.First(g => g.Nombre == Grupo);
                 if (Grupos is null)
                 {
-                    WriteLine("The value you were searching does not exists");
+                    WriteLine("El grupo no existe");
                     return 0;
                 }
                 else

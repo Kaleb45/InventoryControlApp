@@ -6,7 +6,7 @@ function toggleForm(formId) {
 
     if (container.style.height === '0px' || container.style.height === '') {
         // Expande el contenedor en ancho y altura
-        container.style.width = '300px'; // ajusta el ancho según tus necesidades
+        container.style.width = '400px'; // ajusta el ancho según tus necesidades
         container.style.height = 'auto'; // ajusta la altura según tus necesidades
 
         setTimeout(function () {
@@ -28,5 +28,14 @@ function toggleForm(formId) {
             container.style.marginBottom = '1opx';
             container.style.marginTop = '10px';
         }, 300); // Ajusta según la duración de la animación de colapso
+    }
+}
+
+function mostrarContrasena() {
+    var x = document.getElementById("passwordInput");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
     }
 }

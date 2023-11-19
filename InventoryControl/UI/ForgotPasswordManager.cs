@@ -164,4 +164,23 @@ public static partial class UI
             emailSender.sendMail();
         }
     }
+    
+    public static void NotificationUserName(Estudiante estudiante){
+        if (estudiante == null)
+        {
+            // Manejar el caso en el que estudiante es null, por ejemplo, lanzar una excepción o salir de la función.
+            return;
+        }
+        using (Almacen db = new()){
+            EmailSender emailSender = new EmailSender(); 
+            DateTime fechaActual = DateTime.Now.Date;
+            emailSender.setDestinatary(estudiante.Correo);
+            emailSender.setSubject("Nombre de Usuario, registrado con exito");
+            string message = "Completaste tu registro. \n";
+            message += $"Tú nombre de usuario es el siguiente.\n";
+            message += $"Nombre de Usuario: {estudiante.Correo}";
+            emailSender.setBody(message, containsHTML: false);
+            emailSender.sendMail();
+        }
+    }
 }

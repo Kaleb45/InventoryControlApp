@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace AlmacenSQLiteEntities
 {
@@ -19,22 +20,27 @@ namespace AlmacenSQLiteEntities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EstudianteId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo Nombre es obligatorio.")]
         [Column(TypeName = "nvarchar(50)")]
         [StringLength(50)]
+        [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "El campo Nombre solo debe contener letras.")]
         public string Nombre { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = "El campo ApellidoPaterno es obligatorio.")]
         [Column(TypeName = "nvarchar(50)")]
         [StringLength(50)]
+        [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "El campo ApellidoPaterno solo debe contener letras.")]
         public string ApellidoPaterno { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = "El campo ApellidoMaterno es obligatorio.")]
         [Column(TypeName = "nvarchar(50)")]
         [StringLength(50)]
+        [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "El campo ApellidoMaterno solo debe contener letras.")]
         public string ApellidoMaterno { get; set; } = null!;
 
+        [Required(ErrorMessage = "El campo SemestreId es obligatorio.")]
         [Column(TypeName = "int")]
+        [Range(1, 8, ErrorMessage = "El campo SemestreId solo se permite números del 1 al 7.")]
         public int SemestreId { get; set; }
 
         [Column(TypeName = "int")]
@@ -43,12 +49,14 @@ namespace AlmacenSQLiteEntities
         [Column(TypeName = "decimal(10,2)")]
         public decimal? Adeudo { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo Correo es obligatorio.")]
         [Column(TypeName = "nvarchar(100)")]
         [StringLength(100)]
         public string Correo { get; set; } = null!;
 
+        [Required(ErrorMessage = "El campo PlantelId es obligatorio.")]
         [Column(TypeName = "int")]
+        [Range(1, 3, ErrorMessage = "El campo PlantelId solo debe poderse ingresar del 1 al 3.")]
         public int? PlantelId { get; set; }
 
         [Column(TypeName = "int")]

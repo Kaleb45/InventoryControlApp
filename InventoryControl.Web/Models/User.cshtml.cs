@@ -73,10 +73,80 @@ namespace InventoryControlPages
 
         public IActionResult OnPostSignIn()
         {
-             if ((estudiante is not null) && !ModelState.IsValid)
+            if ((estudiante is not null) && !ModelState.IsValid)
             {
-                CrudFuntions.AddStudent(estudiante,usuario);
-                return RedirectToPage("/index");
+                int validationRegister = UI.RegisterValidation(estudiante.EstudianteId);
+
+                switch (validationRegister)
+                {
+                    case 10:
+                        return Page();
+                    case 20:
+                        return Page();
+                    case 30:
+                        return Page();
+                    case 01:
+                        // No hay error, proceder con la lógica normal
+                        break;
+                }
+                
+                int validationEmail = UI.StudentEmailValidation(estudiante.Correo, estudiante.EstudianteId);
+
+                switch (validationEmail)
+                {
+                    case 10:
+                        return Page();
+                    case 20:
+                        return Page();
+                    case 30:
+                        return Page();
+                    case 40:
+                        return Page();
+                    case 50:
+                        return Page();
+                    case 70:
+                        return Page();
+                    case 80:
+                        return Page();
+                    case 100:
+                        return Page();
+                    case 01:
+                        // No hay error, proceder con la lógica normal
+                        break;
+                }
+
+                int validationPassword = UI.PasswordValidation(usuario.Password);
+                
+                switch (validationPassword)
+                {
+                    case 10:
+                        return Page();
+                    case 20:
+                        return Page();
+                    case 30:
+                        return Page();
+                    case 40:
+                        return Page();
+                    case 50:
+                        return Page();
+                    case 80:
+                        return Page();
+                    case 90:
+                        return Page();
+                    case 100:
+                        return Page();
+                    case 01:
+                        // No hay error, proceder con la lógica normal
+                        break;
+                }
+
+                estudiante.Adeudo = 0;
+                usuario.Temporal = false;
+                usuario.Usuario1 = UI.GenerateUsername(estudiante.Nombre, estudiante.ApellidoPaterno, estudiante.ApellidoMaterno);
+                TempData["UserName"] = usuario.Usuario1;
+                CrudFuntions.AddStudent(estudiante, usuario);
+                //UI.NotificationUserName(estudiante);
+                return RedirectToPage("/index", usuario.Usuario1);
             }
             else
             {

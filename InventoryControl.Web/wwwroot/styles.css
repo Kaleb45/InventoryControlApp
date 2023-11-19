@@ -66,7 +66,7 @@ header p {
     padding: 10px;
     margin-bottom: 10px;
     margin-top: 10px;
-    width: 25%; /* Ajusta el ancho al 25% de la pantalla */
+    width: 50%; /* Ajusta el ancho al 25% de la pantalla */
     margin-left: auto;
     margin-right: auto;
     transition: height 0.3s ease-in-out, width 0.3s ease-in-out, background-color 0.3s;
@@ -174,6 +174,33 @@ header p {
     width: 600px;
 }
 
+.fields-table select {
+    width: 90%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    text-align: center;
+    border: 1px solid #64CCC5;
+    transition: border-color 0.3s;
+}
+
+.fields-table option {
+    width: 90%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #64CCC5;
+    transition: border-color 0.3s;
+}
+
+.fields-table select option{
+    width: 90%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #64CCC5;
+    transition: border-color 0.3s;
+}
+
 .fields-table input {
     width: 90%;
     border-radius: 10px;
@@ -185,6 +212,7 @@ header p {
 .fields-table input:hover {
     border-color: 1px solid #176B87;
 }
+
 
 .fields-table #enviar {
     background-color: #04364A;

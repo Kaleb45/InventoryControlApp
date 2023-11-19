@@ -43,7 +43,7 @@ namespace InventoryControlPages
                 //WriteLine($" {pedido.Fecha,-22} | | {pedido.HoraEntrega,-22} | {pedido.HoraDevolucion,-5}");
                 CrudFuntions.AddPedido(pedido, descPedido);
                 TempData["UserType"] = 2;
-                return Page();
+                return RedirectToPage("/EstudianteMenu", new{id = pedido.EstudianteId});
             }
             return Page();
         }

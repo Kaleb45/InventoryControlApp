@@ -1,7 +1,7 @@
 @page
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.EntityFrameworkCore.ChangeTracking
-@model InventoryControlPages.UserModel
+@model InventoryControlPages.AlmacenistaModel
 @addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
 @using AlmacenSQLiteEntities;
 @using AlmacenDataContext;
@@ -19,6 +19,513 @@
         <h1>Bienvenido, @TempData["UserName"]</h1>
         <p>Almacenista</p>
     </div>
+
+    <div class="titles">
+        <h1>Solicitudes Aprobadas proximas Docentes</h1>
+    </div>
+        <div class="table-database">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td><p>Id</p></td>
+                        <td><p>Laboratorio</p></td>
+                        <td><p>Hora de entrega</p></td>
+                        <td><p>Hora de devolucion</p></td>
+                        <td><p>Docente</p></td>
+                        <td><p>Estado</p></td>
+                        <td><p>Material</p></td>
+                        <td><p>Cantidad</p></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{using(Almacen db = new ()){
+                            IQueryable<DescPedido>? descPedidos = db.DescPedidos.Include(d => d.Pedido).Include(d => d.Material).Where(d => d.Pedido.DocenteId != null && d.Pedido.EstudianteId == null && d.Pedido.Fecha.Value.Date > DateTime.Now.Date).OrderBy(d => d.Pedido.Fecha);
+                                if(descPedidos is null || !descPedidos.Any()){
+                                    return;
+                                }
+                                else{
+                                    foreach(var p in descPedidos){
+                                    <tr>
+                                        <td id="id">@p.Pedido.PedidoId</td>
+                                        <td id="campos">@p.Pedido.Laboratorio.Nombre</td>
+                                        <td id="campos">@p.Pedido.HoraEntrega</td>
+                                        <td id="campos">@p.Pedido.HoraDevolucion</td>
+                                        <td id="campos">@p.Pedido.Docente.Nombre</td>
+                                        <td id="campos">@p.Pedido.Estado</td>
+                                        <td id="campos">@p.Material.Categoria.Nombre</td>
+                                        <td id="campos">@p.Cantidad</td>
+                                        <td id="campos">
+                                        <form method="POST" asp-page-handler="DeleteOrder">
+                                            <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId"/>
+                                            <input type="hidden" name="pedidoId" value="@p.Pedido.PedidoId" />
+                                            <button type="submit">Delete</button>
+                                        </form>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    <div class="titles">
+        <h1>Solicitudes Aprobadas proximas Estudiantes</h1>
+    </div>
+    <div class="table-database">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td><p>Id</p></td>
+                        <td><p>Laboratorio</p></td>
+                        <td><p>Hora de entrega</p></td>
+                        <td><p>Hora de devolucion</p></td>
+                        <td><p>Docente</p></td>
+                        <td><p>Estado</p></td>
+                        <td><p>Material</p></td>
+                        <td><p>Cantidad</p></td>
+                        <td><p>Estudiante</p></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{using(Almacen db = new ()){
+                            IQueryable<DescPedido>? descPedidos = db.DescPedidos.Include(d => d.Pedido).Include(d => d.Material).Where(d => d.Pedido.DocenteId != null && d.Pedido.EstudianteId != null && d.Pedido.Estado == true && d.Pedido.Fecha.Value.Date > DateTime.Now.Date).OrderBy(d => d.Pedido.Fecha);
+                                if(descPedidos is null || !descPedidos.Any()){
+                                    return;
+                                }
+                                else{
+                                    foreach(var p in descPedidos){
+                                    <tr>
+                                        <td id="id">@p.Pedido.PedidoId</td>
+                                        <td id="campos">@p.Pedido.Laboratorio.Nombre</td>
+                                        <td id="campos">@p.Pedido.HoraEntrega</td>
+                                        <td id="campos">@p.Pedido.HoraDevolucion</td>
+                                        <td id="campos">@p.Pedido.Docente.Nombre</td>
+                                        <td id="campos">@p.Pedido.Estado</td>
+                                        <td id="campos">@p.Material.Categoria.Nombre</td>
+                                        <td id="campos">@p.Cantidad</td>
+                                        <td id="campos">@p.Pedido.Estudiante.Nombre</td>
+                                        <td id="campos">
+                                        <form method="POST" asp-page-handler="DeleteOrder">
+                                            <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId"/>
+                                            <input type="hidden" name="pedidoId" value="@p.Pedido.PedidoId" />
+                                            <button type="submit">Delete</button>
+                                        </form>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    <div class="titles">
+        <h1>Solicitudes No Aprobadas proximas Estudiantes</h1>
+    </div>
+        <div class="table-database">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td><p>Id</p></td>
+                        <td><p>Laboratorio</p></td>
+                        <td><p>Hora de entrega</p></td>
+                        <td><p>Hora de devolucion</p></td>
+                        <td><p>Docente</p></td>
+                        <td><p>Estado</p></td>
+                        <td><p>Material</p></td>
+                        <td><p>Cantidad</p></td>
+                        <td><p>Estudiante</p></td>
+                        <td><p>Aprovacion</p></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{using(Almacen db = new ()){
+                            IQueryable<DescPedido>? descPedidos = db.DescPedidos.Include(d => d.Pedido).Include(d => d.Material).Where(d => d.Pedido.EstudianteId != null && d.Pedido.Estado == false && d.Pedido.Fecha.Value.Date > DateTime.Now.Date).OrderBy(d => d.Pedido.Fecha);
+                                if(descPedidos is null || !descPedidos.Any()){
+                                    return;
+                                }
+                                else{
+                                    foreach(var p in descPedidos){
+                                    <tr>
+                                        <td id="id">@p.Pedido.PedidoId</td>
+                                        <td id="campos">@p.Pedido.Laboratorio.Nombre</td>
+                                        <td id="campos">@p.Pedido.HoraEntrega</td>
+                                        <td id="campos">@p.Pedido.HoraDevolucion</td>
+                                        <td id="campos">@p.Pedido.Docente.Nombre</td>
+                                        <td id="campos">@p.Pedido.Estado</td>
+                                        <td id="campos">@p.Material.Categoria.Nombre</td>
+                                        <td id="campos">@p.Cantidad</td>
+                                        <td id="campos">@p.Pedido.Estudiante.Nombre</td>
+                                        <td id="campos">
+                                        <form method="POST" asp-page-handler="Approve">
+                                            <input type="hidden" name="pedidoId" value="@p.Pedido.PedidoId" />
+                                            <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId"/>
+                                            <button type="submit">Aprobar</button>
+                                        </form>
+                                        <form method="POST" asp-page-handler="Decline">
+                                            <input type="hidden" name="pedidoId" value="@p.Pedido.PedidoId" />
+                                            <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId"/>
+                                            <button type="submit">Denegar</button>
+                                        </form>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    <div class="titles">
+        <h1>Historial Total de Solicitudes</h1>
+    </div>
+    <div class="table-database">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td><p>Id</p></td>
+                        <td><p>Laboratorio</p></td>
+                        <td><p>Hora de entrega</p></td>
+                        <td><p>Hora de devolucion</p></td>
+                        <td><p>Docente</p></td>
+                        <td><p>Estado</p></td>
+                        <td><p>Material</p></td>
+                        <td><p>Cantidad</p></td>
+                        <td><p>Estudiante</p></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{using(Almacen db = new ()){
+                            IQueryable<DescPedido>? descPedidos = db.DescPedidos.Include(d => d.Pedido).Include(d => d.Material).Where(d => d.Pedido.Fecha.Value.Date < DateTime.Now.Date).OrderBy(d => d.Pedido.Fecha);
+                                if(descPedidos is null || !descPedidos.Any()){
+                                    return;
+                                }
+                                else{
+                                    foreach(var p in descPedidos){
+                                    <tr>
+                                        <td id="id">@p.Pedido.PedidoId</td>
+                                        <td id="campos">@p.Pedido.Laboratorio.Nombre</td>
+                                        <td id="campos">@p.Pedido.HoraEntrega</td>
+                                        <td id="campos">@p.Pedido.HoraDevolucion</td>
+                                        @if(p.Pedido.DocenteId is not null){
+                                            <td id="campos">@p.Pedido.Docente.Nombre</td>
+                                        }
+                                        else{
+                                            <td id="campos"></td>
+                                        }
+                                        <td id="campos">@p.Pedido.Estado</td>
+                                        <td id="campos">@p.Material.Categoria.Nombre</td>
+                                        <td id="campos">@p.Cantidad</td>
+                                        @if(p.Pedido.EstudianteId is not null){
+                                            <td id="campos">@p.Pedido.Estudiante.Nombre</td>
+                                        }
+                                        else{
+                                            <td id="campos"></td>
+                                        }
+                                        <td id="campos">
+                                        <form method="POST" asp-page-handler="DeleteOrder">
+                                            <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId"/>
+                                            <input type="hidden" name="pedidoId" value="@p.Pedido.PedidoId" />
+                                            <button type="submit">Delete</button>
+                                        </form>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    <div class="titles">
+        <h1>Categorias</h1>
+    </div>
+        <div class="insert-database">
+            <div>
+                <p>Nueva categoria</p>
+                <form method="POST" asp-page-handler="NewCat">
+                    <div class="fields-table">
+                        <input asp-for="categoria.Nombre" placeholder="Nombre" class="form-control">
+                        <span asp-validation-for="categoria.Nombre" class="text-danger"></span>
+
+                        <input asp-for="categoria.Descripcion" placeholder="Descripcion" class="form-control" required>
+                        <span asp-validation-for="categoria.Descripcion" class="text-danger"></span>
+
+                        <select asp-for="categoria.Acceso" placeholder="Acceso" class="fields-table" required>
+                            <option value="1">Todos</option>
+                            <option value="2">Solo docentes</option>
+                        </select>
+                        <span asp-validation-for="categoria.Acceso" class="text-danger"></span>
+                        <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId" />
+                        <input id="enviar" type="submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="table-database">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td><p>Id</p></td>
+                        <td><p>Nombre</p></td>
+                        <td><p>Descripcion</p></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{using(Almacen db = new ()){
+                                if(db.Categorias is null || !db.Categorias.Any()){
+                                    return;
+                                }
+                                else{
+                                    foreach(var c in db.Categorias){
+                                    <tr>
+                                        <td id="id">@c.CategoriaId</td>
+                                        <td id="campos">@c.Nombre</td>
+                                        <td id="campos">@c.Descripcion</td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
     
+    <div class="titles">
+        <h1>Marca</h1>
+    </div>
+        <div class="insert-database">
+            <div>
+                <p>Nueva marca</p>
+                <form method="POST" asp-page-handler="NewMarca">
+                    <div class="fields-table">
+                        <input asp-for="marca.Nombre" placeholder="Nombre" class="form-control">
+                        <span asp-validation-for="marca.Nombre" class="text-danger"></span>
+
+                        <input asp-for="marca.Descripcion" placeholder="Descripcion" class="form-control" required>
+                        <span asp-validation-for="marca.Descripcion" class="text-danger"></span>
+
+                        <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId" />
+                        <input id="enviar" type="submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="table-database">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td><p>Id</p></td>
+                        <td><p>Nombre</p></td>
+                        <td><p>Descripcion</p></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{using(Almacen db = new ()){
+                                if(db.Marcas is null || !db.Marcas.Any()){
+                                    return;
+                                }
+                                else{
+                                    foreach(var c in db.Marcas){
+                                    <tr>
+                                        <td id="id">@c.MarcaId</td>
+                                        <td id="campos">@c.Nombre</td>
+                                        <td id="campos">@c.Descripcion</td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    <div class="titles">
+        <h1>Modelo</h1>
+    </div>
+        <div class="insert-database">
+            <div>
+                <p>Nueva Modelo</p>
+                <form method="POST" asp-page-handler="NewModelo">
+                    <div class="fields-table">
+                        <input asp-for="modelo.Nombre" placeholder="Nombre" class="form-control">
+                        <span asp-validation-for="modelo.Nombre" class="text-danger"></span>
+
+                        <input asp-for="modelo.Descripcion" placeholder="Descripcion" class="form-control" required>
+                        <span asp-validation-for="modelo.Descripcion" class="text-danger"></span>
+
+                        <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId" />
+                        <input id="enviar" type="submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="table-database">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td><p>Id</p></td>
+                        <td><p>Nombre</p></td>
+                        <td><p>Descripcion</p></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{using(Almacen db = new ()){
+                                if(db.Modelos is null || !db.Modelos.Any()){
+                                    return;
+                                }
+                                else{
+                                    foreach(var c in db.Modelos){
+                                    <tr>
+                                        <td id="id">@c.ModeloId</td>
+                                        <td id="campos">@c.Nombre</td>
+                                        <td id="campos">@c.Descripcion</td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    <div class="titles">
+        <h1>Material</h1>
+    </div>
+        <div class="insert-database">
+            <div>
+                <p>Nueva Material</p>
+                <form method="POST" asp-page-handler="NewMaterial">
+                    <div class="fields-table">
+                        <select asp-for="material.CategoriaId" placeholder="Categoria" class="fields-table" required>
+                            <option value="">Selecciona una categoria</option>
+                            @{
+                                using (Almacen db = new Almacen())
+                                {
+                                    List<Categoria> categorias = db.Categorias.ToList();
+                                    foreach (var c in categorias)
+                                    {
+                                        <option value="@c.CategoriaId">@c.Nombre</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="material.CategoriaId" class="text-danger"></span>
+                        
+                        <select asp-for="material.MarcaId" placeholder="Marca" class="fields-table" required>
+                            <option value="">Selecciona una Marca</option>
+                            @{
+                                using (Almacen db = new Almacen())
+                                {
+                                    List<Marca> marcas = db.Marcas.ToList();
+                                    foreach (var c in marcas)
+                                    {
+                                        <option value="@c.MarcaId">@c.Nombre</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="material.MarcaId" class="text-danger"></span>
+                        
+                        <select asp-for="material.PlantelId" placeholder="Plantel" class="fields-table" required>
+                            <option value="">Selecciona un Plantel</option>
+                            @{
+                                using (Almacen db = new Almacen())
+                                {
+                                    List<Plantel> planteles = db.Planteles.ToList();
+                                    foreach (var c in planteles)
+                                    {
+                                        <option value="@c.PlantelId">@c.Nombre</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="material.PlantelId" class="text-danger"></span>
+                        
+                        <select asp-for="material.ModeloId" placeholder="Modelo" class="fields-table" required>
+                            <option value="">Selecciona un Modelo</option>
+                            @{
+                                using (Almacen db = new Almacen())
+                                {
+                                    List<Modelo> modelos = db.Modelos.ToList();
+                                    foreach (var c in modelos)
+                                    {
+                                        <option value="@c.ModeloId">@c.Nombre</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="material.ModeloId" class="text-danger"></span>
+                        
+                        <input asp-for="material.Descripcion" placeholder="Descripcion" class="form-control" required>
+                        <span asp-validation-for="material.Descripcion" class="text-danger"></span>
+                        
+                        <input asp-for="material.YearEntrada" placeholder="Año entrada" class="form-control">
+                        <span asp-validation-for="material.YearEntrada" class="text-danger"></span>
+
+                        <input asp-for="material.Serie" placeholder="Serie" class="form-control">
+                        <span asp-validation-for="material.Serie" class="text-danger"></span>
+                        
+                        <input type="number" asp-for="material.ValorHistorico" placeholder="Valor Historico" class="form-control">
+                        <span asp-validation-for="material.ValorHistorico" class="text-danger"></span>
+                        
+                        <select asp-for="material.Condicion" placeholder="Condicion" class="fields-table" required>
+                            <option value="1">Normal</option>
+                            <option value="2">Mantenimiento</option>
+                        </select>
+                        <span asp-validation-for="material.Condicion" class="text-danger"></span>
+
+                        <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId" />
+                        <input id="enviar" type="submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="table-database">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td><p>Id</p></td>
+                        <td><p>Modelo</p></td>
+                        <td><p>Descripcion</p></td>
+                        <td><p>Año entrada</p></td>
+                        <td><p>Marca</p></td>
+                        <td><p>Categoria</p></td>
+                        <td><p>Plantel</p></td>
+                        <td><p>Serie</p></td>
+                        <td><p>Valor Historico</p></td>
+                        <td><p>Condicion</p></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{using(Almacen db = new ()){
+                                if(db.Materiales is null || !db.Materiales.Any()){
+                                    return;
+                                }
+                                else{
+                                    foreach(var m in db.Materiales){
+                                    <tr>
+                                        <td id="id">@m.MaterialId</td>
+                                        <td id="campos">@m.Modelo.Nombre</td>
+                                        <td id="campos">@m.Descripcion</td>
+                                        <td id="campos">@m.YearEntrada</td>
+                                        <td id="campos">@m.Marca.Nombre</td>
+                                        <td id="campos">@m.Categoria.Nombre</td>
+                                        <td id="campos">@m.Plantel.Nombre</td>
+                                        <td id="campos">@m.Serie</td>
+                                        <td id="campos">@m.ValorHistorico</td>
+                                        <td id="campos">@m.Condicion</td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
 </body>
 </html>

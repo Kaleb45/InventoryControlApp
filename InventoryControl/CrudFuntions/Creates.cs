@@ -70,7 +70,9 @@ public static partial class CrudFuntions{
 
     public static void AddMarca(Marca marca){
         using (Almacen db = new()){
-            Clear();
+            int? lastMarcaId = db.Marcas.OrderByDescending(u => u.MarcaId).Select(u => u.MarcaId).FirstOrDefault();
+            int MarcaID = lastMarcaId.HasValue ? lastMarcaId.Value + 1 : 1;
+            marca.MarcaId = MarcaID;
             db.Marcas.Add(marca);
             db.SaveChanges();
         }
@@ -78,7 +80,9 @@ public static partial class CrudFuntions{
 
     public static void AddModelo(Modelo modelo){
         using (Almacen db = new()){
-            Clear();
+            int? lastModeloId = db.Modelos.OrderByDescending(u => u.ModeloId).Select(u => u.ModeloId).FirstOrDefault();
+            int ModeloID = lastModeloId.HasValue ? lastModeloId.Value + 1 : 1;
+            modelo.ModeloId = ModeloID;
             db.Modelos.Add(modelo);
             db.SaveChanges();
         }
@@ -86,7 +90,9 @@ public static partial class CrudFuntions{
 
     public static void AddCategoria(Categoria categoria){
         using (Almacen db = new()){
-            Clear();
+            int? lastCatId = db.Categorias.OrderByDescending(u => u.CategoriaId).Select(u => u.CategoriaId).FirstOrDefault();
+            int CategoriaID = lastCatId.HasValue ? lastCatId.Value + 1 : 1;
+            categoria.CategoriaId = CategoriaID;
             db.Categorias.Add(categoria);
             db.SaveChanges();
         }
@@ -110,7 +116,9 @@ public static partial class CrudFuntions{
 
     public static void AddMaterial(Material material){
         using (Almacen db = new Almacen()){
-            Clear();
+            int? lastMatId = db.Materiales.OrderByDescending(u => u.MaterialId).Select(u => u.MaterialId).FirstOrDefault();
+            int MaterialID = lastMatId.HasValue ? lastMatId.Value + 1 : 1;
+            material.MaterialId = MaterialID;
             db.Materiales.Add(material);
             db.SaveChanges();
         }

@@ -16,7 +16,7 @@
 </head>
 <body>
     <div class="titles">
-        <h1 id="Inicio">Bienvenido, @TempData["UserName"]</h1>
+        <h1 id="Inicio">Bienvenido, @Model.docente.Usuario.Usuario1</h1>
         <p>Docentes</p>
     </div>
 
@@ -53,7 +53,12 @@
                                         <td id="campos">@p.Pedido.HoraEntrega</td>
                                         <td id="campos">@p.Pedido.HoraDevolucion</td>
                                         <td id="campos">@p.Pedido.Docente.Nombre</td>
-                                        <td id="campos">@p.Pedido.Estado</td>
+                                        @if(p.Pedido.Estado == false){
+                                            <td id="campos">NO</td>
+                                        }
+                                        else{
+                                            <td id="campos">SI</td>
+                                        }
                                         <td id="campos">@p.Material.Categoria.Nombre</td>
                                         <td id="campos">@p.Cantidad</td>
                                         <td id="campos">@p.Pedido.Estudiante.Nombre</td>
@@ -75,7 +80,6 @@
                 </tbody>
             </table>
         </div>
-
     <div class="titles">
         <h1 id="Pedidos">Pedidos Actuales Propios</h1>
     </div>
@@ -107,7 +111,12 @@
                                         <td id="campos">@p.Pedido.HoraEntrega</td>
                                         <td id="campos">@p.Pedido.HoraDevolucion</td>
                                         <td id="campos">@p.Pedido.Docente.Nombre</td>
-                                        <td id="campos">@p.Pedido.Estado</td>
+                                        @if(p.Pedido.Estado == false){
+                                            <td id="campos">NO</td>
+                                        }
+                                        else{
+                                            <td id="campos">SI</td>
+                                        }
                                         <td id="campos">@p.Material.Categoria.Nombre</td>
                                         <td id="campos">@p.Cantidad</td>
                                     </tr>
@@ -120,33 +129,108 @@
         </div>
 
 
-
         <div class="titles">
             <h1 id="Solicitud">Hacer un pedido</h1>
         </div>
-
         <div class="insert-database">
             <div>
                 <p>Nuevo pedido</p>
                 <form method="POST" onsubmit="recargarPagina()">
                     <div class="fields-table">
-                        <input asp-for="pedido.Fecha" placeholder="Fecha" class="form-control">
+                        <label for="Fecha">Fecha y Hora de entrega:
+                            <input asp-for="pedido.Fecha" placeholder="Fecha" class="form-control" value="@Model.pedido.Fecha" required>
+                        </label>
                         <span asp-validation-for="pedido.Fecha" class="text-danger"></span>
+                        @{
+                            @if (Model.pedido is not null)
+                            {
+                                int validateHour = UI.DateValidationWeb(Model.pedido.Fecha.ToString());
+                                switch (validateHour)
+                                {
+                                    case 2:
+                                        <span asp-validation-for="pedido.Fecha" class="text-danger">No se permiten selecciones en sábados ni domingos.</span>
+                                        break;
+                                    case 3:
+                                        <span asp-validation-for="pedido.Fecha" class="text-danger">La fecha debe ser un día posterior al día actual y no mayor a una semana.</span>
+                                        break;
+                                    case 4:
+                                        break;
+                                    case 5:
+                                        <span asp-validation-for="pedido.Fecha" class="text-danger">Formato de fecha incorrecto. Intenta de nuevo.</span>
+                                        break;
+                                    case 1:
+                                        // No hay error, proceder con la lógica normal
+                                        break;
+                                }
 
-                        <input asp-for="pedido.LaboratorioId" placeholder="Laboratorio" class="form-control" required>
+                                if (UI.HourValidation(Model.pedido.HoraEntrega.ToString()) == false)
+                                {
+                                    <span asp-validation-for="pedido.HoraEntrega" class="text-danger">Horario no válido. Inténtalo de nuevo.</span>
+                                }
+                            }
+                        }
+
+                        <label for="horaDevolucion">Hora de Devolución:
+                            <input asp-for="pedido.HoraDevolucion" placeholder="HoraDevolucion" class="form-control" value="@Model.pedido.HoraDevolucion" required>
+                        </label>
+                        <span asp-validation-for="pedido.HoraDevolucion" class="text-danger"></span>
+
+                        @{
+                            if (Model.pedido is not null)
+                            {
+                                if (UI.HourValidation(Model.pedido.HoraDevolucion.ToString()) == false)
+                                {
+                                    <span asp-validation-for="pedido.HoraDevolucion" class="text-danger">Horario no válido. Inténtalo de nuevo.</span>
+                                }
+
+                                if (Model.pedido.HoraDevolucion <= Model.pedido.HoraEntrega)
+                                {
+                                    <span asp-validation-for="pedido.HoraDevolucion" class="text-danger">La hora de devolución debe ser posterior a la hora de entrega.</span>
+                                }
+                            }
+                        }
+
+                        <select asp-for="pedido.LaboratorioId" placeholder="Laboratorio" class="fields-table" required>
+                            <option value="">Selecciona un laboratorio</option>
+                            @{
+                                using (Almacen db = new Almacen())
+                                {
+                                    List<Laboratorio> laboratorio = db.Laboratorios.ToList();
+
+                                    foreach (var lab in laboratorio)
+                                    {
+                                        <option value="@lab.LaboratorioId">@lab.Nombre</option>
+                                    }
+                                }
+                            }
+                        </select>
                         <span asp-validation-for="pedido.LaboratorioId" class="text-danger"></span>
 
-                        <input asp-for="pedido.HoraEntrega" placeholder="HoraEntrega" class="form-control" required>
-                        <span asp-validation-for="pedido.HoraEntrega" class="text-danger"></span>
+                        <select asp-for="categoria.CategoriaId" placeholder="Material" class="fields-table" required>
+                            <option value="">Selecciona una categoria</option>
+                            @{
+                                using (Almacen db = new Almacen())
+                                {
+                                    IQueryable<Categoria> categorias = db.Categorias.Where(c => c.Acceso == "1" || c.Acceso == "2");
 
-                        <input asp-for="pedido.HoraDevolucion" placeholder="HoraDevolucion" class="form-control" required>
-                        <span asp-validation-for="pedido.HoraDevolucion" class="text-danger"></span>
+                                    foreach (var c in categorias)
+                                    {
+                                        <option value="@c.CategoriaId">@c.Nombre</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="categoria.CategoriaId" class="text-danger"></span>
+                        @{
+                            if(Model.descPedido is not null){
+                                if(UI.GetMaterialID(Model.categoria.CategoriaId) == 0){
+                                    <span class="text-danger">Ese material no esta disponible.</span>
+                                }
+                            }
+                        }
 
                         <input asp-for="descPedido.Cantidad" placeholder="Cantidad" class="form-control" required>
                         <span asp-validation-for="descPedido.Cantidad" class="text-danger"></span>
-
-                        <input asp-for="descPedido.MaterialId" placeholder="Material" class="form-control" required>
-                        <span asp-validation-for="descPedido.MaterialId" class="text-danger"></span>
 
                         <input type="hidden" asp-for="pedido.DocenteId" value="@Model.docente.DocenteId" />
                         <span asp-validation-for="pedido.DocenteId" class="text-danger"></span>
@@ -187,7 +271,12 @@
                                         <td id="campos">@p.Pedido.HoraEntrega</td>
                                         <td id="campos">@p.Pedido.HoraDevolucion</td>
                                         <td id="campos">@p.Pedido.Docente.Nombre</td>
-                                        <td id="campos">@p.Pedido.Estado</td>
+                                        @if(p.Pedido.Estado == false){
+                                            <td id="campos">NO</td>
+                                        }
+                                        else{
+                                            <td id="campos">SI</td>
+                                        }
                                         <td id="campos">@p.Material.Categoria.Nombre</td>
                                         <td id="campos">@p.Cantidad</td>
                                     </tr>
@@ -198,7 +287,6 @@
                 </tbody>
             </table>
         </div>
-
         <div class="titles">
             <h1 id="HE">Historial de Solicitudes Estudiantes</h1>
         </div>
@@ -231,7 +319,12 @@
                                         <td id="campos">@p.Pedido.HoraEntrega</td>
                                         <td id="campos">@p.Pedido.HoraDevolucion</td>
                                         <td id="campos">@p.Pedido.Docente.Nombre</td>
-                                        <td id="campos">@p.Pedido.Estado</td>
+                                        @if(p.Pedido.Estado == false){
+                                            <td id="campos">NO</td>
+                                        }
+                                        else{
+                                            <td id="campos">SI</td>
+                                        }
                                         <td id="campos">@p.Material.Categoria.Nombre</td>
                                         <td id="campos">@p.Cantidad</td>
                                         <td id="campos">@p.Pedido.Estudiante.Nombre</td>
@@ -243,11 +336,10 @@
                 </tbody>
             </table>
         </div>
-
         <div class="titles">
             <h1 id="Materiales">Materiales</h1>
         </div>
-                <div class="table-database">
+        <div class="table-database">
             <table border="1">
                 <thead>
                     <tr>

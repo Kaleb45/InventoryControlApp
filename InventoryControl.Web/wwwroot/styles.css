@@ -28,29 +28,75 @@ header p {
 }
 
 .Toolbar nav {
-    background-color: #333;
+    background-color: #04364A;
+    text-align: center;
     overflow: hidden;
+    position: fixed;
+    left: 0;
+    top: 35px;
+    width: 100px; /* Ancho inicial de la barra de navegación */
+    height: calc(100% - 35px);
+    transition: width 0.3s ease-in-out;
+}
+
+.Toolbar nav:hover {
+    width: 200px; /* Ancho expandido al poner el cursor sobre la barra de navegación */
+    color: #04364A; /* Color del texto al poner el cursor sobre el recuadro */
 }
 
 .Toolbar nav a {
-    float: left;
+    float: none;
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 14px 0;
     text-decoration: none;
-    transition: background-color 0.3s;
+    position: relative;
+    overflow: hidden;
+    background-color: #04364A; /* Agregado fondo al enlace */
+    transition: background-color 0.3s ease-in-out; /* Agregada transición al cambio de fondo */
+}
+
+.Toolbar nav a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 0;
+    height: 100%;
+    background-color: rgba(100, 204, 197, 0.8); /* Cambiado a rgba con un canal alfa de 0.8 para transparencia */
+    color: #04364A;
+    transition: left 0.3s ease-in-out, width 0.3s ease-in-out, color 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Agregado background-color a la transición */
 }
 
 .Toolbar nav a:hover {
-    background-color: #ddd;
-    color: black;
+    background-color: #176B87; /* Cambiado a un color más oscuro para resaltar */
+}
+
+.Toolbar nav a:hover::before {
+    left: 0;
+    width: 100%;
+    color: #04364A;
+    background-color: rgba(100, 204, 197, 0); /* Cambiado a rgba con un canal alfa de 0 para ocultar el recuadro al poner el cursor sobre el enlace */
 }
 
 @media screen and (max-width: 600px) {
-    .Toolbar nav a {
-        float: none;
-        width: 100%;
+    .Toolbar nav {
+        left: -250px; /* Oculta el menú en pantallas pequeñas */
+    }
+
+    .Toolbar nav.responsive {
+        position: relative;
+    }
+
+    .Toolbar nav.responsive a.icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .Toolbar nav.responsive a {
+        display: block;
         text-align: left;
     }
 }

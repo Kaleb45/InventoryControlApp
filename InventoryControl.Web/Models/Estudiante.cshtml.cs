@@ -40,14 +40,6 @@ namespace InventoryControlPages
                 pedido.Fecha = (DateTime)TempData["Fecha"];
             if (TempData.ContainsKey("HoraDevolucion"))
                 pedido.HoraDevolucion = (DateTime)TempData["HoraDevolucion"];
-            if (TempData.ContainsKey("LaboratorioId"))
-                pedido.LaboratorioId = (int)TempData["LaboratorioId"];
-            if (TempData.ContainsKey("DocenteId"))
-                pedido.DocenteId = (int)TempData["DocenteId"];
-            if (TempData.ContainsKey("CategoriaId"))
-                categoria.CategoriaId = (int)TempData["CategoriaId"];
-            if (TempData.ContainsKey("Cantidad"))
-                descPedido.Cantidad = (int)TempData["Cantidad"];
         }
 
         public IActionResult OnPostNewOrder()
@@ -55,16 +47,24 @@ namespace InventoryControlPages
             if ((pedido is not null) && (descPedido is not null) &&  !ModelState.IsValid)
             {
                 TempData["UserType"] = 2;
+                TempData["Fecha"] = pedido.Fecha;
+                TempData["HoraDevolucion"] = pedido.HoraDevolucion;
 
-                int validateHour = UI.DateValidationWeb(pedido.Fecha.ToString());
-                switch (validateHour){
+                int validateDate = UI.DateValidationWeb(pedido.Fecha.ToString());
+                switch (validateDate){
                     case 2:
                         return RedirectToPage("/EstudianteMenu", new{id = pedido.EstudianteId});
+                        break;
                     case 3:
                         return RedirectToPage("/EstudianteMenu", new{id = pedido.EstudianteId});
+                        break;
                     case 4:
                         return RedirectToPage("/EstudianteMenu", new{id = pedido.EstudianteId});
-                    case 01:
+                        break;
+                    case 5:
+                        return RedirectToPage("/EstudianteMenu", new{id = pedido.EstudianteId});
+                        break;
+                    case 1:
                         // No hay error, proceder con la lógica normal
                         break;
                 }
@@ -75,7 +75,7 @@ namespace InventoryControlPages
 
                 pedido.HoraEntrega = pedido.Fecha;
 
-                if(UI.HourValidation(pedido.HoraEntrega.ToString()) == false){
+                if(UI.HourValidation(pedido.HoraDevolucion.ToString()) == false){
                     return RedirectToPage("/EstudianteMenu", new{id = pedido.EstudianteId});
                 }
 

@@ -18,7 +18,7 @@
 </head>
 <body>
     <div class="titles">
-        <h1 id="Inicio">Bienvenido, @TempData["UserName"]</h1>
+        <h1 id="Inicio">Bienvenido, @Model.estudiante.Usuario.Usuario1</h1>
         <p>Estudiantes</p>
     </div>
         <div class="titles">
@@ -78,7 +78,7 @@
                 <form method="POST" onsubmit="recargarPagina()" asp-page-handler="NewOrder">
                     <div class="fields-table">
                         <label for="Fecha">Fecha y Hora de entrega:
-                            <input asp-for="pedido.Fecha" placeholder="Fecha" class="form-control" required value="@Model.pedido?.Fecha" required>
+                            <input asp-for="pedido.Fecha" placeholder="Fecha" class="form-control" value="@Model.pedido.Fecha" required>
                         </label>
                         <span asp-validation-for="pedido.Fecha" class="text-danger"></span>
                         @{
@@ -94,7 +94,6 @@
                                         <span asp-validation-for="pedido.Fecha" class="text-danger">La fecha debe ser un día posterior al día actual y no mayor a una semana.</span>
                                         break;
                                     case 4:
-                                        <span asp-validation-for="pedido.Fecha" class="text-danger">Formato de fecha incorrecto. Intenta de nuevo.</span>
                                         break;
                                     case 5:
                                         <span asp-validation-for="pedido.Fecha" class="text-danger">Rellene todos los espacios.</span>
@@ -104,22 +103,22 @@
                                         break;
                                 }
 
-                                if (UI.HourValidation(Model.pedido.Fecha.ToString()) == false)
+                                if (UI.HourValidation(Model.pedido.HoraEntrega.ToString()) == false)
                                 {
-                                    <span asp-validation-for="pedido.Fecha" class="text-danger">Horario no válido. Inténtalo de nuevo.</span>
+                                    <span asp-validation-for="pedido.HoraEntrega" class="text-danger">Horario no válido. Inténtalo de nuevo.</span>
                                 }
                             }
                         }
 
                         <label for="horaDevolucion">Hora de Devolución:
-                            <input asp-for="pedido.HoraDevolucion" placeholder="HoraDevolucion" class="form-control" required value="@Model.pedido?.Fecha" required>
+                            <input asp-for="pedido.HoraDevolucion" placeholder="HoraDevolucion" class="form-control" value="@Model.pedido.HoraDevolucion" required>
                         </label>
                         <span asp-validation-for="pedido.HoraDevolucion" class="text-danger"></span>
 
                         @{
                             if (Model.pedido is not null)
                             {
-                                if (UI.HourValidation(Model.pedido.HoraEntrega.ToString()) == false)
+                                if (UI.HourValidation(Model.pedido.HoraDevolucion.ToString()) == false)
                                 {
                                     <span asp-validation-for="pedido.HoraDevolucion" class="text-danger">Horario no válido. Inténtalo de nuevo.</span>
                                 }
@@ -131,7 +130,7 @@
                             }
                         }
 
-                        <select asp-for="pedido.LaboratorioId" placeholder="Laboratorio" class="fields-table" required value="@Model.pedido?.LaboratorioId"required>
+                        <select asp-for="pedido.LaboratorioId" placeholder="Laboratorio" class="fields-table" required>
                             <option value="">Selecciona un laboratorio</option>
                             @{
                                 using (Almacen db = new Almacen())
@@ -147,7 +146,7 @@
                         </select>
                         <span asp-validation-for="pedido.LaboratorioId" class="text-danger"></span>
                             
-                        <select asp-for="pedido.DocenteId" placeholder="Docente" class="fields-table" required value="@Model.pedido?.DocenteId" required>
+                        <select asp-for="pedido.DocenteId" placeholder="Docente" class="fields-table" required>
                             <option value="">Selecciona un docente</option>
                             @{
                                 using (Almacen db = new Almacen())
@@ -163,12 +162,12 @@
                         </select>
                         <span asp-validation-for="pedido.DocenteId" class="text-danger"></span>
 
-                        <select asp-for="categoria.CategoriaId" placeholder="Material" class="fields-table" required value="@Model.categoria?.CategoriaId" required>
+                        <select asp-for="categoria.CategoriaId" placeholder="Material" class="fields-table" required>
                             <option value="">Selecciona una categoria</option>
                             @{
                                 using (Almacen db = new Almacen())
                                 {
-                                    List<Categoria> categorias = db.Categorias.ToList();
+                                    IQueryable<Categoria> categorias = db.Categorias.Where(c => c.Acceso == "1");
 
                                     foreach (var c in categorias)
                                     {
@@ -186,7 +185,7 @@
                             }
                         }
 
-                        <input asp-for="descPedido.Cantidad" placeholder="Cantidad" class="form-control" required value="@Model.descPedido?.Cantidad"required>
+                        <input asp-for="descPedido.Cantidad" placeholder="Cantidad" class="form-control" required>
                         <span asp-validation-for="descPedido.Cantidad" class="text-danger"></span>
 
                         <input type="hidden"asp-for="pedido.EstudianteId" value=@Model.estudiante.EstudianteId>

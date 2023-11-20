@@ -27,6 +27,7 @@ header p {
     font-weight: bold;
 }
 
+
 .Toolbar nav {
     background-color: #04364A;
     text-align: center;
@@ -100,6 +101,7 @@ header p {
         text-align: left;
     }
 }
+
 
 /* Agregamos un botón de menú para pantallas pequeñas */
 .icon {

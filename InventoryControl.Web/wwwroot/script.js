@@ -53,3 +53,20 @@ function recargarPagina() {
     location.reload();
     location.reload();
 }
+
+function toggleContent(event) {
+    var titleId = event.target.closest('.titles').id;
+    var contentId = titleId + "Content";
+    var content = document.getElementById(contentId);
+
+    // Cierra todos los elementos abiertos
+    var openContents = document.querySelectorAll('.table-database.open, .insert-database.open');
+    openContents.forEach(function (openContent) {
+        if (openContent.id !== contentId) {
+            openContent.classList.remove('open');
+        }
+    });
+
+    // Realiza la animación
+    content.classList.toggle('open');
+}

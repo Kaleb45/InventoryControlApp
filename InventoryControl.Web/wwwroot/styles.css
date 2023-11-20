@@ -141,7 +141,7 @@ header p {
     border-radius: 10px;
 }
 
-.titles {
+.bienvenida {
     display: flex;
     margin-top: 40px;
     text-align: center;
@@ -153,11 +153,74 @@ header p {
     border-bottom: 1px solid #04364A;
 }
 
-.titles #bienvenida {
+.titles {
     display: flex;
+    margin-top: 40px;
     text-align: center;
     align-items: center;
-    justify-content: center;
+    padding: 5px;
+    color: #04364A;
+    font-size: 20px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #04364A;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-bottom-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    position: relative;
+}
+
+.titles h1 a {
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+    user-select: none; /* Evita la selección de texto al hacer clic */
+    transition: color 0.3s ease-in-out;
+}
+
+.titles:hover {
+    background-color: #176B87;
+    cursor: pointer;
+}
+
+
+.titles:hover h1 a {
+    color: #fff;
+}
+
+.titles:hover {
+    border-bottom: 1px solid #fff;
+    opacity: 0.9; /* Cambia la opacidad al estar sobre el título */
+    background-color: #176B87;
+}
+
+.titles:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: rgba(100, 204, 197, 0.8); /* Cambia la opacidad al estar sobre el título */
+    transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    pointer-events: none; /* Evita que este elemento capture eventos del ratón */
+}
+
+.titles:hover:before {
+    width: 100%;
+    color: #04364A;
+    background-color: rgba(167, 255, 249, 0.1);/* Cambia la opacidad al estar sobre el título */
+}
+
+.welcome-title:hover {
+    background-color: transparent;
+    cursor: default;
+}
+
+.welcome-title:hover h1 a {
+    color: inherit;
+}
+
+.welcome-title:hover:before {
+    width: 0;
+    background-color: transparent;
 }
 
 .form-container {
@@ -259,6 +322,32 @@ header p {
     font-weight: bold;
 }
 
+.table-database button {
+    width: 90%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #176B87;
+    background-color: rgba(100, 204, 197, 0.8);
+    color: #04364A;
+    transition: border-color 0.3s;
+}
+
+.table-database button:hover {
+    border-color: 1px solid #04364A;
+    background-color: #176B87;
+    color: #fff;
+}
+
+.in-database {
+    text-align: center;
+    margin-bottom: 2px;
+    padding-top: 3px;
+}
+
+.in-database p {
+    border-bottom: 1px solid #176B87;
+}
+
 .insert-database {
     text-align: center;
     margin-bottom: 2px;
@@ -336,6 +425,43 @@ header p {
 .form-container:hover .fields-table #enviar:hover {
     background-color: #64CCC5; /* Cambia a tu color deseado */
     color: #04364A;
+}
+
+.table-database,
+.insert-database {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    animation: slideDown 0.8s ease-in-out;
+}
+
+.table-database.open,
+.insert-database.open {
+    max-height: 1000px; /* o un valor suficientemente grande */
+    opacity: 1;
+    animation: slideDown 0.8s ease-in-out;
+}
+
+@keyframes slideDown {
+    from {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+    }
+
+    to {
+        max-height: 1000px; /* o un valor suficientemente grande */
+        overflow: hidden;
+        opacity: 1;
+    }
+}
+
+.hidden-content:target {
+    display: block;
+}
+
+.hidden-content {
+    display: none;
 }
 
 footer {

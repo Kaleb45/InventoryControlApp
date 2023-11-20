@@ -12,18 +12,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/styles.css">
+    <script src="~/script.js" defer></script>
     <title>Usuarios</title>
 </head>
 <body>
-    <div class="titles">
-        <h1 id="Inicio">Bienvenido, @Model.docente.Usuario.Usuario1</h1>
+    <div class="welcome-title titles">
+        <h1 id="Inicio">Bienvenido, @Model.docente.Nombre @Model.docente.ApellidoPaterno</h1>
+        <br>
         <p>Docentes</p>
     </div>
 
-    <div class="titles">
-        <h1>Solicitudes Actuales</h1>
+    <div class="titles" onclick="toggleContent()">
+        <h1><a href="#solicitudesActualesContent">Solicitudes Actuales</a></h1>
     </div>
-        <div class="table-database">
+
+    
+        <div class="table-database hidden-content open" id="solicitudesActualesContent">
             <table border="1">
                 <thead>
                     <tr>
@@ -43,7 +47,16 @@
                     @{using(Almacen db = new ()){
                             IQueryable<DescPedido>? descPedidos = db.DescPedidos.Include(d => d.Pedido).Include(d => d.Material).Where(d => d.Pedido.DocenteId == Model.docente.DocenteId && d.Pedido.EstudianteId != null && d.Pedido.Estado == false && d.Pedido.Fecha.Value.Date > DateTime.Now.Date).OrderBy(d => d.Pedido.Fecha);
                                 if(descPedidos is null || !descPedidos.Any()){
-                                    return;
+                                    <tr>
+                                        <td><p class="text-danger">No tiene solicitudes actuales</p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                    </tr>
                                 }
                                 else{
                                     foreach(var p in descPedidos){
@@ -80,10 +93,13 @@
                 </tbody>
             </table>
         </div>
-    <div class="titles">
-        <h1 id="Pedidos">Pedidos Actuales Propios</h1>
+
+    <div class="titles" onclick="toggleContent()">
+        <h1 id="Pedidos"><a href="#pedidosActualesContent">Pedidos Actuales Propios</a></h1>
     </div>
-        <div class="table-database">
+
+    
+        <div class="table-database hidden-content open" id="pedidosActualesContent">
             <table border="1">
                 <thead>
                     <tr>
@@ -101,7 +117,16 @@
                     @{using(Almacen db = new ()){
                             IQueryable<DescPedido>? descPedidos = db.DescPedidos.Include(d => d.Pedido).Include(d => d.Material).Where(d => d.Pedido.DocenteId == Model.docente.DocenteId && d.Pedido.EstudianteId == null && d.Pedido.Fecha.Value.Date > DateTime.Now.Date).OrderBy(d => d.Pedido.Fecha);
                                 if(descPedidos is null || !descPedidos.Any()){
-                                    return;
+                                    <tr>
+                                    <td><p class="text-danger">No tiene pedidos actuales</p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                </tr>
                                 }
                                 else{
                                     foreach(var p in descPedidos){
@@ -128,11 +153,12 @@
             </table>
         </div>
 
+    <div class="titles" onclick="toggleContent()">
+        <h1 id="Solicitud"><a href="#hacerPedidoContent">Hacer un pedido</a></h1>
+    </div>
 
-        <div class="titles">
-            <h1 id="Solicitud">Hacer un pedido</h1>
-        </div>
-        <div class="insert-database">
+    
+        <div class="insert-database hidden-content open" id="hacerPedidoContent">
             <div>
                 <p>Nuevo pedido</p>
                 <form method="POST" onsubmit="recargarPagina()">
@@ -240,10 +266,13 @@
                 </form>
             </div>
         </div>
-        <div class="titles">
-            <h1 id="HD">Historial de Solicitudes</h1>
-        </div>
-        <div class="table-database">
+
+    <div class="titles" onclick="toggleContent()">
+        <h1 id="HD"><a href="#historialSolicitudesContent">Historial de Solicitudes</a></h1>
+    </div>
+
+    
+        <div class="table-database hidden-content open" id="historialSolicitudesContent">
             <table border="1">
                 <thead>
                     <tr>
@@ -261,7 +290,16 @@
                     @{using(Almacen db = new ()){
                             IQueryable<DescPedido>? descPedidos = db.DescPedidos.Include(d => d.Pedido).Include(d => d.Material).Where(d => d.Pedido.DocenteId == Model.docente.DocenteId && d.Pedido.Fecha.Value.Date < DateTime.Now.Date).OrderBy(d => d.Pedido.Fecha);
                                 if(descPedidos is null || !descPedidos.Any()){
-                                    return;
+                                    <tr>
+                                    <td><p class="text-danger">No tiene solicitudes anteriores</p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                </tr>
                                 }
                                 else{
                                     foreach(var p in descPedidos){
@@ -287,10 +325,13 @@
                 </tbody>
             </table>
         </div>
-        <div class="titles">
-            <h1 id="HE">Historial de Solicitudes Estudiantes</h1>
-        </div>
-        <div class="table-database">
+
+    <div class="titles" onclick="toggleContent()">
+        <h1 id="HE"><a href="#historialSolicitudesEstContent">Historial de Solicitudes Estudiantes</a></h1>
+    </div>
+
+    
+        <div class="table-database hidden-content open" id="historialSolicitudesEstContent">
             <table border="1">
                 <thead>
                     <tr>
@@ -309,7 +350,17 @@
                     @{using(Almacen db = new ()){
                             IQueryable<DescPedido>? descPedidos = db.DescPedidos.Include(d => d.Pedido).Include(d => d.Material).Where(d => d.Pedido.DocenteId == Model.docente.DocenteId && d.Pedido.EstudianteId != null && d.Pedido.Estado == true).OrderBy(d => d.Pedido.Fecha);
                                 if(descPedidos is null || !descPedidos.Any()){
-                                    return;
+                                    <tr>
+                                    <td><p class="text-danger">No tiene solicitudes anteriores de estudiantes</p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                </tr>
                                 }
                                 else{
                                     foreach(var p in descPedidos){
@@ -336,10 +387,13 @@
                 </tbody>
             </table>
         </div>
-        <div class="titles">
-            <h1 id="Materiales">Materiales</h1>
-        </div>
-        <div class="table-database">
+
+    <div class="titles" onclick="toggleContent()">
+        <h1 id="Materiales"><a href="#materialesContent">Materiales</a></h1>
+    </div>
+
+    
+        <div class="table-database hidden-content open" id="materialesContent">
             <table border="1">
                 <thead>
                     <tr>
@@ -351,7 +405,9 @@
                 <tbody>
                     @{using(Almacen db = new ()){
                                 if(db.Categorias is null || !db.Categorias.Any()){
-                                    return;
+                                    <td><p class="text-danger">No hay materiales registrados</p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
                                 }
                                 else{
                                     foreach(var c in db.Categorias){

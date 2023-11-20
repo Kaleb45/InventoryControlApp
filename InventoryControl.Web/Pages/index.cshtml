@@ -18,13 +18,13 @@
 </head>
 <body>
     <div class="welcome-init">
-        <div class="titles">
-            <p id="bienvenida">Bienvenido al Almacen</p>
+        <div class="welcome-title titles">
+            <p>Bienvenido al Almacen</p>
         </div>
         <div id="loginFormContainer" class="form-container">
             <br>
             <p id="in" onclick="toggleForm('loginForm')">Log In</p>
-            <div class="insert-database">
+            <div class="in-database">
                 <div id="loginForm" class="form">
                     <p>Inicie sesión</p>
                     <form method="POST" asp-page-handler="LogIn">
@@ -52,7 +52,7 @@
         <div id="signinFormContainer" class="form-container">
             <br>
             <p onclick="toggleForm('signinForm')">Sign In</p>
-            <div class="insert-database">
+            <div class="in-database">
                 <div id="signinForm" class="form">
                     <p>Registre su Usuario</p>
                     <form method="POST" asp-page-handler="SignIn">

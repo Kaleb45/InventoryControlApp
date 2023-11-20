@@ -17,14 +17,16 @@
     <title>Usuarios</title>
 </head>
 <body>
-    <div class="titles">
-        <h1 id="Inicio">Bienvenido, @Model.estudiante.Usuario.Usuario1</h1>
+    <div class="welcome-title titles">
+        <h1 id="Inicio">Bienvenido, @Model.estudiante.Nombre @Model.estudiante.ApellidoPaterno</h1>
+        <br>
         <p>Estudiantes</p>
     </div>
-        <div class="titles">
-            <h1>Pedidos Actuales</h1>
-        </div>
-        <div class="table-database">
+    <div class="titles" onclick="toggleContent()">
+        <h1><a href="#pedidosActualesContent">Pedidos Actuales</a></h1>
+    </div>
+    
+        <div class="table-database hidden-content open" id="pedidosActualesContent">
             <table border="1">
                 <thead>
                     <tr>
@@ -43,7 +45,16 @@
                         using(Almacen db = new ()){
                             IQueryable<DescPedido>? descPedidos = db.DescPedidos.Include(d => d.Pedido).Include(d => d.Material).Where(d => d.Pedido.EstudianteId == Model.estudiante.EstudianteId && d.Pedido.Fecha.Value.Date > DateTime.Now.Date).OrderBy(d => d.Pedido.Fecha);
                             if(descPedidos is null || !descPedidos.Any()){
-                                return;
+                                <tr>
+                                    <td><p class="text-danger">No tiene pedidos actuales</p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                    <td><p></p></td>
+                                </tr>
                             }
                             else{
                                 foreach(var p in descPedidos){
@@ -69,10 +80,11 @@
                 </tbody>
             </table>
         </div>
-        <div class="titles">
-            <h1 id="Pedido">Hacer un pedido</h1>
+        <div class="titles" onclick="toggleContent()">
+            <h1 id="Pedido"><a href="#hacerPedidoContent">Hacer un pedido</a></h1>
         </div>
-        <div class="insert-database">
+    
+        <div class="insert-database hidden-content open" id="hacerPedidoContent">
             <div>
                 <p>Nuevo pedido</p>
                 <form method="POST" onsubmit="recargarPagina()" asp-page-handler="NewOrder">
@@ -196,10 +208,11 @@
                 </form>
             </div>
         </div>
-        <div class="titles">
-            <h1 id="Historial">Historial de Solicitudes</h1>
+        <div class="titles" onclick="toggleContent()">
+            <h1 id="Historial"><a href="#historialContent">Historial de Solicitudes</a></h1>
         </div>
-        <div class="table-database">
+    
+        <div class="table-database hidden-content open" id="historialContent">
             <table border="1">
                 <thead>
                     <tr>
@@ -217,7 +230,16 @@
                     @{using(Almacen db = new ()){
                             IQueryable<DescPedido>? descPedidos = db.DescPedidos.Include(d => d.Pedido).Include(d => d.Material).Where(d => d.Pedido.EstudianteId == Model.estudiante.EstudianteId && d.Pedido.Fecha.Value.Date < DateTime.Now.Date).OrderBy(d => d.Pedido.Fecha);
                                 if(descPedidos is null || !descPedidos.Any()){
-                                    return;
+                                    <tr>
+                                        <td><p class="text-danger">No tiene solicitudes anteriores</p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                    </tr>
                                 }
                                 else{
                                     foreach(var p in descPedidos){

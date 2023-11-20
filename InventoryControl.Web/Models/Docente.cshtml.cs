@@ -29,6 +29,8 @@ namespace InventoryControlPages
 
         [BindProperty]
         public DescPedido? descPedido { get; set; }
+        [BindProperty]
+        public Categoria? categoria { get; set; }
 
         public void OnGet(int id)
         {
@@ -40,6 +42,51 @@ namespace InventoryControlPages
         {
             if ((pedido is not null) && (descPedido is not null) &&  !ModelState.IsValid)
             {
+                TempData["UserType"] = 1;
+
+                int validateDate = UI.DateValidationWeb(pedido.Fecha.ToString());
+                switch (validateDate){
+                    case 2:
+                        return RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
+                        break;
+                    case 3:
+                        return RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
+                        break;
+                    case 4:
+                        return RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
+                        break;
+                    case 5:
+                        return RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
+                        break;
+                    case 1:
+                        // No hay error, proceder con la lógica normal
+                        break;
+                }
+
+                pedido.HoraEntrega = pedido.Fecha;
+                
+                if(UI.HourValidation(pedido.HoraEntrega.ToString()) == false){
+                    RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
+                }
+
+
+                if(UI.HourValidation(pedido.HoraDevolucion.ToString()) == false){
+                    RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
+                }
+
+                if(pedido.HoraDevolucion <= pedido.HoraEntrega){
+                    RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
+                }
+
+                descPedido.MaterialId = UI.GetMaterialID(categoria.CategoriaId);
+                WriteLine($"{descPedido.MaterialId} |   {categoria.CategoriaId}");
+
+                if(descPedido.MaterialId is null || descPedido.MaterialId == 0){
+                    return RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
+                }
+
+                pedido.Estado = true;
+
                 CrudFuntions.AddPedido(pedido, descPedido);
                 TempData["UserType"] = 1;
                 return RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});

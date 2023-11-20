@@ -35,7 +35,12 @@ namespace InventoryControlPages
         public void OnGet(int id)
         {
             docente = db.Docentes.FirstOrDefault(e => e.DocenteId == id);
+            TempData["UserType"] = 1;
             ViewData["Title"] = "";
+            if (TempData.ContainsKey("Fecha"))
+                pedido.Fecha = (DateTime)TempData["Fecha"];
+            if (TempData.ContainsKey("HoraDevolucion"))
+                pedido.HoraDevolucion = (DateTime)TempData["HoraDevolucion"];
         }
 
         public IActionResult OnPost()
@@ -43,6 +48,8 @@ namespace InventoryControlPages
             if ((pedido is not null) && (descPedido is not null) &&  !ModelState.IsValid)
             {
                 TempData["UserType"] = 1;
+                TempData["Fecha"] = pedido.Fecha;
+                TempData["HoraDevolucion"] = pedido.HoraDevolucion;
 
                 int validateDate = UI.DateValidationWeb(pedido.Fecha.ToString());
                 switch (validateDate){

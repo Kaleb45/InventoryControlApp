@@ -286,6 +286,13 @@
                                         <td id="id">@c.CategoriaId</td>
                                         <td id="campos">@c.Nombre</td>
                                         <td id="campos">@c.Descripcion</td>
+                                        <td id="campos">
+                                        <form method="POST" asp-page-handler="DeleteCategoria">
+                                            <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId"/>
+                                            <input type="hidden" name="categoriaId" value="@c.CategoriaId" />
+                                            <button type="submit">Delete</button>
+                                        </form>
+                                        </td>
                                     </tr>
                                 }
                             }
@@ -335,6 +342,13 @@
                                         <td id="id">@c.MarcaId</td>
                                         <td id="campos">@c.Nombre</td>
                                         <td id="campos">@c.Descripcion</td>
+                                        <td id="campos">
+                                        <form method="POST" asp-page-handler="DeleteMarca">
+                                            <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId"/>
+                                            <input type="hidden" name="marcaId" value="@c.MarcaId" />
+                                            <button type="submit">Delete</button>
+                                        </form>
+                                        </td>
                                     </tr>
                                 }
                             }
@@ -384,6 +398,13 @@
                                         <td id="id">@c.ModeloId</td>
                                         <td id="campos">@c.Nombre</td>
                                         <td id="campos">@c.Descripcion</td>
+                                        <td id="campos">
+                                        <form method="POST" asp-page-handler="DeleteModelo">
+                                            <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId"/>
+                                            <input type="hidden" name="modeloId" value="@c.ModeloId" />
+                                            <button type="submit">Delete</button>
+                                        </form>
+                                        </td>
                                     </tr>
                                 }
                             }
@@ -519,6 +540,13 @@
                                         <td id="campos">@m.Serie</td>
                                         <td id="campos">@m.ValorHistorico</td>
                                         <td id="campos">@m.Condicion</td>
+                                        <td id="campos">
+                                        <form method="POST" asp-page-handler="DeleteMaterial">
+                                            <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId"/>
+                                            <input type="hidden" name="materialId" value="@m.MaterialId" />
+                                            <button type="submit">Delete</button>
+                                        </form>
+                                        </td>
                                     </tr>
                                 }
                             }

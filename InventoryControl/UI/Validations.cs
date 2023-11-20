@@ -194,47 +194,54 @@ public static partial class UI
     /// </returns>
     public static int StudentEmailValidation(string? Email, long registro)
     {
-        string register = registro.ToString();
-        if (Email.Length != 17)//a19300107@ceti.mx
-        {
-            return 10;
-        }
-        if (!Email.Substring(0, 1).Contains('a'))
-        {
-            return 20;
-        }
-        if (!Email.Substring(1, 8).Contains(register))
-        {
-            return 30;
-        }
-        if (!Email.Substring(9, 8).Contains("@ceti.mx"))
-        {
-            return 40;
-        }
+        try{
+            string register = registro.ToString();
+            if (Email.Length != 17)//a19300107@ceti.mx
+            {
+                return 10;
+            }
+            if (!Email.Substring(0, 1).Contains('a'))
+            {
+                return 20;
+            }
+            if (!Email.Substring(1, 8).Contains(register))
+            {
+                return 30;
+            }
+            if (!Email.Substring(9, 8).Contains("@ceti.mx"))
+            {
+                return 40;
+            }
 
-        if (Email.Length != 17)
-        {
-            return 50;
-        }
-
-
-        if (!long.TryParse(Email.Substring(1, 8), out long parsedRegistro) || parsedRegistro != registro)
-        {
-            return 70;
-        }
-
-        if (Email.Substring(17) != "")
-        {
-            return 80;
-        }
+            if (Email.Length != 17)
+            {
+                return 50;
+            }
 
 
-        if (!Email.Substring(9, 8).Equals("@ceti.mx", StringComparison.OrdinalIgnoreCase))
-        {
-            return 100;
-        }
+            if (!long.TryParse(Email.Substring(1, 8), out long parsedRegistro) || parsedRegistro != registro)
+            {
+                return 70;
+            }
 
-        return 1;
+            if (Email.Substring(17) != "")
+            {
+                return 80;
+            }
+
+
+            if (!Email.Substring(9, 8).Equals("@ceti.mx", StringComparison.OrdinalIgnoreCase))
+            {
+                return 100;
+            }
+
+            return 1;
+        }
+        catch(Exception){
+            Program.Fail("Formato de Correo Incorrecto");
+            return 90;
+            throw;
+        }
     }
 
     /// <summary>
@@ -407,6 +414,45 @@ public static bool DateValidation(string? sDate)
         throw;
     }
     return validDate;
+}
+
+public static int DateValidationWeb(string? sDate)
+{
+    try
+    {
+        if (DateTime.TryParse(sDate, out DateTime dateOnly))
+        {
+            if (dateOnly > DateTime.Now.Date && (dateOnly.Date - DateTime.Now.Date).TotalDays <= 7)
+            {
+                // Verifica si la fecha es un sábado o domingo
+                if (dateOnly.DayOfWeek == DayOfWeek.Saturday || dateOnly.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    Program.Fail("No se permiten selecciones en sábados ni domingos.");
+                    return 2;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+            else
+            {
+                Program.Fail("La fecha debe ser un día posterior al día actual y no mayor a una semana.");
+                return 3;
+            }
+        }
+        else
+        {
+            Program.Fail("Formato de fecha incorrecto. Intenta de nuevo.");
+            return 4;
+        }
+    }
+    catch (System.Exception)
+    {
+        Program.Fail("Formato de fecha incorrecto. Intenta de nuevo.");
+        return 5;
+        throw;
+    }
 }
 
 //funcion que obtiene el ID del laboratorio ingresado por el usuario

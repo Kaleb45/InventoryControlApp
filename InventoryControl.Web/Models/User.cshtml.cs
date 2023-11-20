@@ -34,7 +34,7 @@ namespace InventoryControlPages
         [BindProperty]
         public Estudiante? estudiante {get; set;}
 
-        public IActionResult OnPost()
+        public IActionResult OnPostLogIn()
         {
             if ((usuario is not null) &&!ModelState.IsValid)
             {
@@ -47,6 +47,8 @@ namespace InventoryControlPages
                     TempData["UserName"] = result.usuarioEncontrado.Usuario1;
                     TempData["UserType"] = result.typeOfUser;
                     switch(result.typeOfUser){
+                        case 0:
+                            return Page();
                         case 1:
                             Docente? docente = db.Docentes!.FirstOrDefault(r => r.UsuarioId == result.usuarioEncontrado.UsuarioId);
                             return RedirectToPage("/DocenteMenu", new{id = docente.DocenteId});

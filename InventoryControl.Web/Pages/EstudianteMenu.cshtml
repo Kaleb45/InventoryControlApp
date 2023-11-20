@@ -5,6 +5,8 @@
 @addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
 @using AlmacenSQLiteEntities;
 @using AlmacenDataContext;
+@using InventoryControl.UI;
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,20 +39,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @{using(Almacen db = new ()){
+                    @{
+                        using(Almacen db = new ()){
                             IQueryable<DescPedido>? descPedidos = db.DescPedidos.Include(d => d.Pedido).Include(d => d.Material).Where(d => d.Pedido.EstudianteId == Model.estudiante.EstudianteId && d.Pedido.Fecha.Value.Date > DateTime.Now.Date).OrderBy(d => d.Pedido.Fecha);
-                                if(descPedidos is null || !descPedidos.Any()){
-                                    return;
-                                }
-                                else{
-                                    foreach(var p in descPedidos){
+                            if(descPedidos is null || !descPedidos.Any()){
+                                return;
+                            }
+                            else{
+                                foreach(var p in descPedidos){
                                     <tr>
                                         <td id="id">@p.Pedido.PedidoId</td>
                                         <td id="campos">@p.Pedido.Laboratorio.Nombre</td>
                                         <td id="campos">@p.Pedido.HoraEntrega</td>
                                         <td id="campos">@p.Pedido.HoraDevolucion</td>
                                         <td id="campos">@p.Pedido.Docente.Nombre</td>
-                                        <td id="campos">@p.Pedido.Estado</td>
+                                        @if(p.Pedido.Estado == false){
+                                            <td id="campos">NO</td>
+                                        }
+                                        else{
+                                            <td id="campos">SI</td>
+                                        }
                                         <td id="campos">@p.Material.Categoria.Nombre</td>
                                         <td id="campos">@p.Cantidad</td>
                                     </tr>
@@ -67,33 +75,121 @@
         <div class="insert-database">
             <div>
                 <p>Nuevo pedido</p>
-                <form method="POST" onsubmit="recargarPagina()">
+                <form method="POST" onsubmit="recargarPagina()" asp-page-handler="NewOrder">
                     <div class="fields-table">
-                        <input asp-for="pedido.Fecha" placeholder="Fecha" class="form-control">
+                        <label for="Fecha">Fecha y Hora de entrega:
+                            <input asp-for="pedido.Fecha" placeholder="Fecha" class="form-control" required value="@Model.pedido?.Fecha" required>
+                        </label>
                         <span asp-validation-for="pedido.Fecha" class="text-danger"></span>
+                        @{
+                            if (Model.pedido is not null)
+                            {
+                                int validateHour = UI.DateValidationWeb(Model.pedido.Fecha.ToString());
+                                switch (validateHour)
+                                {
+                                    case 2:
+                                        <span asp-validation-for="pedido.Fecha" class="text-danger">No se permiten selecciones en sábados ni domingos.</span>
+                                        break;
+                                    case 3:
+                                        <span asp-validation-for="pedido.Fecha" class="text-danger">La fecha debe ser un día posterior al día actual y no mayor a una semana.</span>
+                                        break;
+                                    case 4:
+                                        <span asp-validation-for="pedido.Fecha" class="text-danger">Formato de fecha incorrecto. Intenta de nuevo.</span>
+                                        break;
+                                    case 5:
+                                        <span asp-validation-for="pedido.Fecha" class="text-danger">Rellene todos los espacios.</span>
+                                        break;
+                                    case 1:
+                                        // No hay error, proceder con la lógica normal
+                                        break;
+                                }
 
-                        <input asp-for="pedido.LaboratorioId" placeholder="Laboratorio" class="form-control" required>
-                        <span asp-validation-for="pedido.LaboratorioId" class="text-danger"></span>
+                                if (UI.HourValidation(Model.pedido.Fecha.ToString()) == false)
+                                {
+                                    <span asp-validation-for="pedido.Fecha" class="text-danger">Horario no válido. Inténtalo de nuevo.</span>
+                                }
+                            }
+                        }
 
-                        <input asp-for="pedido.HoraEntrega" placeholder="HoraEntrega" class="form-control" required>
-                        <span asp-validation-for="pedido.HoraEntrega" class="text-danger"></span>
-
-                        <input asp-for="pedido.HoraDevolucion" placeholder="HoraDevolucion" class="form-control" required>
+                        <label for="horaDevolucion">Hora de Devolución:
+                            <input asp-for="pedido.HoraDevolucion" placeholder="HoraDevolucion" class="form-control" required value="@Model.pedido?.Fecha" required>
+                        </label>
                         <span asp-validation-for="pedido.HoraDevolucion" class="text-danger"></span>
 
-                        <input asp-for="pedido.DocenteId" placeholder="Docente" class="form-control" required>
+                        @{
+                            if (Model.pedido is not null)
+                            {
+                                if (UI.HourValidation(Model.pedido.HoraEntrega.ToString()) == false)
+                                {
+                                    <span asp-validation-for="pedido.HoraDevolucion" class="text-danger">Horario no válido. Inténtalo de nuevo.</span>
+                                }
+
+                                if (Model.pedido.HoraDevolucion <= Model.pedido.HoraEntrega)
+                                {
+                                    <span asp-validation-for="pedido.HoraDevolucion" class="text-danger">La hora de devolución debe ser posterior a la hora de entrega.</span>
+                                }
+                            }
+                        }
+
+                        <select asp-for="pedido.LaboratorioId" placeholder="Laboratorio" class="fields-table" required value="@Model.pedido?.LaboratorioId"required>
+                            <option value="">Selecciona un laboratorio</option>
+                            @{
+                                using (Almacen db = new Almacen())
+                                {
+                                    List<Laboratorio> laboratorio = db.Laboratorios.ToList();
+
+                                    foreach (var lab in laboratorio)
+                                    {
+                                        <option value="@lab.LaboratorioId">@lab.Nombre</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="pedido.LaboratorioId" class="text-danger"></span>
+                            
+                        <select asp-for="pedido.DocenteId" placeholder="Docente" class="fields-table" required value="@Model.pedido?.DocenteId" required>
+                            <option value="">Selecciona un docente</option>
+                            @{
+                                using (Almacen db = new Almacen())
+                                {
+                                    List<Docente> docentes = db.Docentes.ToList();
+
+                                    foreach (var d in docentes)
+                                    {
+                                        <option value="@d.DocenteId">@d.ApellidoPaterno @d.ApellidoMaterno @d.Nombre</option>
+                                    }
+                                }
+                            }
+                        </select>
                         <span asp-validation-for="pedido.DocenteId" class="text-danger"></span>
 
-                        <input asp-for="descPedido.Cantidad" placeholder="Cantidad" class="form-control" required>
+                        <select asp-for="categoria.CategoriaId" placeholder="Material" class="fields-table" required value="@Model.categoria?.CategoriaId" required>
+                            <option value="">Selecciona una categoria</option>
+                            @{
+                                using (Almacen db = new Almacen())
+                                {
+                                    List<Categoria> categorias = db.Categorias.ToList();
+
+                                    foreach (var c in categorias)
+                                    {
+                                        <option value="@c.CategoriaId">@c.Nombre</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="categoria.CategoriaId" class="text-danger"></span>
+                        @{
+                            if(Model.descPedido is not null){
+                                if(UI.GetMaterialID(Model.categoria.CategoriaId) == 0){
+                                    <span class="text-danger">Ese material no esta disponible.</span>
+                                }
+                            }
+                        }
+
+                        <input asp-for="descPedido.Cantidad" placeholder="Cantidad" class="form-control" required value="@Model.descPedido?.Cantidad"required>
                         <span asp-validation-for="descPedido.Cantidad" class="text-danger"></span>
 
-                        <input asp-for="descPedido.MaterialId" placeholder="Material" class="form-control" required>
-                        <span asp-validation-for="descPedido.MaterialId" class="text-danger"></span>
-
-                        <select id="list" asp-for="pedido.EstudianteId" class="fields-table" required>
-                            <option value="">Selecciona un semestre</option>
-                            <option value=@Model.estudiante.EstudianteId>@Model.estudiante.EstudianteId</option>
-                        </select>
+                        <input type="hidden"asp-for="pedido.EstudianteId" value=@Model.estudiante.EstudianteId>
                         <span asp-validation-for="pedido.EstudianteId" class="text-danger"></span>
 
                         <input id="enviar" type="submit" />
@@ -132,7 +228,12 @@
                                         <td id="campos">@p.Pedido.HoraEntrega</td>
                                         <td id="campos">@p.Pedido.HoraDevolucion</td>
                                         <td id="campos">@p.Pedido.Docente.Nombre</td>
-                                        <td id="campos">@p.Pedido.Estado</td>
+                                        @if(p.Pedido.Estado == false){
+                                            <td id="campos">NO</td>
+                                        }
+                                        else{
+                                            <td id="campos">SI</td>
+                                        }
                                         <td id="campos">@p.Material.Categoria.Nombre</td>
                                         <td id="campos">@p.Cantidad</td>
                                     </tr>

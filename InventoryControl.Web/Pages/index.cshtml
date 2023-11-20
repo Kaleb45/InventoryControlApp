@@ -27,15 +27,19 @@
             <div class="insert-database">
                 <div id="loginForm" class="form">
                     <p>Inicie sesión</p>
-                    <form method="POST">
+                    <form method="POST" asp-page-handler="LogIn">
                         <div class="fields-table">
-                            @if(Model.usuario is not null){
-                                <input asp-for=@Model.usuario.Usuario1 placeholder="Nombre de Usuario" class="form-control">
-                            }
-                            else{
-                                <input asp-for="usuario.Usuario1" placeholder="Nombre de Usuario" class="form-control">
-                            }
+                            <input asp-for="usuario.Usuario1" placeholder="Nombre de Usuario" class="form-control">
                             <span asp-validation-for="usuario.Usuario1" class="text-danger"></span>
+                            @{
+                                if(Model.usuario is not null){
+                                    var result = UI.LogIn(Model.usuario.Usuario1, Model.usuario.Password);
+                                    if(result.typeOfUser == 0){
+                                        <span class="text-danger">Usuario o contraseña incorrectos. Inténtalo nuevamente.</span>
+                                    }
+                                }
+                            }
+
                             <input asp-for="usuario.Password" placeholder="Contraseña" class="form-control" type="password" id="passwordInput" required>
                             <span asp-validation-for="usuario.Password" class="text-danger"></span>
                             <input id="enviar" type="submit" />
@@ -140,6 +144,9 @@
                                             break;
                                         case 80:
                                             <span class="text-danger">El correo debe contener la terminación 'ceti.mx'</span>
+                                            break;
+                                        case 90:
+                                            <span class="text-danger">Formato de Correo Incorrecto</span>
                                             break;
                                         case 100:
                                             <span class="text-danger">El correo debe contener la terminación 'ceti.mx'</span>

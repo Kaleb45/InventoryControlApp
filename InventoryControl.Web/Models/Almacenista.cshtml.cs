@@ -143,5 +143,63 @@ namespace InventoryControlPages
             TempData["UserType"] = 3;
             return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
         }
+
+        public IActionResult OnPostDeleteCategoria()
+        {
+            // Obtener el valor de pedidoId del formulario            
+            categoria = db.Categorias.FirstOrDefault(p => p.CategoriaId == int.Parse(Request.Form["categoriaId"]));
+            foreach (var material in db.Materiales)
+            {
+                if(material.CategoriaId == int.Parse(Request.Form["categoriaId"])){
+                    db.Materiales.RemoveRange(material);
+                }
+            }
+            db.Categorias.RemoveRange(categoria);
+            db.SaveChanges();
+            TempData["UserType"] = 3;
+            return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
+        }
+
+        public IActionResult OnPostDeleteModelo()
+        {
+            // Obtener el valor de pedidoId del formulario            
+            modelo = db.Modelos.FirstOrDefault(p => p.ModeloId == int.Parse(Request.Form["modeloId"]));
+            foreach (var material in db.Materiales)
+            {
+                if(material.ModeloId == int.Parse(Request.Form["modeloId"])){
+                    db.Materiales.RemoveRange(material);
+                }
+            }
+            db.Modelos.RemoveRange(modelo);
+            db.SaveChanges();
+            TempData["UserType"] = 3;
+            return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
+        }
+
+        public IActionResult OnPostDeleteMarca()
+        {
+            // Obtener el valor de pedidoId del formulario            
+            marca = db.Marcas.FirstOrDefault(p => p.MarcaId == int.Parse(Request.Form["marcaId"]));
+            foreach (var material in db.Materiales)
+            {
+                if(material.MarcaId == int.Parse(Request.Form["marcaId"])){
+                    db.Materiales.RemoveRange(material);
+                }
+            }
+            db.Marcas.RemoveRange(marca);
+            db.SaveChanges();
+            TempData["UserType"] = 3;
+            return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
+        }
+
+        public IActionResult OnPostDeleteMaterial()
+        {
+            // Obtener el valor de pedidoId del formulario            
+            material = db.Materiales.FirstOrDefault(p => p.MaterialId == int.Parse(Request.Form["materialId"]));
+            db.Materiales.RemoveRange(material);
+            db.SaveChanges();
+            TempData["UserType"] = 3;
+            return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
+        }
     }
 }

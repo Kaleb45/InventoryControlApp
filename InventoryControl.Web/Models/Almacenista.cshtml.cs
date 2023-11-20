@@ -201,5 +201,15 @@ namespace InventoryControlPages
             TempData["UserType"] = 3;
             return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
         }
+
+        public IActionResult OnPostUpdate()
+        {
+            // Obtener el valor de pedidoId del formulario  
+            int registroId = int.Parse(Request.Form["registroId"]);
+            string tableId = Request.Form["tableId"];
+            int userId = int.Parse(Request.Form["almacenistaId"]);
+            string typeUser = "Almacenista";
+            return RedirectToPage("/Updates", new{id = registroId, table = tableId, usuario = userId, tipo = typeUser});
+        }
     }
 }

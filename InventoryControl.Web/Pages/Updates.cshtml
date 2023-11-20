@@ -1,0 +1,191 @@
+@page
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@model InventoryControlPages.UpdatesModel
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using AlmacenSQLiteEntities;
+@using AlmacenDataContext;
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="~/styles.css">
+        <script src="~/script.js" defer></script>
+        <title>Usuarios</title>
+    </head>
+    <body>
+        @if(Model.tabla == "categoria"){
+        <div class="insert-database">
+            <div>
+                <p>Update categoria</p>
+                <form method="POST" asp-page-handler="Update">
+                    <div class="fields-table">
+                        <input asp-for="categoria.Nombre" placeholder="Nombre" class="form-control">
+                        <span asp-validation-for="categoria.Nombre" class="text-danger"></span>
+
+                        <input asp-for="categoria.Descripcion" placeholder="Descripcion" class="form-control" required>
+                        <span asp-validation-for="categoria.Descripcion" class="text-danger"></span>
+
+                        <select asp-for="categoria.Acceso" placeholder="Acceso" class="fields-table" required>
+                            <option value="1">Todos</option>
+                            <option value="2">Solo docentes</option>
+                        </select>
+                        <span asp-validation-for="categoria.Acceso" class="text-danger"></span>
+
+                        <input type="hidden" name="registroId" value="@Model.categoria.CategoriaId" />
+                        <input type="hidden" name="tableId" value="categoria" />
+                        <input type="hidden" name="userId" value="@Model.userId" />
+                        <input type="hidden" name="typeUser" value="@Model.typeUser" />
+                        <input id="enviar" type="submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        }
+        else if(Model.tabla == "material"){
+            <div class="insert-database">
+                <div>
+                    <p>Update Material</p>
+                    <form method="POST" asp-page-handler="Update">
+                        <div class="fields-table">
+                            <select asp-for="material.CategoriaId" placeholder="Categoria" class="fields-table" required>
+                                <option value="">Selecciona una categoria</option>
+                                @{
+                                    using (Almacen db = new Almacen())
+                                    {
+                                        List<Categoria> categorias = db.Categorias.ToList();
+                                        foreach (var c in categorias)
+                                        {
+                                            <option value="@c.CategoriaId">@c.Nombre</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="material.CategoriaId" class="text-danger"></span>
+                            
+                            <select asp-for="material.MarcaId" placeholder="Marca" class="fields-table" required>
+                                <option value="">Selecciona una Marca</option>
+                                @{
+                                    using (Almacen db = new Almacen())
+                                    {
+                                        List<Marca> marcas = db.Marcas.ToList();
+                                        foreach (var c in marcas)
+                                        {
+                                            <option value="@c.MarcaId">@c.Nombre</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="material.MarcaId" class="text-danger"></span>
+                            
+                            <select asp-for="material.PlantelId" placeholder="Plantel" class="fields-table" required>
+                                <option value="">Selecciona un Plantel</option>
+                                @{
+                                    using (Almacen db = new Almacen())
+                                    {
+                                        List<Plantel> planteles = db.Planteles.ToList();
+                                        foreach (var c in planteles)
+                                        {
+                                            <option value="@c.PlantelId">@c.Nombre</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="material.PlantelId" class="text-danger"></span>
+                            
+                            <select asp-for="material.ModeloId" placeholder="Modelo" class="fields-table" required>
+                                <option value="">Selecciona un Modelo</option>
+                                @{
+                                    using (Almacen db = new Almacen())
+                                    {
+                                        List<Modelo> modelos = db.Modelos.ToList();
+                                        foreach (var c in modelos)
+                                        {
+                                            <option value="@c.ModeloId">@c.Nombre</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="material.ModeloId" class="text-danger"></span>
+                            
+                            <input asp-for="material.Descripcion" placeholder="Descripcion" class="form-control" required>
+                            <span asp-validation-for="material.Descripcion" class="text-danger"></span>
+                            
+                            <input asp-for="material.YearEntrada" placeholder="Año entrada" class="form-control">
+                            <span asp-validation-for="material.YearEntrada" class="text-danger"></span>
+
+                            <input asp-for="material.Serie" placeholder="Serie" class="form-control">
+                            <span asp-validation-for="material.Serie" class="text-danger"></span>
+                            
+                            <input type="number" asp-for="material.ValorHistorico" placeholder="Valor Historico" class="form-control">
+                            <span asp-validation-for="material.ValorHistorico" class="text-danger"></span>
+                            
+                            <select asp-for="material.Condicion" placeholder="Condicion" class="fields-table" required>
+                                <option value="1">Normal</option>
+                                <option value="2">Mantenimiento</option>
+                            </select>
+                            <span asp-validation-for="material.Condicion" class="text-danger"></span>
+                            <input type="hidden" name="registroId" value="@Model.material.MaterialId" />
+                            <input type="hidden" name="tableId" value="material" />
+                            <input type="hidden" name="userId" value="@Model.userId" />
+                            <input type="hidden" name="typeUser" value="@Model.typeUser" />
+                            <input id="enviar" type="submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        }
+        else if(Model.tabla == "marca"){
+            <div class="insert-database">
+                <div>
+                    <p>Update marca</p>
+                    <form method="POST" asp-page-handler="Update">
+                        <div class="fields-table">
+                            <input asp-for="marca.Nombre" placeholder="Nombre" class="form-control">
+                            <span asp-validation-for="marca.Nombre" class="text-danger"></span>
+
+                            <input asp-for="marca.Descripcion" placeholder="Descripcion" class="form-control" required>
+                            <span asp-validation-for="marca.Descripcion" class="text-danger"></span>
+                            <input type="hidden" name="registroId" value="@Model.marca.MarcaId" />
+                            <input type="hidden" name="tableId" value="marca" />
+                            <input type="hidden" name="userId" value="@Model.userId" />
+                            <input type="hidden" name="typeUser" value="@Model.typeUser" />
+                            <input id="enviar" type="submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+        else if(Model.tabla == "modelo"){
+            <div class="insert-database">
+                <div>
+                    <p>Update Modelo</p>
+                    <form method="POST" asp-page-handler="Update">
+                        <div class="fields-table">
+                            <input asp-for="modelo.Nombre" placeholder="Nombre" class="form-control">
+                            <span asp-validation-for="modelo.Nombre" class="text-danger"></span>
+
+                            <input asp-for="modelo.Descripcion" placeholder="Descripcion" class="form-control" required>
+                            <span asp-validation-for="modelo.Descripcion" class="text-danger"></span>
+                            <input type="hidden" name="registroId" value="@Model.modelo.ModeloId" />
+                            <input type="hidden" name="tableId" value="modelo" />
+                            <input type="hidden" name="userId" value="@Model.userId" />
+                            <input type="hidden" name="typeUser" value="@Model.typeUser" />
+                            <input id="enviar" type="submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+        <form method="POST">
+            <div class="fields-table">
+                <input type="hidden" name="userId" value="@Model.userId" />
+                <input type="hidden" name="typeUser" value="@Model.typeUser" />
+                <button type="submit">Volver</button>
+            </div>
+        </form>
+    </body>
+</html>

@@ -409,12 +409,29 @@ header p {
 }
 
 
+
 .fields-table #enviar {
     background-color: #04364A;
     border: none;
     color: #fff;
     border-radius: 10px;
     transition: background-color 0.3s ease-in-out;
+}
+
+.fields-table button {
+    width: 90%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #176B87;
+    background-color: rgba(100, 204, 197, 0.8);
+    color: #04364A;
+    transition: border-color 0.3s;
+}
+
+.fields-table button:hover {
+    border-color: 1px solid #04364A;
+    background-color: #176B87;
+    color: #fff;
 }
 
 .form-container:hover + .fields-table #enviar {
@@ -427,6 +444,23 @@ header p {
     color: #04364A;
 }
 
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    animation: slideDown 0.8s ease-in-out;
+}
+
+.content-container.open {
+    max-height: 100%; /* o un valor suficientemente grande */
+    max-width: 100%;
+    opacity: 1;
+    animation: slideDown 0.8s ease-in-out;
+}
+
 .table-database,
 .insert-database {
     overflow: hidden;
@@ -437,7 +471,8 @@ header p {
 
 .table-database.open,
 .insert-database.open {
-    max-height: 1000px; /* o un valor suficientemente grande */
+    max-height: 100%; /* o un valor suficientemente grande */
+    width: 100%;
     opacity: 1;
     animation: slideDown 0.8s ease-in-out;
 }

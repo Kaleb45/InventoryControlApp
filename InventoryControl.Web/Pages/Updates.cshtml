@@ -17,7 +17,7 @@
     </head>
     <body>
         @if(Model.tabla == "categoria"){
-        <div class="insert-database">
+        <div class="in-database">
             <div>
                 <p>Update categoria</p>
                 <form method="POST" asp-page-handler="Update">
@@ -45,7 +45,7 @@
         </div>
         }
         else if(Model.tabla == "material"){
-            <div class="insert-database">
+            <div class="in-database">
                 <div>
                     <p>Update Material</p>
                     <form method="POST" asp-page-handler="Update">
@@ -139,7 +139,7 @@
 
         }
         else if(Model.tabla == "marca"){
-            <div class="insert-database">
+            <div class="in-database">
                 <div>
                     <p>Update marca</p>
                     <form method="POST" asp-page-handler="Update">
@@ -160,7 +160,7 @@
             </div>
         }
         else if(Model.tabla == "modelo"){
-            <div class="insert-database">
+            <div class="in-database">
                 <div>
                     <p>Update Modelo</p>
                     <form method="POST" asp-page-handler="Update">
@@ -184,7 +184,7 @@
             <div class="fields-table">
                 <input type="hidden" name="userId" value="@Model.userId" />
                 <input type="hidden" name="typeUser" value="@Model.typeUser" />
-                <button type="submit">Volver</button>
+                <input type="submit" value="Volver"/>
             </div>
         </form>
     </body>

@@ -118,15 +118,15 @@
                             IQueryable<DescPedido>? descPedidos = db.DescPedidos.Include(d => d.Pedido).Include(d => d.Material).Where(d => d.Pedido.DocenteId == Model.docente.DocenteId && d.Pedido.EstudianteId == null && d.Pedido.Fecha.Value.Date > DateTime.Now.Date).OrderBy(d => d.Pedido.Fecha);
                                 if(descPedidos is null || !descPedidos.Any()){
                                     <tr>
-                                    <td><p class="text-danger">No tiene pedidos actuales</p></td>
-                                    <td><p></p></td>
-                                    <td><p></p></td>
-                                    <td><p></p></td>
-                                    <td><p></p></td>
-                                    <td><p></p></td>
-                                    <td><p></p></td>
-                                    <td><p></p></td>
-                                </tr>
+                                        <td><p class="text-danger">No tiene pedidos actuales</p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                    </tr>
                                 }
                                 else{
                                     foreach(var p in descPedidos){

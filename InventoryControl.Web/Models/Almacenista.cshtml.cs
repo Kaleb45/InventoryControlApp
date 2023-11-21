@@ -47,6 +47,7 @@ namespace InventoryControlPages
         {
             almacenista = db.Almacenistas.FirstOrDefault(a => a.AlmacenistaId == id);
             ViewData["Title"] = "";
+            TempData["UserType"] = 3;
         }
 
         public IActionResult OnPost()

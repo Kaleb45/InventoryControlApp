@@ -60,7 +60,7 @@ function toggleContent(event) {
     var content = document.getElementById(contentId);
 
     // Cierra todos los elementos abiertos
-    var openContents = document.querySelectorAll('.table-database.open, .insert-database.open');
+    var openContents = document.querySelectorAll('.table-database.open, .insert-database.open, content-container.open');
     openContents.forEach(function (openContent) {
         if (openContent.id !== contentId) {
             openContent.classList.remove('open');

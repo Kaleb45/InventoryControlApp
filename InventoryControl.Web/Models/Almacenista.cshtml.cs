@@ -18,7 +18,7 @@ namespace InventoryControlPages
         public AlmacenistaModel(Almacen context)
         {
             db = context;
-        }
+        } 
 
         public List<Almacenista>? almacenistas { get; set; }
 

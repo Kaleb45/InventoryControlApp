@@ -12,18 +12,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/styles.css">
+    <script src="~/script.js" defer></script>
     <title>Usuarios</title>
 </head>
 <body>
     <div class="titles">
-        <h1>Bienvenido, @TempData["UserName"]</h1>
+        <h1>Bienvenido, @Model.almacenista.Nombre @Model.almacenista.ApellidoPaterno</h1>
         <p>Almacenista</p>
     </div>
 
-    <div class="titles">
-        <h1>Solicitudes Aprobadas proximas Docentes</h1>
+    <div class="titles" onclick="toggleContent()">
+        <h1><h1><a href="#SApDContent">Solicitudes Aprobadas proximas Docentes</a></h1>
     </div>
-        <div class="table-database">
+        <div class="table-database hidden-content open" id="SApDContent">
             <table border="1">
                 <thead>
                     <tr>
@@ -35,13 +36,25 @@
                         <td><p>Estado</p></td>
                         <td><p>Material</p></td>
                         <td><p>Cantidad</p></td>
+                        <td><p>Aprovacion</p></td>
                     </tr>
                 </thead>
                 <tbody>
                     @{using(Almacen db = new ()){
                             IQueryable<DescPedido>? descPedidos = db.DescPedidos.Include(d => d.Pedido).Include(d => d.Material).Where(d => d.Pedido.DocenteId != null && d.Pedido.EstudianteId == null && d.Pedido.Fecha.Value.Date > DateTime.Now.Date).OrderBy(d => d.Pedido.Fecha);
                                 if(descPedidos is null || !descPedidos.Any()){
-                                    return;
+                                    <tr>
+                                        <td><p class="text-danger">No tiene solicitudes aprobadas proximas para docentes</p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                    </tr>
                                 }
                                 else{
                                     foreach(var p in descPedidos){
@@ -70,10 +83,10 @@
             </table>
         </div>
 
-    <div class="titles">
-        <h1>Solicitudes Aprobadas proximas Estudiantes</h1>
+    <div class="titles" onclick="toggleContent()">
+        <h1><a href="#SApEContent">Solicitudes Aprobadas proximas Estudiantes</a></h1>
     </div>
-    <div class="table-database">
+    <div class="table-database hidden-content open" id="SApEContent">
             <table border="1">
                 <thead>
                     <tr>
@@ -86,13 +99,26 @@
                         <td><p>Material</p></td>
                         <td><p>Cantidad</p></td>
                         <td><p>Estudiante</p></td>
+                        <td><p>Aprovacion</p></td>
                     </tr>
                 </thead>
                 <tbody>
                     @{using(Almacen db = new ()){
                             IQueryable<DescPedido>? descPedidos = db.DescPedidos.Include(d => d.Pedido).Include(d => d.Material).Where(d => d.Pedido.DocenteId != null && d.Pedido.EstudianteId != null && d.Pedido.Estado == true && d.Pedido.Fecha.Value.Date > DateTime.Now.Date).OrderBy(d => d.Pedido.Fecha);
                                 if(descPedidos is null || !descPedidos.Any()){
-                                    return;
+                                    <tr>
+                                        <td><p class="text-danger">No tiene solicitudes aprobadas proximas para estudiantes</p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                    </tr>
                                 }
                                 else{
                                     foreach(var p in descPedidos){
@@ -122,10 +148,10 @@
             </table>
         </div>
 
-    <div class="titles">
-        <h1>Solicitudes No Aprobadas proximas Estudiantes</h1>
+    <div class="titles" onclick="toggleContent()">
+        <h1><a href="#SNApEContent">Solicitudes No Aprobadas proximas Estudiantes</a></h1>
     </div>
-        <div class="table-database">
+        <div class="table-database hidden-content open" id="SNApEContent">
             <table border="1">
                 <thead>
                     <tr>
@@ -145,7 +171,18 @@
                     @{using(Almacen db = new ()){
                             IQueryable<DescPedido>? descPedidos = db.DescPedidos.Include(d => d.Pedido).Include(d => d.Material).Where(d => d.Pedido.EstudianteId != null && d.Pedido.Estado == false && d.Pedido.Fecha.Value.Date > DateTime.Now.Date).OrderBy(d => d.Pedido.Fecha);
                                 if(descPedidos is null || !descPedidos.Any()){
-                                    return;
+                                    <tr>
+                                        <td><p class="text-danger">No tiene solicitudes no aprobadas proximas para estudiantes</p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                    </tr>
                                 }
                                 else{
                                     foreach(var p in descPedidos){
@@ -180,10 +217,10 @@
             </table>
         </div>
 
-    <div class="titles">
-        <h1>Historial Total de Solicitudes</h1>
+    <div class="titles" onclick="toggleContent()">
+        <h1><a href="#HTSContent">Historial Total de Solicitudes</a></h1>
     </div>
-    <div class="table-database">
+    <div class="table-database hidden-content open" id="HTSContent">
             <table border="1">
                 <thead>
                     <tr>
@@ -196,13 +233,25 @@
                         <td><p>Material</p></td>
                         <td><p>Cantidad</p></td>
                         <td><p>Estudiante</p></td>
+                        <td><p>Aprovacion</p></td>
                     </tr>
                 </thead>
                 <tbody>
                     @{using(Almacen db = new ()){
                             IQueryable<DescPedido>? descPedidos = db.DescPedidos.Include(d => d.Pedido).Include(d => d.Material).Where(d => d.Pedido.Fecha.Value.Date < DateTime.Now.Date).OrderBy(d => d.Pedido.Fecha);
                                 if(descPedidos is null || !descPedidos.Any()){
-                                    return;
+                                    <tr>
+                                        <td><p class="text-danger">No tiene solicitudes anteriores</p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                    </tr>
                                 }
                                 else{
                                     foreach(var p in descPedidos){
@@ -241,10 +290,11 @@
                 </tbody>
             </table>
         </div>
-    <div class="titles">
-        <h1>Categorias</h1>
+    <div class="titles" onclick="toggleContent()">
+        <h1><a href="#cContent">Categorias</a></h1>
     </div>
-        <div class="insert-database">
+    <div class="content-container hidden-content open" id="cContent">
+        <div class="insert-database open">
             <div>
                 <p>Nueva categoria</p>
                 <form method="POST" asp-page-handler="NewCat">
@@ -267,19 +317,27 @@
             </div>
         </div>
 
-        <div class="table-database">
+        <div class="table-database open">
             <table border="1">
                 <thead>
                     <tr>
                         <td><p>Id</p></td>
                         <td><p>Nombre</p></td>
                         <td><p>Descripcion</p></td>
+                        <td><p>Eliminar</p></td>
+                        <td><p>Modificar</p></td>
                     </tr>
                 </thead>
                 <tbody>
                     @{using(Almacen db = new ()){
                                 if(db.Categorias is null || !db.Categorias.Any()){
-                                    return;
+                                    <tr>
+                                        <td><p class="text-danger">No hay categorias registradas</p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                    </tr>
                                 }
                                 else{
                                     foreach(var c in db.Categorias){
@@ -310,11 +368,12 @@
                 </tbody>
             </table>
         </div>
-    
-    <div class="titles">
-        <h1>Marca</h1>
     </div>
-        <div class="insert-database">
+    <div class="titles" onclick="toggleContent()">
+        <h1><a href="#marcaContent">Marca</a></h1>
+    </div>
+    <div class="content-container hidden-content open" id="marcaContent">
+        <div class="insert-database open">
             <div>
                 <p>Nueva marca</p>
                 <form method="POST" asp-page-handler="NewMarca">
@@ -331,19 +390,27 @@
                 </form>
             </div>
         </div>
-        <div class="table-database">
+        <div class="table-database open">
             <table border="1">
                 <thead>
                     <tr>
                         <td><p>Id</p></td>
                         <td><p>Nombre</p></td>
                         <td><p>Descripcion</p></td>
+                        <td><p>Eliminar</p></td>
+                        <td><p>Modificar</p></td>
                     </tr>
                 </thead>
                 <tbody>
                     @{using(Almacen db = new ()){
                                 if(db.Marcas is null || !db.Marcas.Any()){
-                                    return;
+                                    <tr>
+                                        <td><p class="text-danger">No hay Marcas registradas</p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                    </tr>
                                 }
                                 else{
                                     foreach(var c in db.Marcas){
@@ -374,11 +441,12 @@
                 </tbody>
             </table>
         </div>
-
-    <div class="titles">
-        <h1>Modelo</h1>
     </div>
-        <div class="insert-database">
+    <div class="titles" onclick="toggleContent()">
+        <h1><a href="#modeloContent">Modelo</a></h1>
+    </div>
+    <div class="content-container hidden-content open" id="modeloContent">
+        <div class="insert-database open">
             <div>
                 <p>Nueva Modelo</p>
                 <form method="POST" asp-page-handler="NewModelo">
@@ -395,19 +463,27 @@
                 </form>
             </div>
         </div>
-        <div class="table-database">
+        <div class="table-database open">
             <table border="1">
                 <thead>
                     <tr>
                         <td><p>Id</p></td>
                         <td><p>Nombre</p></td>
                         <td><p>Descripcion</p></td>
+                        <td><p>Eliminar</p></td>
+                        <td><p>Modificar</p></td>
                     </tr>
                 </thead>
                 <tbody>
                     @{using(Almacen db = new ()){
                                 if(db.Modelos is null || !db.Modelos.Any()){
-                                    return;
+                                    <tr>
+                                        <td><p class="text-danger">No hay Modelos registradas</p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                    </tr>
                                 }
                                 else{
                                     foreach(var c in db.Modelos){
@@ -438,11 +514,12 @@
                 </tbody>
             </table>
         </div>
-
-    <div class="titles">
-        <h1>Material</h1>
     </div>
-        <div class="insert-database">
+    <div class="titles" onclick="toggleContent()">
+        <h1><a href="#materialContent">Material</a></h1>
+    </div>
+    <div class="content-container hidden-content open" id="materialContent">
+        <div class="insert-database open">
             <div>
                 <p>Nueva Material</p>
                 <form method="POST" asp-page-handler="NewMaterial">
@@ -531,7 +608,7 @@
                 </form>
             </div>
         </div>
-        <div class="table-database">
+        <div class="table-database open">
             <table border="1">
                 <thead>
                     <tr>
@@ -545,12 +622,27 @@
                         <td><p>Serie</p></td>
                         <td><p>Valor Historico</p></td>
                         <td><p>Condicion</p></td>
+                        <td><p>Eliminar</p></td>
+                        <td><p>Modificar</p></td>
                     </tr>
                 </thead>
                 <tbody>
                     @{using(Almacen db = new ()){
                                 if(db.Materiales is null || !db.Materiales.Any()){
-                                    return;
+                                    <tr>
+                                        <td><p class="text-danger">No hay Materiales registradas</p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                    </tr>
                                 }
                                 else{
                                     foreach(var m in db.Materiales){
@@ -588,5 +680,6 @@
                 </tbody>
             </table>
         </div>
+    </div>
 </body>
 </html>

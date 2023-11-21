@@ -18,19 +18,22 @@ namespace AlmacenSQLiteEntities
         [Column(TypeName = "int")]
         public int DocenteId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo Nombre es obligatorio.")]
         [Column(TypeName = "nvarchar(50)")]
-        [StringLength(50)]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "El campo Nombre debe tener entre 2 y 50 caracteres.")]
+        [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "El campo Nombre solo debe contener letras.")]
         public string Nombre { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = "El campo ApellidoPaterno es obligatorio.")]
         [Column(TypeName = "nvarchar(50)")]
-        [StringLength(50)]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "El campo ApellidoPaterno debe tener entre 2 y 50 caracteres.")]
+        [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "El campo ApellidoPaterno solo debe contener letras.")]
         public string ApellidoPaterno { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = "El campo ApellidoMaterno es obligatorio.")]
         [Column(TypeName = "nvarchar(50)")]
-        [StringLength(50)]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "El campo ApellidoMaterno debe tener entre 2 y 50 caracteres.")]
+        [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "El campo ApellidoMaterno solo debe contener letras.")]
         public string ApellidoMaterno { get; set; } = null!;
 
         [Required]

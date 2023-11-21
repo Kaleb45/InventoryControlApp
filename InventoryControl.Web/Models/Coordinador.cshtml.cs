@@ -105,6 +105,74 @@ namespace InventoryControlPages
             return RedirectToPage("/CoordinadorMenu", new{id = int.Parse(Request.Form["coordinadorId"])});
         }
 
+        public IActionResult OnPostNewOrder()
+        {
+            if ((pedido is not null) && (descPedido is not null) &&  !ModelState.IsValid)
+            {
+                int validateDate = UI.DateValidationWeb(pedido.Fecha.ToString());
+                switch (validateDate){
+                    case 2:
+                        TempData["ErrorMessage"] = "No se permiten selecciones en sábados ni domingos.";
+                        return RedirectToPage("/CoordinadorMenu", new{id = int.Parse(Request.Form["coordinadorId"])});
+                    case 3:
+                        TempData["ErrorMessage"] = "La fecha debe ser un día posterior al día actual y no mayor a una semana.";
+                        return RedirectToPage("/CoordinadorMenu", new{id = int.Parse(Request.Form["coordinadorId"])});
+                    case 4:
+                        TempData["ErrorMessage"] = "Formato de Fecha Incorrecto.";
+                        return RedirectToPage("/CoordinadorMenu", new{id = int.Parse(Request.Form["coordinadorId"])});
+                    case 5:
+                        TempData["ErrorMessage"] = "Rellene todos los espacios.";
+                        return RedirectToPage("/CoordinadorMenu", new{id = int.Parse(Request.Form["coordinadorId"])});
+                    case 1:
+                        // No hay error, proceder con la lógica normal
+                        break;
+                }
+
+                if(UI.HourValidation(pedido.Fecha.ToString()) == false){
+                    TempData["ErrorMessage"] = "Horario no válido. Inténtalo de nuevo.";
+                    return RedirectToPage("/CoordinadorMenu", new{id = int.Parse(Request.Form["coordinadorId"])});
+                }
+
+                pedido.HoraEntrega = pedido.Fecha;
+
+                if(UI.HourValidation(pedido.HoraDevolucion.ToString()) == false){
+                    TempData["ErrorMessage"] = "Horario no válido. Inténtalo de nuevo.";
+                    return RedirectToPage("/CoordinadorMenu", new{id = int.Parse(Request.Form["coordinadorId"])});
+                }
+
+                if(pedido.HoraDevolucion <= pedido.HoraEntrega){
+                    TempData["ErrorMessage"] = "La hora de devolución debe ser posterior a la hora de entrega.";
+                    return RedirectToPage("/CoordinadorMenu", new{id = int.Parse(Request.Form["coordinadorId"])});
+                }
+
+                descPedido.MaterialId = UI.GetMaterialID(categoria.CategoriaId);
+                WriteLine($"{descPedido.MaterialId} |   {categoria.CategoriaId}");
+
+                if(descPedido.MaterialId is null || descPedido.MaterialId == 0){
+                    TempData["ErrorMessage"] = "Ese material no esta disponible.";
+                    return RedirectToPage("/CoordinadorMenu", new{id = int.Parse(Request.Form["coordinadorId"])});
+                }
+
+                if(descPedido.Cantidad < 1){
+                    TempData["ErrorMessage"] = "No puedes introducir números negativos";
+                    return RedirectToPage("/CoordinadorMenu", new{id = int.Parse(Request.Form["coordinadorId"])});
+                }
+                else if(descPedido.Cantidad > 10){
+                    TempData["ErrorMessage"] = "No puedes poner un cantidad tan grande de materiales";
+                    return RedirectToPage("/CoordinadorMenu", new{id = int.Parse(Request.Form["coordinadorId"])});
+                }
+
+                WriteLine($"{pedido.CoordinadorId}");
+                CrudFuntions.AddPedido(pedido, descPedido);
+
+                pedido.Estado = true;
+                
+                TempData["UserType"] = 4;
+                return RedirectToPage("/CoordinadorMenu", new{id = int.Parse(Request.Form["coordinadorId"])});
+            }
+            return Page();
+        }
+
         public IActionResult OnPostNewCat()
         {
             // Obtener el valor de pedidoId del formulario  
@@ -192,11 +260,16 @@ namespace InventoryControlPages
                         break;
                 }
 
+                material = db.Materiales.FirstOrDefault(m => m.MaterialId == reporteMantenimiento.MaterialId);
+                WriteLine(material.MaterialId);
+                material.Condicion = "2";
+
                 int? lastReportMantId = db.ReporteMantenimientos.OrderByDescending(u => u.ReporteMantenimientoId).Select(u => u.ReporteMantenimientoId).FirstOrDefault();
                 int ReportMantID = lastReportMantId.HasValue ? lastReportMantId.Value + 1 : 1;
                 reporteMantenimiento.ReporteMantenimientoId = ReportMantID;
 
                 CrudFuntions.AddReporteMant(reporteMantenimiento);
+                db.SaveChanges();
                 TempData["UserType"] = 4;
                 return RedirectToPage("/CoordinadorMenu", new{id = int.Parse(Request.Form["coordinadorId"])});
             }
@@ -456,14 +529,42 @@ namespace InventoryControlPages
         {
             // Obtener el valor de pedidoId del formulario            
             categoria = db.Categorias.FirstOrDefault(p => p.CategoriaId == int.Parse(Request.Form["categoriaId"]));
-            foreach (var materiales in db.Materiales)
+            if (modelo != null)
             {
-                if(material.CategoriaId == int.Parse(Request.Form["categoriaId"])){
-                    db.Materiales.RemoveRange(materiales);
+                // Obtener los materiales asociados a la marca
+                IQueryable<Material> materialesToDelete = db.Materiales.Where(m => m.CategoriaId == categoria.CategoriaId);
+
+                foreach (var material in materialesToDelete)
+                {
+                    // Obtener Desc_Pedidos asociados al material
+                    IQueryable<DescPedido> descPedidosToDelete = db.DescPedidos.Where(d => d.MaterialId == material.MaterialId);
+
+                    foreach (var descPedido in descPedidosToDelete)
+                    {
+                        // Obtener Pedidos asociados al DescPedido
+                        IQueryable<Pedido> pedidosToDelete = db.Pedidos.Where(p => p.PedidoId == descPedido.PedidoId);
+                        db.Pedidos.RemoveRange(pedidosToDelete);
+                    }
+
+                    // Eliminar Desc_Pedidos asociados al material
+                    db.DescPedidos.RemoveRange(descPedidosToDelete);
+
+                    // Obtener ReporteMantenimientos asociados al material
+                    IQueryable<ReporteMantenimiento> reportesToDelete = db.ReporteMantenimientos.Where(r => r.MaterialId == material.MaterialId);
+                    
+                    // Eliminar ReporteMantenimientos asociados al material
+                    db.ReporteMantenimientos.RemoveRange(reportesToDelete);
+
+                    // Eliminar el material
+                    db.Materiales.Remove(material);
                 }
+
+                // Eliminar la marca
+                db.Modelos.Remove(modelo);
+
+                // Guardar los cambios en la base de datos
+                db.SaveChanges();
             }
-            db.Categorias.RemoveRange(categoria);
-            db.SaveChanges();
             TempData["UserType"] = 4;
             return RedirectToPage("/CoordinadorMenu", new{id = int.Parse(Request.Form["coordinadorId"])});
         }
@@ -472,40 +573,124 @@ namespace InventoryControlPages
         {
             // Obtener el valor de pedidoId del formulario            
             modelo = db.Modelos.FirstOrDefault(p => p.ModeloId == int.Parse(Request.Form["modeloId"]));
-            foreach (var materiales in db.Materiales)
+            if (modelo != null)
             {
-                if(materiales.ModeloId == int.Parse(Request.Form["modeloId"])){
-                    db.Materiales.RemoveRange(materiales);
+                // Obtener los materiales asociados a la marca
+                IQueryable<Material> materialesToDelete = db.Materiales.Where(m => m.ModeloId == modelo.ModeloId);
+
+                foreach (var material in materialesToDelete)
+                {
+                    // Obtener Desc_Pedidos asociados al material
+                    IQueryable<DescPedido> descPedidosToDelete = db.DescPedidos.Where(d => d.MaterialId == material.MaterialId);
+
+                    foreach (var descPedido in descPedidosToDelete)
+                    {
+                        // Obtener Pedidos asociados al DescPedido
+                        IQueryable<Pedido> pedidosToDelete = db.Pedidos.Where(p => p.PedidoId == descPedido.PedidoId);
+                        db.Pedidos.RemoveRange(pedidosToDelete);
+                    }
+
+                    // Eliminar Desc_Pedidos asociados al material
+                    db.DescPedidos.RemoveRange(descPedidosToDelete);
+
+                    // Obtener ReporteMantenimientos asociados al material
+                    IQueryable<ReporteMantenimiento> reportesToDelete = db.ReporteMantenimientos.Where(r => r.MaterialId == material.MaterialId);
+                    
+                    // Eliminar ReporteMantenimientos asociados al material
+                    db.ReporteMantenimientos.RemoveRange(reportesToDelete);
+
+                    // Eliminar el material
+                    db.Materiales.Remove(material);
                 }
+
+                // Eliminar la marca
+                db.Modelos.Remove(modelo);
+
+                // Guardar los cambios en la base de datos
+                db.SaveChanges();
             }
-            db.Modelos.RemoveRange(modelo);
-            db.SaveChanges();
+            
             TempData["UserType"] = 4;
             return RedirectToPage("/CoordinadorMenu", new{id = int.Parse(Request.Form["coordinadorId"])});
         }
 
         public IActionResult OnPostDeleteMarca()
         {
-            // Obtener el valor de pedidoId del formulario            
-            marca = db.Marcas.FirstOrDefault(p => p.MarcaId == int.Parse(Request.Form["marcaId"]));
-            foreach (var materiales in db.Materiales)
+            // Obtener el valor de marcaId del formulario            
+            Marca marca = db.Marcas.FirstOrDefault(p => p.MarcaId == int.Parse(Request.Form["marcaId"]));
+
+            if (marca != null)
             {
-                if(materiales.MarcaId == int.Parse(Request.Form["marcaId"])){
-                    db.Materiales.RemoveRange(materiales);
+                // Obtener los materiales asociados a la marca
+                IQueryable<Material> materialesToDelete = db.Materiales.Where(m => m.MarcaId == marca.MarcaId);
+
+                foreach (var material in materialesToDelete)
+                {
+                    // Obtener Desc_Pedidos asociados al material
+                    IQueryable<DescPedido> descPedidosToDelete = db.DescPedidos.Where(d => d.MaterialId == material.MaterialId);
+
+                    foreach (var descPedido in descPedidosToDelete)
+                    {
+                        // Obtener Pedidos asociados al DescPedido
+                        IQueryable<Pedido> pedidosToDelete = db.Pedidos.Where(p => p.PedidoId == descPedido.PedidoId);
+                        db.Pedidos.RemoveRange(pedidosToDelete);
+                    }
+
+                    // Eliminar Desc_Pedidos asociados al material
+                    db.DescPedidos.RemoveRange(descPedidosToDelete);
+
+                    // Obtener ReporteMantenimientos asociados al material
+                    IQueryable<ReporteMantenimiento> reportesToDelete = db.ReporteMantenimientos.Where(r => r.MaterialId == material.MaterialId);
+                    
+                    // Eliminar ReporteMantenimientos asociados al material
+                    db.ReporteMantenimientos.RemoveRange(reportesToDelete);
+
+                    // Eliminar el material
+                    db.Materiales.Remove(material);
                 }
+
+                // Eliminar la marca
+                db.Marcas.Remove(marca);
+
+                // Guardar los cambios en la base de datos
+                db.SaveChanges();
             }
-            db.Marcas.RemoveRange(marca);
-            db.SaveChanges();
+
             TempData["UserType"] = 4;
-            return RedirectToPage("/CoordinadorMenu", new{id = int.Parse(Request.Form["coordinadorId"])});
+            return RedirectToPage("/CoordinadorMenu", new { id = int.Parse(Request.Form["coordinadorId"]) });
         }
 
         public IActionResult OnPostDeleteMaterial()
         {
             // Obtener el valor de pedidoId del formulario            
             material = db.Materiales.FirstOrDefault(p => p.MaterialId == int.Parse(Request.Form["materialId"]));
-            db.Materiales.RemoveRange(material);
-            db.SaveChanges();
+            if (material != null)
+            {
+                // Obtener Desc_Pedidos asociados al material
+                IQueryable<DescPedido> descPedidosToDelete = db.DescPedidos.Where(d => d.MaterialId == material.MaterialId);
+
+                foreach (var descPedido in descPedidosToDelete)
+                {
+                    // Obtener Pedidos asociados al DescPedido
+                    IQueryable<Pedido> pedidosToDelete = db.Pedidos.Where(p => p.PedidoId == descPedido.PedidoId);
+                    db.Pedidos.RemoveRange(pedidosToDelete);
+                }
+
+                // Eliminar Desc_Pedidos asociados al material
+                db.DescPedidos.RemoveRange(descPedidosToDelete);
+
+                // Obtener ReporteMantenimientos asociados al material
+                IQueryable<ReporteMantenimiento> reportesToDelete = db.ReporteMantenimientos.Where(r => r.MaterialId == material.MaterialId);
+                    
+                // Eliminar ReporteMantenimientos asociados al material
+                db.ReporteMantenimientos.RemoveRange(reportesToDelete);
+
+                // Eliminar el material
+                db.Materiales.Remove(material);
+
+                // Guardar los cambios en la base de datos
+                db.SaveChanges();
+            }
             TempData["UserType"] = 4;
             return RedirectToPage("/CoordinadorMenu", new{id = int.Parse(Request.Form["coordinadorId"])});
         }
@@ -532,6 +717,8 @@ namespace InventoryControlPages
         {
             // Obtener el valor de pedidoId del formulario            
             reporteMantenimiento = db.ReporteMantenimientos.FirstOrDefault(p => p.ReporteMantenimientoId == int.Parse(Request.Form["reporteMantenimientoId"]));
+            material = db.Materiales.FirstOrDefault(m => m.MaterialId == reporteMantenimiento.MaterialId);
+            material.Condicion = "1";
             db.ReporteMantenimientos.RemoveRange(reporteMantenimiento);
             db.SaveChanges();
             TempData["UserType"] = 4;

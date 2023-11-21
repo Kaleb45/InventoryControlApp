@@ -291,6 +291,68 @@
             </table>
         </div>
     <div class="titles" onclick="toggleContent()">
+            <h1 id="Pedido"><a href="#hacerPedidoContent">Hacer un pedido</a></h1>
+        </div>
+    <div class="insert-database hidden-content open" id="hacerPedidoContent">
+        <div>
+            <p>Nuevo pedido</p>
+            <form method="POST" onsubmit="recargarPagina()" asp-page-handler="NewOrder">
+                <div class="fields-table">
+                    <label for="Fecha">Fecha y Hora de entrega:
+                        <input asp-for="pedido.Fecha" placeholder="Fecha" class="form-control" required>
+                    </label>
+                    <span asp-validation-for="pedido.Fecha" class="text-danger"></span>
+
+                    <label for="horaDevolucion">Hora de Devolución:
+                        <input asp-for="pedido.HoraDevolucion" placeholder="HoraDevolucion" class="form-control" required>
+                    </label>
+                    <span asp-validation-for="pedido.HoraDevolucion" class="text-danger"></span>
+
+                    <select asp-for="pedido.LaboratorioId" placeholder="Laboratorio" class="fields-table" required>
+                        <option value="">Selecciona un laboratorio</option>
+                        @{
+                            using (Almacen db = new Almacen())
+                            {
+                                List<Laboratorio> laboratorio = db.Laboratorios.ToList();
+
+                                foreach (var lab in laboratorio)
+                                {
+                                    <option value="@lab.LaboratorioId">@lab.Nombre</option>
+                                }
+                            }
+                        }
+                    </select>
+                    <span asp-validation-for="pedido.LaboratorioId" class="text-danger"></span>
+
+                    <select asp-for="categoria.CategoriaId" placeholder="Material" class="fields-table" required>
+                        <option value="">Selecciona una categoria</option>
+                        @{
+                            using (Almacen db = new Almacen())
+                            {
+                                IQueryable<Categoria> categorias = db.Categorias.Where(c => c.Acceso == "1" || c.Acceso == "2");
+
+                                foreach (var c in categorias)
+                                {
+                                    <option value="@c.CategoriaId">@c.Nombre</option>
+                                }
+                            }
+                        }
+                    </select>
+                    <span asp-validation-for="categoria.CategoriaId" class="text-danger"></span>
+
+                    <input asp-for="descPedido.Cantidad" placeholder="Cantidad" class="form-control" required>
+                    <span asp-validation-for="descPedido.Cantidad" class="text-danger"></span>
+
+                    <input type="hidden" name="coordinadorId" value="@Model.coordinador.CoordinadorId" />
+                    <span asp-validation-for="pedido.EstudianteId" class="text-danger"></span>
+
+                    <span class="text-danger">@Model.ErrorMessage</span>
+                    <input id="enviar" type="submit" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="titles" onclick="toggleContent()">
         <h1><a href="#cContent">Categorias</a></h1>
     </div>
     <div class="content-container hidden-content open" id="cContent">
@@ -788,7 +850,7 @@
                             @{
                                 using (Almacen db = new Almacen())
                                 {
-                                    List<Material> materiales = db.Materiales.ToList();
+                                    IQueryable<Material> materiales = db.Materiales.Where(m => m.Condicion == "1");
                                     foreach (var m in materiales)
                                     {
                                         <option value="@m.MaterialId">@m.MaterialId: @m.Categoria.Nombre</option>

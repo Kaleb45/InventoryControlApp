@@ -90,12 +90,12 @@
                 <form method="POST" onsubmit="recargarPagina()" asp-page-handler="NewOrder">
                     <div class="fields-table">
                         <label for="Fecha">Fecha y Hora de entrega:
-                            <input asp-for="pedido.Fecha" placeholder="Fecha" class="form-control" value="@Model.pedido.Fecha" required>
+                            <input asp-for="pedido.Fecha" placeholder="Fecha" class="form-control" required>
                         </label>
                         <span asp-validation-for="pedido.Fecha" class="text-danger"></span>
 
                         <label for="horaDevolucion">Hora de Devolución:
-                            <input asp-for="pedido.HoraDevolucion" placeholder="HoraDevolucion" class="form-control" value="@Model.pedido.HoraDevolucion" required>
+                            <input asp-for="pedido.HoraDevolucion" placeholder="HoraDevolucion" class="form-control" required>
                         </label>
                         <span asp-validation-for="pedido.HoraDevolucion" class="text-danger"></span>
 

@@ -850,7 +850,7 @@
                             @{
                                 using (Almacen db = new Almacen())
                                 {
-                                    List<Material> materiales = db.Materiales.ToList();
+                                    IQueryable<Material> materiales = db.Materiales.Where(m => m.Condicion == "1");
                                     foreach (var m in materiales)
                                     {
                                         <option value="@m.MaterialId">@m.MaterialId: @m.Categoria.Nombre</option>

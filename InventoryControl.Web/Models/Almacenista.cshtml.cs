@@ -161,7 +161,6 @@ namespace InventoryControlPages
             // Obtener el valor de pedidoId del formulario  
             if ((material is not null) &&  !ModelState.IsValid)
             {
-                material.Condicion = "2";
                 int validateDate = UI.DateValidationWeb(reporteMantenimiento.Fecha.ToString());
                 switch (validateDate){
                     case 2:
@@ -181,11 +180,16 @@ namespace InventoryControlPages
                         break;
                 }
 
+                material = db.Materiales.FirstOrDefault(m => m.MaterialId == reporteMantenimiento.MaterialId);
+                WriteLine(material.MaterialId);
+                material.Condicion = "2";
+
                 int? lastReportMantId = db.ReporteMantenimientos.OrderByDescending(u => u.ReporteMantenimientoId).Select(u => u.ReporteMantenimientoId).FirstOrDefault();
                 int ReportMantID = lastReportMantId.HasValue ? lastReportMantId.Value + 1 : 1;
                 reporteMantenimiento.ReporteMantenimientoId = ReportMantID;
 
                 CrudFuntions.AddReporteMant(reporteMantenimiento);
+                db.SaveChanges();
                 TempData["UserType"] = 4;
                 return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
             }
@@ -208,15 +212,42 @@ namespace InventoryControlPages
         {
             // Obtener el valor de pedidoId del formulario            
             categoria = db.Categorias.FirstOrDefault(p => p.CategoriaId == int.Parse(Request.Form["categoriaId"]));
-            foreach (var material in db.Materiales)
+            if (modelo != null)
             {
-                if(material.CategoriaId == int.Parse(Request.Form["categoriaId"])){
-                    db.Materiales.RemoveRange(material);
+                // Obtener los materiales asociados a la marca
+                IQueryable<Material> materialesToDelete = db.Materiales.Where(m => m.CategoriaId == categoria.CategoriaId);
+
+                foreach (var material in materialesToDelete)
+                {
+                    // Obtener Desc_Pedidos asociados al material
+                    IQueryable<DescPedido> descPedidosToDelete = db.DescPedidos.Where(d => d.MaterialId == material.MaterialId);
+
+                    foreach (var descPedido in descPedidosToDelete)
+                    {
+                        // Obtener Pedidos asociados al DescPedido
+                        IQueryable<Pedido> pedidosToDelete = db.Pedidos.Where(p => p.PedidoId == descPedido.PedidoId);
+                        db.Pedidos.RemoveRange(pedidosToDelete);
+                    }
+
+                    // Eliminar Desc_Pedidos asociados al material
+                    db.DescPedidos.RemoveRange(descPedidosToDelete);
+
+                    // Obtener ReporteMantenimientos asociados al material
+                    IQueryable<ReporteMantenimiento> reportesToDelete = db.ReporteMantenimientos.Where(r => r.MaterialId == material.MaterialId);
+                    
+                    // Eliminar ReporteMantenimientos asociados al material
+                    db.ReporteMantenimientos.RemoveRange(reportesToDelete);
+
+                    // Eliminar el material
+                    db.Materiales.Remove(material);
                 }
+
+                // Eliminar la marca
+                db.Modelos.Remove(modelo);
+
+                // Guardar los cambios en la base de datos
+                db.SaveChanges();
             }
-            db.Categorias.RemoveRange(categoria);
-            db.SaveChanges();
-            TempData["UserType"] = 3;
             return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
         }
 
@@ -224,30 +255,88 @@ namespace InventoryControlPages
         {
             // Obtener el valor de pedidoId del formulario            
             modelo = db.Modelos.FirstOrDefault(p => p.ModeloId == int.Parse(Request.Form["modeloId"]));
-            foreach (var material in db.Materiales)
+            if (modelo != null)
             {
-                if(material.ModeloId == int.Parse(Request.Form["modeloId"])){
-                    db.Materiales.RemoveRange(material);
+                // Obtener los materiales asociados a la marca
+                IQueryable<Material> materialesToDelete = db.Materiales.Where(m => m.ModeloId == modelo.ModeloId);
+
+                foreach (var material in materialesToDelete)
+                {
+                    // Obtener Desc_Pedidos asociados al material
+                    IQueryable<DescPedido> descPedidosToDelete = db.DescPedidos.Where(d => d.MaterialId == material.MaterialId);
+
+                    foreach (var descPedido in descPedidosToDelete)
+                    {
+                        // Obtener Pedidos asociados al DescPedido
+                        IQueryable<Pedido> pedidosToDelete = db.Pedidos.Where(p => p.PedidoId == descPedido.PedidoId);
+                        db.Pedidos.RemoveRange(pedidosToDelete);
+                    }
+
+                    // Eliminar Desc_Pedidos asociados al material
+                    db.DescPedidos.RemoveRange(descPedidosToDelete);
+
+                    // Obtener ReporteMantenimientos asociados al material
+                    IQueryable<ReporteMantenimiento> reportesToDelete = db.ReporteMantenimientos.Where(r => r.MaterialId == material.MaterialId);
+                    
+                    // Eliminar ReporteMantenimientos asociados al material
+                    db.ReporteMantenimientos.RemoveRange(reportesToDelete);
+
+                    // Eliminar el material
+                    db.Materiales.Remove(material);
                 }
+
+                // Eliminar la marca
+                db.Modelos.Remove(modelo);
+
+                // Guardar los cambios en la base de datos
+                db.SaveChanges();
             }
-            db.Modelos.RemoveRange(modelo);
-            db.SaveChanges();
+
             TempData["UserType"] = 3;
             return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
         }
 
         public IActionResult OnPostDeleteMarca()
         {
-            // Obtener el valor de pedidoId del formulario            
-            marca = db.Marcas.FirstOrDefault(p => p.MarcaId == int.Parse(Request.Form["marcaId"]));
-            foreach (var material in db.Materiales)
+            // Obtener el valor de marcaId del formulario            
+            Marca marca = db.Marcas.FirstOrDefault(p => p.MarcaId == int.Parse(Request.Form["marcaId"]));
+
+            if (marca != null)
             {
-                if(material.MarcaId == int.Parse(Request.Form["marcaId"])){
-                    db.Materiales.RemoveRange(material);
+                // Obtener los materiales asociados a la marca
+                IQueryable<Material> materialesToDelete = db.Materiales.Where(m => m.MarcaId == marca.MarcaId);
+
+                foreach (var material in materialesToDelete)
+                {
+                    // Obtener Desc_Pedidos asociados al material
+                    IQueryable<DescPedido> descPedidosToDelete = db.DescPedidos.Where(d => d.MaterialId == material.MaterialId);
+
+                    foreach (var descPedido in descPedidosToDelete)
+                    {
+                        // Obtener Pedidos asociados al DescPedido
+                        IQueryable<Pedido> pedidosToDelete = db.Pedidos.Where(p => p.PedidoId == descPedido.PedidoId);
+                        db.Pedidos.RemoveRange(pedidosToDelete);
+                    }
+
+                    // Eliminar Desc_Pedidos asociados al material
+                    db.DescPedidos.RemoveRange(descPedidosToDelete);
+
+                    // Obtener ReporteMantenimientos asociados al material
+                    IQueryable<ReporteMantenimiento> reportesToDelete = db.ReporteMantenimientos.Where(r => r.MaterialId == material.MaterialId);
+                    
+                    // Eliminar ReporteMantenimientos asociados al material
+                    db.ReporteMantenimientos.RemoveRange(reportesToDelete);
+
+                    // Eliminar el material
+                    db.Materiales.Remove(material);
                 }
+
+                // Eliminar la marca
+                db.Marcas.Remove(marca);
+
+                // Guardar los cambios en la base de datos
+                db.SaveChanges();
             }
-            db.Marcas.RemoveRange(marca);
-            db.SaveChanges();
             TempData["UserType"] = 3;
             return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
         }
@@ -256,9 +345,64 @@ namespace InventoryControlPages
         {
             // Obtener el valor de pedidoId del formulario            
             material = db.Materiales.FirstOrDefault(p => p.MaterialId == int.Parse(Request.Form["materialId"]));
-            db.Materiales.RemoveRange(material);
-            db.SaveChanges();
+            if (material != null)
+            {
+                // Obtener Desc_Pedidos asociados al material
+                IQueryable<DescPedido> descPedidosToDelete = db.DescPedidos.Where(d => d.MaterialId == material.MaterialId);
+
+                foreach (var descPedido in descPedidosToDelete)
+                {
+                    // Obtener Pedidos asociados al DescPedido
+                    IQueryable<Pedido> pedidosToDelete = db.Pedidos.Where(p => p.PedidoId == descPedido.PedidoId);
+                    db.Pedidos.RemoveRange(pedidosToDelete);
+                }
+
+                // Eliminar Desc_Pedidos asociados al material
+                db.DescPedidos.RemoveRange(descPedidosToDelete);
+
+                // Obtener ReporteMantenimientos asociados al material
+                IQueryable<ReporteMantenimiento> reportesToDelete = db.ReporteMantenimientos.Where(r => r.MaterialId == material.MaterialId);
+                    
+                // Eliminar ReporteMantenimientos asociados al material
+                db.ReporteMantenimientos.RemoveRange(reportesToDelete);
+
+                // Eliminar el material
+                db.Materiales.Remove(material);
+
+                // Guardar los cambios en la base de datos
+                db.SaveChanges();
+            }
             TempData["UserType"] = 3;
+            return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
+        }
+
+        public IActionResult OnPostDeleteMant()
+        {
+            // Obtener el valor de pedidoId del formulario            
+            mantenimiento = db.Mantenimientos.FirstOrDefault(p => p.MantenimientoId == int.Parse(Request.Form["mantenimientoId"]));
+            
+            foreach (var reporteMantenimientos in db.ReporteMantenimientos)
+            {
+                if(reporteMantenimientos.MantenimientoId == int.Parse(Request.Form["mantenimientoId"])){
+                    db.ReporteMantenimientos.RemoveRange(reporteMantenimientos);
+                }
+            }
+            
+            db.Mantenimientos.RemoveRange(mantenimiento);
+            db.SaveChanges();
+            TempData["UserType"] = 4;
+            return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
+        }
+
+        public IActionResult OnPostDeleteReportMant()
+        {
+            // Obtener el valor de pedidoId del formulario            
+            reporteMantenimiento = db.ReporteMantenimientos.FirstOrDefault(p => p.ReporteMantenimientoId == int.Parse(Request.Form["reporteMantenimientoId"]));
+            material = db.Materiales.FirstOrDefault(m => m.MaterialId == reporteMantenimiento.MaterialId);
+            material.Condicion = "1";
+            db.ReporteMantenimientos.RemoveRange(reporteMantenimiento);
+            db.SaveChanges();
+            TempData["UserType"] = 4;
             return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
         }
 

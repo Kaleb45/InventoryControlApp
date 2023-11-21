@@ -494,7 +494,7 @@ CREATE TABLE "Estudiante" (
   "ApellidoPaterno" nvarchar(50) NOT NULL,
   "ApellidoMaterno" nvarchar(50) NOT NULL,
   "SemestreId" INTEGER NOT NULL,
-  "GrupoId" INTEGER NOT NULL,
+  "GrupoId" INTEGER NULL,
   "Adeudo" decimal(10,2) NULL,
   "Correo" nvarchar(100) NOT NULL,
   "PlantelId" INTEGER NOT NULL,

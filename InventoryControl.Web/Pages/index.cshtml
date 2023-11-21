@@ -31,17 +31,11 @@
                         <div class="fields-table">
                             <input asp-for="usuario.Usuario1" placeholder="Nombre de Usuario" class="form-control">
                             <span asp-validation-for="usuario.Usuario1" class="text-danger"></span>
-                            @{
-                                if(Model.usuario is not null){
-                                    var result = UI.LogIn(Model.usuario.Usuario1, Model.usuario.Password);
-                                    if(result.typeOfUser == 0){
-                                        <span class="text-danger">Usuario o contraseña incorrectos. Inténtalo nuevamente.</span>
-                                    }
-                                }
-                            }
 
                             <input asp-for="usuario.Password" placeholder="Contraseña" class="form-control" type="password" id="passwordInput" required>
                             <span asp-validation-for="usuario.Password" class="text-danger"></span>
+                            
+                            <span class="text-danger">@Model.ErrorMessage</span>
                             <input id="enviar" type="submit" />
                         </div>
                     </form>
@@ -59,26 +53,6 @@
                         <div class="fields-table">
                             <input asp-for="estudiante.EstudianteId" placeholder="Registro" class="form-control" required>
                             <span asp-validation-for="estudiante.EstudianteId" class="text-danger"></span>
-                            @{
-                                if(Model.estudiante is not null){
-                                    int validationRegister = UI.RegisterValidation(Model.estudiante.EstudianteId);
-                                    switch (validationRegister)
-                                    {
-                                        case 10:
-                                            <span class="text-danger">El campo Registro debe tener 8 dígitos.</span>
-                                            break;
-                                        case 20:
-                                            <span class="text-danger">El año en el campo Registro no puede ser mayor al año actual.</span>
-                                            break;
-                                        case 30:
-                                            <span class="text-danger">El campo Registro debe comenzar con '100' o '300'.</span>
-                                            break;
-                                        case 01:
-                                            // No hay error, proceder con la lógica normal
-                                            break;
-                                    }
-                                }
-                            }
 
                             <input asp-for="estudiante.Nombre" placeholder="Nombre" class="form-control" required>
                             <span asp-validation-for="estudiante.Nombre" class="text-danger"></span>
@@ -119,44 +93,6 @@
 
                             <input asp-for="estudiante.Correo" placeholder="Correo" class="form-control" required>
                             <span asp-validation-for="estudiante.Correo" class="text-danger"></span>
-                            @{
-                                if(Model.estudiante is not null){
-                                    int validationEmail = UI.StudentEmailValidation(Model.estudiante.Correo, Model.estudiante.EstudianteId);
-                                    switch (validationEmail)
-                                    {
-                                        case 10:
-                                            <span class="text-danger">El correo debe contener 17 caracteres, ejemplo: 'a19300107@ceti.mx'</span>
-                                            break;
-                                        case 20:
-                                            <span class="text-danger">El correo debe contener la letra a al inicio del mismo</span>
-                                            break;
-                                        case 30:
-                                            <span class="text-danger">El correo debe contener el registro proporcionado</span>
-                                            break;
-                                        case 40:
-                                            <span class="text-danger">El correo debe contener la terminación 'ceti.mx'</span>
-                                            break;
-                                        case 50:
-                                            <span class="text-danger">El correo debe contener 17 caracteres, ejemplo: 'a19300107@ceti.mx'</span>
-                                            break;
-                                        case 70:
-                                            <span class="text-danger">El correo debe contener el registro proporcionado</span>
-                                            break;
-                                        case 80:
-                                            <span class="text-danger">El correo debe contener la terminación 'ceti.mx'</span>
-                                            break;
-                                        case 90:
-                                            <span class="text-danger">Formato de Correo Incorrecto</span>
-                                            break;
-                                        case 100:
-                                            <span class="text-danger">El correo debe contener la terminación 'ceti.mx'</span>
-                                            break;
-                                        case 01:
-                                            // No hay error, proceder con la lógica normal
-                                            break;
-                                    }
-                                }
-                            }
 
                             <select asp-for="estudiante.PlantelId" class="fields-table" required>
                                 <option value="">Selecciona un plantel</option>
@@ -168,42 +104,8 @@
                             
                             <input asp-for="usuario.Password" placeholder="Contraseña" type="password" id="passwordInput" required>
                             <span asp-validation-for="usuario.Password" class="text-danger"></span>
-                            @{
-                                if(Model.usuario is not null){
-                                    int validationPassword = UI.PasswordValidation(Model.usuario.Password);
-                                    switch (validationPassword)
-                                    {
-                                        case 10:
-                                            <span class="text-danger">La contraseña es muy corta. Debe tener al menos 8 caracteres.</span>
-                                            break;
-                                        case 20:
-                                            <span class="text-danger">La contraseña debe contener al menos un caracter en mayusculas.</span>
-                                            break;
-                                        case 30:
-                                            <span class="text-danger">La contraseña debe contener al menos un caracter numerico.</span>
-                                            break;
-                                        case 40:
-                                            <span class="text-danger">La contraseña debe contener al menos un caracter especial no alfanumérico.</span>
-                                            break;
-                                        case 50:
-                                            <span class="text-danger">La contraseña debe contener al menos un caracter en minúsculas.</span>
-                                            break;
-                                        case 80:
-                                            <span class="text-danger">La contraseña es muy común o fácil de adivinar.</span>
-                                            break;
-                                        case 90:
-                                            <span class="text-danger">La contraseña debe contener al menos un caracter no alfanumérico.</span>
-                                            break;
-                                        case 100:
-                                            <span class="text-danger">La contraseña debe contener una combinación de mayúsculas y minúsculas.</span>
-                                            break;
-                                        case 01:
-                                            // No hay error, proceder con la lógica normal
-                                            break;
-                                    }
-                                }
-                            }
-
+                            
+                            <span class="text-danger">@Model.ErrorMessage</span>
                             <input id="enviar" type="submit" />
                         </div>
                     </form>

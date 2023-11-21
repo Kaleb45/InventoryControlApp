@@ -681,5 +681,187 @@
             </table>
         </div>
     </div>
+
+    <div class="titles" onclick="toggleContent()">
+        <h1><a href="#mantContent">Mantenimiento</a></h1>
+    </div>
+    <div class="content-container hidden-content open" id="mantContent">
+        <div class="insert-database open">
+            <div>
+                <p>Nueva Mantenimiento</p>
+                <form method="POST" asp-page-handler="NewMant">
+                    <div class="fields-table">
+                        <input asp-for="mantenimiento.Nombre" placeholder="Nombre" class="form-control">
+                        <span asp-validation-for="mantenimiento.Nombre" class="text-danger"></span>
+
+                        <input asp-for="mantenimiento.Descripcion" placeholder="Descripcion" class="form-control" required>
+                        <span asp-validation-for="mantenimiento.Descripcion" class="text-danger"></span>
+                        <span class="text-danger">@Model.ErrorMessage</span>
+
+                        <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId" />
+                        <input id="enviar" type="submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="table-database open" >
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td><p>Id</p></td>
+                        <td><p>Nombre</p></td>
+                        <td><p>Descripcion</p></td>
+                        <td><p>Eliminar</p></td>
+                        <td><p>Modificar</p></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{using(Almacen db = new ()){
+                                if(db.Mantenimientos is null || !db.Mantenimientos.Any()){
+                                    <tr>
+                                        <td><p class="text-danger">No hay Mantenimientos registrados</p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                    </tr>
+                                }
+                                else{
+                                    foreach(var c in db.Mantenimientos){
+                                    <tr>
+                                        <td id="id">@c.MantenimientoId</td>
+                                        <td id="campos">@c.Nombre</td>
+                                        <td id="campos">@c.Descripcion</td>
+                                        <td id="campos">
+                                        <form method="POST" asp-page-handler="DeleteMant">
+                                            <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId"/>
+                                            <input type="hidden" name="mantenimientoId" value="@c.MantenimientoId" />
+                                            <button type="submit">Delete</button>
+                                        </form>
+                                        </td>
+                                        <td id="campos" type="hidden">
+                                        <form method="POST" asp-page-handler="Update">
+                                            <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId"/>
+                                            <input type="hidden" name="registroId" value="@c.MantenimientoId" />
+                                            <input type="hidden" name="tableId" value="mantenimiento" />
+                                            <button type="submit">Update</button>
+                                        </form>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="titles" onclick="toggleContent()">
+        <h1><a href="#reportmantContent">Reportes de Mantenimiento</a></h1>
+    </div>
+    <div class="content-container hidden-content open" id="reportmantContent">
+        <div class="insert-database open">
+            <div>
+                <p>Nueva Reporte de Mantenimiento</p>
+                <form method="POST" asp-page-handler="NewReportMant">
+                    <div class="fields-table">
+                        <input asp-for="reporteMantenimiento.Fecha" placeholder="Nombre" class="form-control">
+                        <span asp-validation-for="reporteMantenimiento.Fecha" class="text-danger"></span>
+
+                        <select asp-for="reporteMantenimiento.MantenimientoId" placeholder="Modelo" class="fields-table" required>
+                            <option value="">Selecciona un Mantenimiento</option>
+                            @{
+                                using (Almacen db = new Almacen())
+                                {
+                                    List<Mantenimiento> mantenimientos = db.Mantenimientos.ToList();
+                                    foreach (var c in mantenimientos)
+                                    {
+                                        <option value="@c.MantenimientoId">@c.Nombre</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="reporteMantenimiento.MantenimientoId" class="text-danger"></span>
+                        
+                        <select asp-for="reporteMantenimiento.MaterialId" placeholder="Modelo" class="fields-table" required>
+                            <option value="">Selecciona un Material</option>
+                            @{
+                                using (Almacen db = new Almacen())
+                                {
+                                    List<Material> materiales = db.Materiales.ToList();
+                                    foreach (var m in materiales)
+                                    {
+                                        <option value="@m.MaterialId">@m.MaterialId: @m.Categoria.Nombre</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="reporteMantenimiento.MaterialId" class="text-danger"></span>
+                        <span class="text-danger">@Model.ErrorMessage</span>
+
+                        <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId" />
+                        <input id="enviar" type="submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="table-database open" >
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td><p>Id</p></td>
+                        <td><p>Fecha</p></td>
+                        <td><p>Mantenimiento</p></td>
+                        <td><p>Id Material</p></td>
+                        <td><p>Material</p></td>
+                        <td><p>Eliminar</p></td>
+                        <td><p>Modificar</p></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{using(Almacen db = new ()){
+                                if(db.ReporteMantenimientos is null || !db.ReporteMantenimientos.Any()){
+                                    <tr>
+                                        <td><p class="text-danger">No hay Reportes de Mantenimiento registrados</p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                    </tr>
+                                }
+                                else{
+                                    foreach(var c in db.ReporteMantenimientos){
+                                    <tr>
+                                        <td id="id">@c.ReporteMantenimientoId</td>
+                                        <td id="campos">@c.Fecha</td>
+                                        <td id="campos">@c.Mantenimiento.Nombre</td>
+                                        <td id="campos">@c.Material.MaterialId</td>
+                                        <td id="campos">@c.Material.Categoria.Nombre</td>
+                                        <td id="campos">
+                                        <form method="POST" asp-page-handler="DeleteReportMant">
+                                            <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId"/>
+                                            <input type="hidden" name="reporteMantenimientoId" value="@c.ReporteMantenimientoId" />
+                                            <button type="submit">Delete</button>
+                                        </form>
+                                        </td>
+                                        <td id="campos" type="hidden">
+                                        <form method="POST" asp-page-handler="Update">
+                                            <input type="hidden" name="almacenistaId" value="@Model.almacenista.AlmacenistaId"/>
+                                            <input type="hidden" name="registroId" value="@c.ReporteMantenimientoId" />
+                                            <input type="hidden" name="tableId" value="reporteMantenimiento" />
+                                            <button type="submit">Update</button>
+                                        </form>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>

@@ -42,6 +42,12 @@ namespace InventoryControlPages
 
         [BindProperty]
         public Modelo? modelo { get; set; }
+        [BindProperty]
+        public Mantenimiento? mantenimiento { get; set; }
+        [BindProperty]
+        public ReporteMantenimiento? reporteMantenimiento { get; set; }
+        [TempData]
+        public string ErrorMessage { get; set; }
 
         public void OnGet(int id)
         {
@@ -133,6 +139,58 @@ namespace InventoryControlPages
             }
             return Page();
         }
+
+        public IActionResult OnPostNewMant()
+        {
+            // Obtener el valor de pedidoId del formulario  
+            if ((material is not null) &&  !ModelState.IsValid)
+            {
+                int? lastMantId = db.Mantenimientos.OrderByDescending(u => u.MantenimientoId).Select(u => u.MantenimientoId).FirstOrDefault();
+                int MantID = lastMantId.HasValue ? lastMantId.Value + 1 : 1;
+                mantenimiento.MantenimientoId = MantID;
+
+                CrudFuntions.AddMant(mantenimiento);
+                TempData["UserType"] = 4;
+                return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
+            }
+            return Page();
+        }
+        
+        public IActionResult OnPostNewReportMant()
+        {
+            // Obtener el valor de pedidoId del formulario  
+            if ((material is not null) &&  !ModelState.IsValid)
+            {
+                int validateDate = UI.DateValidationWeb(reporteMantenimiento.Fecha.ToString());
+                switch (validateDate){
+                    case 2:
+                        TempData["ErrorMessage"] = "No se permiten selecciones en sábados ni domingos.";
+                        return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
+                    case 3:
+                        TempData["ErrorMessage"] = "La fecha debe ser un día posterior al día actual y no mayor a una semana.";
+                        return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
+                    case 4:
+                        TempData["ErrorMessage"] = "Formato de fecha incorrecto. Intenta de nuevo.";
+                        return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
+                    case 5:
+                        TempData["ErrorMessage"] = "Formato de fecha incorrecto. Intenta de nuevo.";
+                        return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
+                    case 1:
+                        // No hay error, proceder con la lógica normal
+                        break;
+                }
+
+                int? lastReportMantId = db.ReporteMantenimientos.OrderByDescending(u => u.ReporteMantenimientoId).Select(u => u.ReporteMantenimientoId).FirstOrDefault();
+                int ReportMantID = lastReportMantId.HasValue ? lastReportMantId.Value + 1 : 1;
+                reporteMantenimiento.ReporteMantenimientoId = ReportMantID;
+
+                CrudFuntions.AddReporteMant(reporteMantenimiento);
+                TempData["UserType"] = 4;
+                return RedirectToPage("/AlmacenistaMenu", new{id = int.Parse(Request.Form["almacenistaId"])});
+            }
+            return Page();
+        }
+
         public IActionResult OnPostDeleteOrder()
         {
             // Obtener el valor de pedidoId del formulario            

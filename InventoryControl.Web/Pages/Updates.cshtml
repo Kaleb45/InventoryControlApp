@@ -180,6 +180,184 @@
                 </div>
             </div>
         }
+        else if(Model.tabla == "docente"){
+            <div class="in-database">
+                <div>
+                    <p>Update Docente</p>
+                    <form method="POST" asp-page-handler="Update">
+                        <div class="fields-table">
+
+                            <input asp-for="docente.Nombre" placeholder="Nombre" class="form-control" required>
+                            <span asp-validation-for="docente.Nombre" class="text-danger"></span>
+
+                            <input asp-for="docente.ApellidoPaterno" placeholder="Apellido paterno" class="form-control" required>
+                            <span asp-validation-for="docente.ApellidoPaterno" class="text-danger"></span>
+
+                            <input asp-for="docente.ApellidoMaterno" placeholder="Apellido materno" class="form-control" required>
+                            <span asp-validation-for="docente.ApellidoMaterno" class="text-danger"></span>
+
+                            <input asp-for="docente.Correo" placeholder="Correo" class="form-control" required>
+                            <span asp-validation-for="docente.Correo" class="text-danger"></span>
+
+                            <select asp-for="docente.PlantelId" class="fields-table" required>
+                                <option value="">Selecciona un plantel</option>
+                                <option value="1">Colomos</option>
+                                <option value="2">Tonála</option>
+                                <option value="3">Rio Santiago</option>
+                            </select>
+                            <span asp-validation-for="docente.PlantelId" class="text-danger"></span>
+                            <span class="text-danger">@Model.ErrorMessage</span>
+                            <input type="hidden" name="registroId" value="@Model.docente.DocenteId" />
+                            <input type="hidden" name="tableId" value="docente" />
+                            <input type="hidden" name="userId" value="@Model.userId" />
+                            <input type="hidden" name="typeUser" value="@Model.typeUser" />
+                            <input id="enviar" type="submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+        else if(Model.tabla == "estudiante"){
+            <div class="in-database">
+                <div>
+                    <p>Update Estudiante</p>
+                    <form method="POST" asp-page-handler="Update">
+                        <div class="fields-table">
+                            <input asp-for="estudiante.Nombre" placeholder="Nombre" class="form-control" required>
+                            <span asp-validation-for="estudiante.Nombre" class="text-danger"></span>
+
+                            <input asp-for="estudiante.ApellidoPaterno" placeholder="Apellido paterno" class="form-control" required>
+                            <span asp-validation-for="estudiante.ApellidoPaterno" class="text-danger"></span>
+
+                            <input asp-for="estudiante.ApellidoMaterno" placeholder="Apellido materno" class="form-control" required>
+                            <span asp-validation-for="estudiante.ApellidoMaterno" class="text-danger"></span>
+
+                            <select id="list" asp-for="estudiante.SemestreId" class="fields-table" required>
+                                <option value="">Selecciona un semestre</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                            </select>
+                            <span asp-validation-for="estudiante.SemestreId" class="text-danger"></span>
+
+                            <select asp-for="estudiante.GrupoId" placeholder="Grupo" class="fields-table" required>
+                                @{
+                                    using (Almacen db = new Almacen())
+                                    {
+                                        List<Grupo> grupos = db.Grupos.ToList();
+
+                                        foreach (var grupo in grupos)
+                                        {
+                                            <option value="@grupo.GrupoId">@grupo.Nombre</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="estudiante.GrupoId" class="text-danger"></span>
+
+                            <select asp-for="estudiante.PlantelId" class="fields-table" required>
+                            <span class="text-danger">@Model.ErrorMessage</span>
+                                <option value="">Selecciona un plantel</option>
+                                <option value="1">Colomos</option>
+                                <option value="2">Tonála</option>
+                                <option value="3">Rio Santiago</option>
+                            </select>
+                            <span asp-validation-for="estudiante.PlantelId" class="text-danger"></span>
+                            <input type="hidden" name="registroId" value="@Model.estudiante.EstudianteId" />
+                            <input type="hidden" name="tableId" value="estudiante" />
+                            <input type="hidden" name="userId" value="@Model.userId" />
+                            <input type="hidden" name="typeUser" value="@Model.typeUser" />
+                            <input id="enviar" type="submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+        else if(Model.tabla == "almacenista"){
+            <div class="in-database">
+                <div>
+                    <p>Update Almacenista</p>
+                    <form method="POST" asp-page-handler="Update">
+                        <div class="fields-table">
+
+                            <input asp-for="almacenista.Nombre" placeholder="Nombre" class="form-control" required>
+                            <span asp-validation-for="almacenista.Nombre" class="text-danger"></span>
+
+                            <input asp-for="almacenista.ApellidoPaterno" placeholder="Apellido paterno" class="form-control" required>
+                            <span asp-validation-for="almacenista.ApellidoPaterno" class="text-danger"></span>
+
+                            <input asp-for="almacenista.ApellidoMaterno" placeholder="Apellido materno" class="form-control" required>
+                            <span asp-validation-for="almacenista.ApellidoMaterno" class="text-danger"></span>
+
+                            <input asp-for="almacenista.Correo" placeholder="Correo" class="form-control" required>
+                            <span asp-validation-for="almacenista.Correo" class="text-danger"></span>
+
+                            <select asp-for="almacenista.PlantelId" class="fields-table" required>
+                                <option value="">Selecciona un plantel</option>
+                                <option value="1">Colomos</option>
+                                <option value="2">Tonála</option>
+                                <option value="3">Rio Santiago</option>
+                            </select>
+                            <span asp-validation-for="almacenista.PlantelId" class="text-danger"></span>
+                            <span class="text-danger">@Model.ErrorMessage</span>
+                            <input type="hidden" name="registroId" value="@Model.almacenista.AlmacenistaId" />
+                            <input type="hidden" name="tableId" value="almacenista" />
+                            <input type="hidden" name="userId" value="@Model.userId" />
+                            <input type="hidden" name="typeUser" value="@Model.typeUser" />
+                            <input id="enviar" type="submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+        else if(Model.tabla == "mantenimiento"){
+            <div class="in-database">
+                <div>
+                    <p>Update Mantenimiento</p>
+                    <form method="POST" asp-page-handler="Update">
+                        <div class="fields-table">
+                            <input asp-for="mantenimiento.Nombre" placeholder="Nombre" class="form-control">
+                            <span asp-validation-for="mantenimiento.Nombre" class="text-danger"></span>
+
+                            <input asp-for="mantenimiento.Descripcion" placeholder="Descripcion" class="form-control" required>
+                            <span asp-validation-for="mantenimiento.Descripcion" class="text-danger"></span>
+                            <span class="text-danger">@Model.ErrorMessage</span>
+
+                            <input type="hidden" name="registroId" value="@Model.mantenimiento.MantenimientoId" />
+                            <input type="hidden" name="tableId" value="mantenimiento" />
+                            <input type="hidden" name="userId" value="@Model.userId" />
+                            <input type="hidden" name="typeUser" value="@Model.typeUser" />
+                            <input id="enviar" type="submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+        else if(Model.tabla == "reporteMantenimiento"){
+            <div class="in-database">
+                <div>
+                    <p>Update Reporte de Mantenimiento</p>
+                    <form method="POST" asp-page-handler="Update">
+                        <div class="fields-table">
+                            <input asp-for="reporteMantenimiento.Fecha" placeholder="Nombre" class="form-control">
+                            <span asp-validation-for="reporteMantenimiento.Fecha" class="text-danger"></span>
+                            <span class="text-danger">@Model.ErrorMessage</span>
+
+                            <input type="hidden" name="registroId" value="@Model.reporteMantenimiento.ReporteMantenimientoId" />
+                                <input type="hidden" name="tableId" value="reporteMantenimiento" />
+                                <input type="hidden" name="userId" value="@Model.userId" />
+                                <input type="hidden" name="typeUser" value="@Model.typeUser" />
+                            <input id="enviar" type="submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
         <form method="POST">
             <div class="fields-table">
                 <input type="hidden" name="userId" value="@Model.userId" />

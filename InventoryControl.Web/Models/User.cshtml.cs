@@ -33,6 +33,8 @@ namespace InventoryControlPages
         public Usuario? usuario { get; set; }
         [BindProperty]
         public Estudiante? estudiante {get; set;}
+        [TempData]
+        public string ErrorMessage { get; set; }
 
         public IActionResult OnPostLogIn()
         {
@@ -41,6 +43,10 @@ namespace InventoryControlPages
                 // Llama a la función de login desde tu programa de consola
                 var result = UI.LogIn(usuario.Usuario1, usuario.Password);
 
+                if(result.typeOfUser == 0){
+                    TempData["ErrorMessage"] = "Usuario o contraseña incorrectos. Inténtalo nuevamente.";
+                }
+
                 if (result.usuarioEncontrado != null)
                 {
                     // Almacena la información del usuario en TempData
@@ -48,23 +54,20 @@ namespace InventoryControlPages
                     TempData["UserType"] = result.typeOfUser;
                     switch(result.typeOfUser){
                         case 0:
+                            TempData["ErrorMessage"] = "Usuario y/o Contraseña incorrecta";
                             return Page();
                         case 1:
                             Docente? docente = db.Docentes!.FirstOrDefault(r => r.UsuarioId == result.usuarioEncontrado.UsuarioId);
                             return RedirectToPage("/DocenteMenu", new{id = docente.DocenteId});
-                            break;
                         case 2:
                             Estudiante? alumno = db.Estudiantes!.FirstOrDefault(r => r.UsuarioId == result.usuarioEncontrado.UsuarioId);
                             return RedirectToPage("/EstudianteMenu", new{id = alumno.EstudianteId});
-                            break;
                         case 3:
                             Almacenista? almacenista = db.Almacenistas!.FirstOrDefault(r => r.UsuarioId == result.usuarioEncontrado.UsuarioId);
                             return RedirectToPage("/AlmacenistaMenu", new{id = almacenista.AlmacenistaId});
-                            break;
                         case 4:
                             Coordinador? coordinador = db.Coordinadores!.FirstOrDefault(r => r.UsuarioId == result.usuarioEncontrado.UsuarioId);
                             return RedirectToPage("/CoordinadorMenu", new{id = coordinador.CoordinadorId});
-                            break;
                     }
                 }
             }
@@ -82,10 +85,13 @@ namespace InventoryControlPages
                 switch (validationRegister)
                 {
                     case 10:
+                        TempData["ErrorMessage"] = "El campo Registro debe tener 8 dígitos.";
                         return Page();
                     case 20:
+                        TempData["ErrorMessage"] = "El año en el campo Registro no puede ser mayor al año actual.";
                         return Page();
                     case 30:
+                        TempData["ErrorMessage"] = "El campo Registro debe comenzar con '100' o '300'.";
                         return Page();
                     case 01:
                         // No hay error, proceder con la lógica normal
@@ -97,20 +103,31 @@ namespace InventoryControlPages
                 switch (validationEmail)
                 {
                     case 10:
+                        TempData["ErrorMessage"] = "El correo debe contener 17 caracteres, ejemplo: 'a19300107@ceti.mx'";
                         return Page();
                     case 20:
+                        TempData["ErrorMessage"] = "El correo debe contener la letra a al inicio del mismo";
                         return Page();
                     case 30:
+                        TempData["ErrorMessage"] = "El correo debe contener el registro proporcionado.";
                         return Page();
                     case 40:
+                        TempData["ErrorMessage"] = "El correo debe contener la terminación 'ceti.mx'";
                         return Page();
                     case 50:
+                        TempData["ErrorMessage"] = "El correo debe contener 17 caracteres, ejemplo: 'a19300107@ceti.mx'";
                         return Page();
                     case 70:
+                        TempData["ErrorMessage"] = "El correo debe contener el registro proporcionado";
                         return Page();
                     case 80:
+                        TempData["ErrorMessage"] = "El correo debe contener la terminación 'ceti.mx'";
+                        return Page();
+                    case 90:
+                        TempData["ErrorMessage"] = "Formato de Correo Incorrecto";
                         return Page();
                     case 100:
+                        TempData["ErrorMessage"] = "El correo debe contener la terminación 'ceti.mx'";
                         return Page();
                     case 01:
                         // No hay error, proceder con la lógica normal
@@ -122,20 +139,28 @@ namespace InventoryControlPages
                 switch (validationPassword)
                 {
                     case 10:
+                        TempData["ErrorMessage"] = "La contraseña es muy corta. Debe tener al menos 8 caracteres.";
                         return Page();
                     case 20:
+                        TempData["ErrorMessage"] = "La contraseña debe contener al menos un caracter en mayusculas.";
                         return Page();
                     case 30:
+                        TempData["ErrorMessage"] = "La contraseña debe contener al menos un caracter numerico.";
                         return Page();
                     case 40:
+                        TempData["ErrorMessage"] = "La contraseña debe contener al menos un caracter especial no alfanumérico.";
                         return Page();
                     case 50:
+                        TempData["ErrorMessage"] = "La contraseña debe contener al menos un caracter en minúsculas.";
                         return Page();
                     case 80:
+                        TempData["ErrorMessage"] = "La contraseña es muy común o fácil de adivinar.";
                         return Page();
                     case 90:
+                        TempData["ErrorMessage"] = "La contraseña debe contener al menos un caracter no alfanumérico.";
                         return Page();
                     case 100:
+                        TempData["ErrorMessage"] = "La contraseña debe contener una combinación de mayúsculas y minúsculas.";
                         return Page();
                     case 01:
                         // No hay error, proceder con la lógica normal

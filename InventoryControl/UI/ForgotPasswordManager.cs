@@ -83,7 +83,7 @@ public static partial class UI
     }
 
     //generador del string aleatorio para recuperar la contraseña
-    private static string GenerateRandomString()
+    public static string GenerateRandomString()
     {
         string guid = Guid.NewGuid().ToString();
         string[] parts = guid.Split('-');
@@ -91,7 +91,7 @@ public static partial class UI
     }
 
     //funcion para enviar el correo de verificacion
-    private static void SendVerificationCodeByEmail(string email, string verificationCode)
+    public static void SendVerificationCodeByEmail(string email, string verificationCode)
     {
         EmailSender emailSender = new EmailSender();
         emailSender.setDestinatary(email);

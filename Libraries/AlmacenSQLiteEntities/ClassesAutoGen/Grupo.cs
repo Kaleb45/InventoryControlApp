@@ -18,9 +18,10 @@ namespace AlmacenSQLiteEntities
         [Column(TypeName = "int")]
         public int GrupoId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo Grupo es obligatorio.")]
         [Column(TypeName = "nvarchar(3)")]
-        [StringLength(3)]
+        [StringLength(2, ErrorMessage = "El campo Grupo debe tener dos caracteres, uno númerico y uno albabetico.")]
+        [RegularExpression(@"^[a-zA-Z0-9]*$", ErrorMessage = "Solo se permiten letras y números en el nombre del grupo.")]
         public string Nombre { get; set; } = null!;
 
         [InverseProperty("Grupo")]

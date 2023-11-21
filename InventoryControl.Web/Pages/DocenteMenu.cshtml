@@ -167,54 +167,11 @@
                             <input asp-for="pedido.Fecha" placeholder="Fecha" class="form-control" value="@Model.pedido.Fecha" required>
                         </label>
                         <span asp-validation-for="pedido.Fecha" class="text-danger"></span>
-                        @{
-                            @if (Model.pedido is not null)
-                            {
-                                int validateHour = UI.DateValidationWeb(Model.pedido.Fecha.ToString());
-                                switch (validateHour)
-                                {
-                                    case 2:
-                                        <span asp-validation-for="pedido.Fecha" class="text-danger">No se permiten selecciones en sábados ni domingos.</span>
-                                        break;
-                                    case 3:
-                                        <span asp-validation-for="pedido.Fecha" class="text-danger">La fecha debe ser un día posterior al día actual y no mayor a una semana.</span>
-                                        break;
-                                    case 4:
-                                        break;
-                                    case 5:
-                                        <span asp-validation-for="pedido.Fecha" class="text-danger">Formato de fecha incorrecto. Intenta de nuevo.</span>
-                                        break;
-                                    case 1:
-                                        // No hay error, proceder con la lógica normal
-                                        break;
-                                }
-
-                                if (UI.HourValidation(Model.pedido.HoraEntrega.ToString()) == false)
-                                {
-                                    <span asp-validation-for="pedido.HoraEntrega" class="text-danger">Horario no válido. Inténtalo de nuevo.</span>
-                                }
-                            }
-                        }
 
                         <label for="horaDevolucion">Hora de Devolución:
                             <input asp-for="pedido.HoraDevolucion" placeholder="HoraDevolucion" class="form-control" value="@Model.pedido.HoraDevolucion" required>
                         </label>
                         <span asp-validation-for="pedido.HoraDevolucion" class="text-danger"></span>
-
-                        @{
-                            if (Model.pedido is not null)
-                            {
-                                if (UI.HourValidation(Model.pedido.HoraDevolucion.ToString()) == false)
-                                {
-                                    <span asp-validation-for="pedido.HoraDevolucion" class="text-danger">Horario no válido. Inténtalo de nuevo.</span>
-                                }
-
-                                if (Model.pedido.HoraDevolucion <= Model.pedido.HoraEntrega)
-                                {
-                                    <span asp-validation-for="pedido.HoraDevolucion" class="text-danger">La hora de devolución debe ser posterior a la hora de entrega.</span>
-                                }
-                            }
-                        }
 
                         <select asp-for="pedido.LaboratorioId" placeholder="Laboratorio" class="fields-table" required>
                             <option value="">Selecciona un laboratorio</option>
@@ -247,13 +204,6 @@
                             }
                         </select>
                         <span asp-validation-for="categoria.CategoriaId" class="text-danger"></span>
-                        @{
-                            if(Model.descPedido is not null){
-                                if(UI.GetMaterialID(Model.categoria.CategoriaId) == 0){
-                                    <span class="text-danger">Ese material no esta disponible.</span>
-                                }
-                            }
-                        }
 
                         <input asp-for="descPedido.Cantidad" placeholder="Cantidad" class="form-control" required>
                         <span asp-validation-for="descPedido.Cantidad" class="text-danger"></span>
@@ -261,6 +211,7 @@
                         <input type="hidden" asp-for="pedido.DocenteId" value="@Model.docente.DocenteId" />
                         <span asp-validation-for="pedido.DocenteId" class="text-danger"></span>
 
+                        <span class="text-danger">@Model.ErrorMessage</span>
                         <input id="enviar" type="submit" />
                     </div>
                 </form>

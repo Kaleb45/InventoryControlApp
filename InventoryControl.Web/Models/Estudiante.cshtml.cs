@@ -31,15 +31,13 @@ namespace InventoryControlPages
         public DescPedido? descPedido { get; set; }
         [BindProperty]
         public Categoria? categoria { get; set; }
+        [TempData]
+        public string ErrorMessage { get; set; }
         public void OnGet(int id)
         {
             estudiante = db.Estudiantes.FirstOrDefault(e => e.EstudianteId == id);
             TempData["UserType"] = 2;
             ViewData["Title"] = "";
-            if (TempData.ContainsKey("Fecha"))
-                pedido.Fecha = (DateTime)TempData["Fecha"];
-            if (TempData.ContainsKey("HoraDevolucion"))
-                pedido.HoraDevolucion = (DateTime)TempData["HoraDevolucion"];
         }
 
         public IActionResult OnPostNewOrder()
@@ -53,33 +51,36 @@ namespace InventoryControlPages
                 int validateDate = UI.DateValidationWeb(pedido.Fecha.ToString());
                 switch (validateDate){
                     case 2:
+                        TempData["ErrorMessage"] = "No se permiten selecciones en sábados ni domingos.";
                         return RedirectToPage("/EstudianteMenu", new{id = pedido.EstudianteId});
-                        break;
                     case 3:
+                        TempData["ErrorMessage"] = "La fecha debe ser un día posterior al día actual y no mayor a una semana.";
                         return RedirectToPage("/EstudianteMenu", new{id = pedido.EstudianteId});
-                        break;
                     case 4:
+                        TempData["ErrorMessage"] = "Formato de Fecha Incorrecto.";
                         return RedirectToPage("/EstudianteMenu", new{id = pedido.EstudianteId});
-                        break;
                     case 5:
+                        TempData["ErrorMessage"] = "Rellene todos los espacios.";
                         return RedirectToPage("/EstudianteMenu", new{id = pedido.EstudianteId});
-                        break;
                     case 1:
                         // No hay error, proceder con la lógica normal
                         break;
                 }
 
                 if(UI.HourValidation(pedido.Fecha.ToString()) == false){
+                    TempData["ErrorMessage"] = "Horario no válido. Inténtalo de nuevo.";
                     return RedirectToPage("/EstudianteMenu", new{id = pedido.EstudianteId});
                 }
 
                 pedido.HoraEntrega = pedido.Fecha;
 
                 if(UI.HourValidation(pedido.HoraDevolucion.ToString()) == false){
+                    TempData["ErrorMessage"] = "Horario no válido. Inténtalo de nuevo.";
                     return RedirectToPage("/EstudianteMenu", new{id = pedido.EstudianteId});
                 }
 
                 if(pedido.HoraDevolucion <= pedido.HoraEntrega){
+                    TempData["ErrorMessage"] = "La hora de devolución debe ser posterior a la hora de entrega.";
                     return RedirectToPage("/EstudianteMenu", new{id = pedido.EstudianteId});
                 }
 
@@ -87,6 +88,16 @@ namespace InventoryControlPages
                 WriteLine($"{descPedido.MaterialId} |   {categoria.CategoriaId}");
 
                 if(descPedido.MaterialId is null || descPedido.MaterialId == 0){
+                    TempData["ErrorMessage"] = "Ese material no esta disponible.";
+                    return RedirectToPage("/EstudianteMenu", new{id = pedido.EstudianteId});
+                }
+
+                if(descPedido.Cantidad < 1){
+                    TempData["ErrorMessage"] = "No puedes introducir números negativos";
+                    return RedirectToPage("/EstudianteMenu", new{id = pedido.EstudianteId});
+                }
+                else if(descPedido.Cantidad > 10){
+                    TempData["ErrorMessage"] = "No puedes poner un cantidad tan grande de materiales";
                     return RedirectToPage("/EstudianteMenu", new{id = pedido.EstudianteId});
                 }
 

@@ -31,16 +31,14 @@ namespace InventoryControlPages
         public DescPedido? descPedido { get; set; }
         [BindProperty]
         public Categoria? categoria { get; set; }
+        [TempData]
+        public string ErrorMessage { get; set; }
 
         public void OnGet(int id)
         {
             docente = db.Docentes.FirstOrDefault(e => e.DocenteId == id);
             TempData["UserType"] = 1;
             ViewData["Title"] = "";
-            if (TempData.ContainsKey("Fecha"))
-                pedido.Fecha = (DateTime)TempData["Fecha"];
-            if (TempData.ContainsKey("HoraDevolucion"))
-                pedido.HoraDevolucion = (DateTime)TempData["HoraDevolucion"];
         }
 
         public IActionResult OnPost()
@@ -54,41 +52,53 @@ namespace InventoryControlPages
                 int validateDate = UI.DateValidationWeb(pedido.Fecha.ToString());
                 switch (validateDate){
                     case 2:
+                        TempData["ErrorMessage"] = "No se permiten selecciones en sábados ni domingos.";
                         return RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
-                        break;
                     case 3:
+                        TempData["ErrorMessage"] = "La fecha debe ser un día posterior al día actual y no mayor a una semana.";
                         return RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
-                        break;
                     case 4:
+                        TempData["ErrorMessage"] = "Formato de Fecha Incorrecto.";
                         return RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
-                        break;
                     case 5:
+                        TempData["ErrorMessage"] = "Rellene todos los espacios.";
                         return RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
-                        break;
                     case 1:
                         // No hay error, proceder con la lógica normal
                         break;
                 }
 
-                pedido.HoraEntrega = pedido.Fecha;
-                
-                if(UI.HourValidation(pedido.HoraEntrega.ToString()) == false){
-                    RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
+                if(UI.HourValidation(pedido.Fecha.ToString()) == false){
+                    TempData["ErrorMessage"] = "Horario no válido. Inténtalo de nuevo.";
+                    return RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
                 }
 
+                pedido.HoraEntrega = pedido.Fecha;
 
                 if(UI.HourValidation(pedido.HoraDevolucion.ToString()) == false){
-                    RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
+                    TempData["ErrorMessage"] = "Horario no válido. Inténtalo de nuevo.";
+                    return RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
                 }
 
                 if(pedido.HoraDevolucion <= pedido.HoraEntrega){
-                    RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
+                    TempData["ErrorMessage"] = "La hora de devolución debe ser posterior a la hora de entrega.";
+                    return RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
                 }
 
                 descPedido.MaterialId = UI.GetMaterialID(categoria.CategoriaId);
                 WriteLine($"{descPedido.MaterialId} |   {categoria.CategoriaId}");
 
                 if(descPedido.MaterialId is null || descPedido.MaterialId == 0){
+                    TempData["ErrorMessage"] = "Ese material no esta disponible.";
+                    return RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
+                }
+
+                if(descPedido.Cantidad < 1){
+                    TempData["ErrorMessage"] = "No puedes introducir números negativos";
+                    return RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
+                }
+                else if(descPedido.Cantidad > 10){
+                    TempData["ErrorMessage"] = "No puedes poner un cantidad tan grande de materiales";
                     return RedirectToPage("/DocenteMenu", new{id = pedido.DocenteId});
                 }
 

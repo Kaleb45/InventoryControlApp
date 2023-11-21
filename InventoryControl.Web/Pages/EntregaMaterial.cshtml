@@ -1,0 +1,145 @@
+@page
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.ChangeTracking
+@model InventoryControlPages.EntregaModel
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@using AlmacenSQLiteEntities;
+@using AlmacenDataContext;
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="~/styles.css">
+        <script src="~/script.js" defer></script>
+        <title>Usuarios</title>
+    </head>
+    <body>
+    <div class="titles">
+        <h1>Entrega de material</h1>
+    </div>
+
+    <div class="in-database">
+        <div>
+            <p>Entrega de material</p>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td><p>Id</p></td>
+                        <td><p>Modelo</p></td>
+                        <td><p>Descripcion</p></td>
+                        <td><p>Año entrada</p></td>
+                        <td><p>Marca</p></td>
+                        <td><p>Categoria</p></td>
+                        <td><p>Plantel</p></td>
+                        <td><p>Serie</p></td>
+                        <td><p>Valor Historico</p></td>
+                        <td><p>Condicion</p></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="id">@Model.material.MaterialId</td>
+                        <td id="campos">@Model.material.Modelo.Nombre</td>
+                        <td id="campos">@Model.material.Descripcion</td>
+                        <td id="campos">@Model.material.YearEntrada</td>
+                        <td id="campos">@Model.material.Marca.Nombre</td>
+                        <td id="campos">@Model.material.Categoria.Nombre</td>
+                        <td id="campos">@Model.material.Plantel.Nombre</td>
+                        <td id="campos">@Model.material.Serie</td>
+                        <td id="campos">@Model.material.ValorHistorico</td>
+                        <td id="campos">@Model.material.Condicion</td>
+                    </tr>
+                </tbody>
+            </table>
+            <form method="POST" asp-page-handler="NewEntrega">
+                <div class="fields-table">
+                    <select asp-for="material.Condicion" placeholder="Acceso" class="fields-table" required>
+                        <option value="1">Entregado</option>
+                        <option value="2">No Entregado o Dañado</option>
+                    </select>
+                    <input type="hidden" name="registroId" value="@Model.material.MaterialId" />
+                    <input type="hidden" name="userId" value="@Model.userId" />
+                    <input type="hidden" name="typeUser" value="@Model.typeUser" />
+                    <input id="enviar" type="submit" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="titles" onclick="toggleContent()">
+        <h1><h1><a href="#MPContent">Materiales Prestados</a></h1>
+    </div>
+        <div class="table-database hidden-content open" id="MPContent">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td><p>Id</p></td>
+                        <td><p>Modelo</p></td>
+                        <td><p>Descripcion</p></td>
+                        <td><p>Año entrada</p></td>
+                        <td><p>Marca</p></td>
+                        <td><p>Categoria</p></td>
+                        <td><p>Plantel</p></td>
+                        <td><p>Serie</p></td>
+                        <td><p>Valor Historico</p></td>
+                        <td><p>Condicion</p></td>
+                        <td><p>Entrega</p></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{using(Almacen db = new ()){
+                            IQueryable<Material>? materiales = db.Materiales.Where(m => m.Condicion == "2");
+                                if(materiales is null || !materiales.Any()){
+                                    <tr>
+                                        <td><p class="text-danger">No hay materiales prestados</p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                    </tr>
+                                }
+                                else{
+                                    foreach(var m in materiales){
+                                    <tr>
+                                        <td id="id">@m.MaterialId</td>
+                                        <td id="campos">@m.Modelo.Nombre</td>
+                                        <td id="campos">@m.Descripcion</td>
+                                        <td id="campos">@m.YearEntrada</td>
+                                        <td id="campos">@m.Marca.Nombre</td>
+                                        <td id="campos">@m.Categoria.Nombre</td>
+                                        <td id="campos">@m.Plantel.Nombre</td>
+                                        <td id="campos">@m.Serie</td>
+                                        <td id="campos">@m.ValorHistorico</td>
+                                        <td id="campos">@m.Condicion</td>
+                                        <td id="campos">
+                                        <form method="POST" asp-page-handler="Entrega">
+                                            <input type="hidden" name="userId" value="@Model.userId" />
+                                            <input type="hidden" name="typeUser" value="@Model.typeUser" />
+                                            <input type="hidden" name="registroId" value="@m.MaterialId" />
+                                            <button type="submit">Entrega</button>
+                                        </form>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <form method="POST">
+            <div class="fields-table">
+                <input type="hidden" name="userId" value="@Model.userId" />
+                <input type="hidden" name="typeUser" value="@Model.typeUser" />
+                <input type="submit" value="Volver"/>
+            </div>
+        </form>
+    </body>
+</html>

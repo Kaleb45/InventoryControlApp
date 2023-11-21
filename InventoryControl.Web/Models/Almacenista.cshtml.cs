@@ -161,6 +161,7 @@ namespace InventoryControlPages
             // Obtener el valor de pedidoId del formulario  
             if ((material is not null) &&  !ModelState.IsValid)
             {
+                material.Condicion = "2";
                 int validateDate = UI.DateValidationWeb(reporteMantenimiento.Fecha.ToString());
                 switch (validateDate){
                     case 2:
@@ -269,6 +270,15 @@ namespace InventoryControlPages
             int userId = int.Parse(Request.Form["almacenistaId"]);
             string typeUser = "Almacenista";
             return RedirectToPage("/Updates", new{id = registroId, table = tableId, usuario = userId, tipo = typeUser});
+        }
+
+        public IActionResult OnPostEntrega()
+        {
+            // Obtener el valor de pedidoId del formulario  
+            int registroId = int.Parse(Request.Form["registroId"]);
+            int userId = int.Parse(Request.Form["almacenistaId"]);
+            string typeUser = "Almacenista";
+            return RedirectToPage("/EntregaMaterial", new{id = registroId, usuario = userId, tipo = typeUser});
         }
     }
 }

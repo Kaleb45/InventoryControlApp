@@ -155,5 +155,13 @@ namespace InventoryControlPages
                 return Page();
             }
         }
+        public IActionResult OnPostPass()
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToPage("/PasswordPage");
+            }
+            return Page();
+        }
     }
 }

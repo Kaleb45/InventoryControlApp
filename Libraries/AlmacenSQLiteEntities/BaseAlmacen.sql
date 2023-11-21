@@ -27,6 +27,7 @@ CREATE TABLE "Categoria" (
 );
 
 
+
 -----------------------------------------------------
 
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('1', 'BORRADOR', 'BORRADOR DE MEMORIAS', '2');

@@ -172,7 +172,7 @@ namespace InventoryControlPages
                 usuario.Usuario1 = UI.GenerateUsername(estudiante.Nombre, estudiante.ApellidoPaterno, estudiante.ApellidoMaterno);
                 TempData["UserName"] = usuario.Usuario1;
                 CrudFuntions.AddStudent(estudiante, usuario);
-                //UI.NotificationUserName(estudiante);
+                UI.NotificationUserName(estudiante);
                 return RedirectToPage("/index", usuario.Usuario1);
             }
             else

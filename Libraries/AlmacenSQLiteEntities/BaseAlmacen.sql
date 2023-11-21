@@ -26,6 +26,7 @@ CREATE TABLE "Categoria" (
     3 - Nadie son del Almacen*/
 );
 
+
 -----------------------------------------------------
 
 INSERT INTO "Categoria" ("CategoriaId", "Nombre", "Descripcion", "Acceso") VALUES ('1', 'BORRADOR', 'BORRADOR DE MEMORIAS', '2');

@@ -26,6 +26,7 @@ namespace InventoryControlPages
 
         public void OnGet()
         {
+            CrudFuntions.CalcularAdeudo();
             ViewData["Title"] = "LogIn";
         }
 

@@ -1324,5 +1324,71 @@
             </table>
         </div>
     </div>
+    <div class="titles" onclick="toggleContent()">
+        <h1><h1><a href="#MPContent">Materiales Prestados</a></h1>
+    </div>
+        <div class="table-database hidden-content open" id="MPContent">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td><p>Id</p></td>
+                        <td><p>Modelo</p></td>
+                        <td><p>Descripcion</p></td>
+                        <td><p>Año entrada</p></td>
+                        <td><p>Marca</p></td>
+                        <td><p>Categoria</p></td>
+                        <td><p>Plantel</p></td>
+                        <td><p>Serie</p></td>
+                        <td><p>Valor Historico</p></td>
+                        <td><p>Condicion</p></td>
+                        <td><p>Entrega</p></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{using(Almacen db = new ()){
+                            IQueryable<Material>? materiales = db.Materiales.Where(m => m.Condicion == "2");
+                                if(materiales is null || !materiales.Any()){
+                                    <tr>
+                                        <td><p class="text-danger">No hay materiales prestados</p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                        <td><p></p></td>
+                                    </tr>
+                                }
+                                else{
+                                    foreach(var m in materiales){
+                                    <tr>
+                                        <td id="id">@m.MaterialId</td>
+                                        <td id="campos">@m.Modelo.Nombre</td>
+                                        <td id="campos">@m.Descripcion</td>
+                                        <td id="campos">@m.YearEntrada</td>
+                                        <td id="campos">@m.Marca.Nombre</td>
+                                        <td id="campos">@m.Categoria.Nombre</td>
+                                        <td id="campos">@m.Plantel.Nombre</td>
+                                        <td id="campos">@m.Serie</td>
+                                        <td id="campos">@m.ValorHistorico</td>
+                                        <td id="campos">@m.Condicion</td>
+                                        <td id="campos">
+                                        <form method="POST" asp-page-handler="Entrega">
+                                            <input type="hidden" name="coordinadorId" value="@Model.coordinador.CoordinadorId"/>
+                                            <input type="hidden" name="registroId" value="@m.MaterialId" />
+                                            <button type="submit">Entrega</button>
+                                        </form>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
 </body>
 </html>

@@ -807,5 +807,13 @@ namespace InventoryControlPages
             string typeUser = "Coordinador";
             return RedirectToPage("/Updates", new{id = registroId, table = tableId, usuario = userId, tipo = typeUser});
         }
+        public IActionResult OnPostEntrega()
+        {
+            // Obtener el valor de pedidoId del formulario  
+            int registroId = int.Parse(Request.Form["registroId"]);
+            int userId = int.Parse(Request.Form["coordinadorId"]);
+            string typeUser = "Coordinador";
+            return RedirectToPage("/EntregaMaterial", new{id = registroId, usuario = userId, tipo = typeUser});
+        }
     }
 }

@@ -130,12 +130,13 @@ namespace InventoryControlPages
                             break;
                     }
 
-                    if(UI.HourValidation(pedido.Fecha.ToString()) == false){
+                    pedido.HoraEntrega = pedido.Fecha;
+
+                    if(UI.HourValidation(pedido.HoraEntrega.ToString()) == false){
                         TempData["ErrorMessage"] = "Horario no válido. Inténtalo de nuevo.";
                         return RedirectToPage("/CoordinadorMenu", new{id = int.Parse(Request.Form["coordinadorId"])});
                     }
 
-                    pedido.HoraEntrega = pedido.Fecha;
 
                     if(UI.HourValidation(pedido.HoraDevolucion.ToString()) == false){
                         TempData["ErrorMessage"] = "Horario no válido. Inténtalo de nuevo.";
